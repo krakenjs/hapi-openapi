@@ -1,11 +1,11 @@
 'use strict';
 
-var test = require('tape'),
-    path = require('path'),
-    swaggerize = require('../lib'),
-    hapi = require('hapi');
+var Test = require('tape'),
+    Path = require('path'),
+    Swaggerize = require('../lib'),
+    Hapi = require('hapi');
 
-test('test', function (t) {
+Test('test', function (t) {
     var server;
 
     t.test('server', function (t) {
@@ -13,13 +13,13 @@ test('test', function (t) {
 
         var settings = {
             api: require('./fixtures/defs/pets.json'),
-            handlers: path.join(__dirname, './fixtures/handlers')
+            handlers: Path.join(__dirname, './fixtures/handlers')
         };
 
-        server = new hapi.Server();
+        server = new Hapi.Server();
 
         server.pack.register({
-            plugin: swaggerize,
+            plugin: Swaggerize,
             options: settings
         }, function (err) {
             t.error(err);
