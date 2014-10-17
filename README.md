@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/krakenjs/swaggerize-hapi.png)](https://travis-ci.org/krakenjs/swaggerize-hapi) [![NPM version](https://badge.fury.io/js/swaggerize-hapi.png)](http://badge.fury.io/js/swaggerize-hapi)
+
 # Swaggerize-Hapi
 
 `swaggerize-hapi` is a design-first approach to building RESTful services with [Swagger](http://swagger.io) and [Hapi](http://hapijs.com).
