@@ -11,16 +11,14 @@ Test('test', function (t) {
     t.test('server', function (t) {
         t.plan(1);
 
-        var settings = {
-            api: require('./fixtures/defs/pets.json'),
-            handlers: Path.join(__dirname, './fixtures/handlers'),
-        };
-
         server = new Hapi.Server();
 
         server.pack.register({
             plugin: Swaggerize,
-            options: settings
+            options: {
+                api: require('./fixtures/defs/pets.json'),
+                handlers: Path.join(__dirname, './fixtures/handlers'),
+            }
         }, function (err) {
             t.error(err, 'No error.');
         });
@@ -31,7 +29,7 @@ Test('test', function (t) {
 
         server.inject({
             method: 'GET',
-            url: '/api-docs'
+            url: '/v1/petstore/api-docs'
         }, function (response) {
             t.strictEqual(response.statusCode, 200, 'OK status.');
         });
