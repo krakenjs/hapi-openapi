@@ -23,7 +23,7 @@ server.pack.register({
 
 - `api` - a valid Swagger 2.0 document.
 - `docspath` - the path to expose api docs for swagger-ui, etc. Defaults to `/`.
-- `handlers` - either a directory structure for route handlers or a premade object (see *Handlers Object* below).
+- `handlers` - either a directory structure for route handlers.
 - `vhost` - *optional* domain string (see [hapi route options](https://github.com/hapijs/hapi/blob/master/docs/Reference.md#route-options)).
 
 ### Mount Path
