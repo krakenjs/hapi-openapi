@@ -31,7 +31,7 @@ Test('test', function (t) {
 
         server.inject({
             method: 'GET',
-            url: '/pets'
+            url: '/api-docs'
         }, function (response) {
             t.strictEqual(response.statusCode, 200, 'OK status.');
         });
@@ -42,27 +42,26 @@ Test('test', function (t) {
 
         server.inject({
             method: 'GET',
-            url: '/pets'
+            url: '/v1/petstore/pets'
         }, function (response) {
             t.strictEqual(response.statusCode, 200, 'OK status.');
         });
 
         server.inject({
             method: 'POST',
-            url: '/pets',
+            url: '/v1/petstore/pets',
         }, function (response) {
             t.strictEqual(response.statusCode, 400, '400 status (required param missing).');
         });
 
         server.inject({
             method: 'POST',
-            url: '/pets',
+            url: '/v1/petstore/pets',
             payload: JSON.stringify({
                 id: 0,
                 name: 'Cat'
             })
         }, function (response) {
-            //console.log(response);
             t.strictEqual(response.statusCode, 200, 'OK status.');
         });
     });
