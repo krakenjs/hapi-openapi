@@ -39,45 +39,51 @@ Test('test', function (t) {
     });
 
     t.test('apis', function (t) {
-        t.plan(5);
+        t.plan(7);
 
         server.inject({
             method: 'GET',
             url: '/v1/petstore/pets'
         }, function (response) {
             t.strictEqual(response.statusCode, 200, 'OK status.');
-        });
 
-        server.inject({
-            method: 'POST',
-            url: '/v1/petstore/pets',
-        }, function (response) {
-            t.strictEqual(response.statusCode, 400, '400 status (required param missing).');
-        });
+            server.inject({
+                method: 'POST',
+                url: '/v1/petstore/pets',
+            }, function (response) {
+                t.strictEqual(response.statusCode, 400, '400 status (required param missing).');
 
-        server.inject({
-            method: 'POST',
-            url: '/v1/petstore/pets',
-            payload: JSON.stringify({
-                id: 0,
-                name: 'Cat'
-            })
-        }, function (response) {
-            t.strictEqual(response.statusCode, 200, 'OK status.');
-        });
+                server.inject({
+                    method: 'POST',
+                    url: '/v1/petstore/pets',
+                    payload: JSON.stringify({
+                        id: 0,
+                        name: 'Cat'
+                    })
+                }, function (response) {
+                    t.strictEqual(response.statusCode, 200, 'OK status.');
 
-        server.inject({
-            method: 'GET',
-            url: '/v1/petstore/pets/0'
-        }, function (response) {
-            t.strictEqual(response.statusCode, 200, 'OK status.');
-        });
+                    server.inject({
+                        method: 'GET',
+                        url: '/v1/petstore/pets/0'
+                    }, function (response) {
+                        t.strictEqual(response.statusCode, 200, 'OK status.');
+                        t.ok(response.result, 'Result exists.');
 
-        server.inject({
-            method: 'DELETE',
-            url: '/v1/petstore/pets/0'
-        }, function (response) {
-            t.strictEqual(response.statusCode, 200, 'OK status.');
+                        server.inject({
+                            method: 'DELETE',
+                            url: '/v1/petstore/pets/0'
+                        }, function (response) {
+                            t.strictEqual(response.statusCode, 200, 'OK status.');
+                            t.ok(response.result, 'Result does not exist anymore.');
+                        });
+
+                    });
+
+                });
+
+            });
+
         });
 
     });
