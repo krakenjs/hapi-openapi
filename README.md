@@ -21,6 +21,13 @@ server.pack.register({
 });
 ```
 
+### Hapi Plugin
+
+The plugin will be registered as `swagger` on `server.plugins` with the following exposed:
+
+- `api` - the Swagger document.
+- `setHost(host)` - a helper function for setting the `host` property on the `api`.
+
 ### Configuration Options
 
 - `api` - a valid Swagger 2.0 document.
