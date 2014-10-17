@@ -3,12 +3,11 @@
   "description": "",
   "version": "1.0.0-alpha.1",
   "author": "Trevor Livingston <tlivings@gmail.com>",
-  "contributors": [],
   "repository": {
     "type": "git",
-    "url": "git://github.com/tlivings/swaggerize-hapi.git"
+    "url": "git://github.com/krakenjs/swaggerize-hapi.git"
   },
-  "bugs": "http://github.com/tlivings/swaggerize-hapi/issues",
+  "bugs": "http://github.com/krakenjs/swaggerize-hapi/issues",
   "publishConfig": {
     "registry": "https://registry.npmjs.org"
   },
@@ -16,12 +15,11 @@
     "node": "~0.10.22"
   },
   "dependencies": {
-    "caller": "^1.0.0",
-    "confit": "^1.2.0",
-    "core-util-is": "^1.0.1",
     "hapi": "^7.0.0",
     "hoek": "^2.6.0",
-    "swaggerize-builder": "^2.0.0"
+    "swaggerize-builder": "^2.0.0",
+    "caller": "^1.0.0",
+    "core-util-is": "^1.0.1"
   },
   "devDependencies": {
     "tape": "^2.4.2",
@@ -31,7 +29,7 @@
   "scripts": {
     "test": "tape test/*.js",
     "cover": "istanbul cover tape -- test/*.js",
-    "lint": "jshint -c .jshintrc lib/"
+    "lint": "jshint -c .jshintrc lib/*.js"
   },
   "main": "./lib/index",
   "readme": "README.md"
