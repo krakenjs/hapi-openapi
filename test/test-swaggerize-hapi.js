@@ -9,7 +9,7 @@ Test('test', function (t) {
     var server;
 
     t.test('server', function (t) {
-        t.plan(3);
+        t.plan(4);
 
         server = new Hapi.Server();
 
@@ -23,6 +23,10 @@ Test('test', function (t) {
             t.error(err, 'No error.');
             t.ok(server.plugins.swagger.api, 'server.plugins.swagger.api exists.');
             t.ok(server.plugins.swagger.setHost, 'server.plugins.swagger.setHost exists.');
+
+            server.plugins.swagger.setHost('api.paypal.com');
+
+            t.strictEqual(server.plugins.swagger.api.host, 'api.paypal.com', 'server.plugins.swagger.setHost set host.');
         });
 
     });
