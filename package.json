@@ -16,6 +16,7 @@
     "node": "~0.10.22"
   },
   "dependencies": {
+    "caller": "^1.0.0",
     "confit": "^1.2.0",
     "core-util-is": "^1.0.1",
     "hapi": "^7.0.0",
