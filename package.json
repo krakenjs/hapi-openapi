@@ -1,7 +1,7 @@
 {
   "name": "swaggerize-hapi",
   "description": "Design first API development with Swagger and Hapi.",
-  "version": "1.0.0-alpha.1",
+  "version": "1.0.0-alpha.2",
   "author": "Trevor Livingston <tlivings@gmail.com>",
   "repository": {
     "type": "git",
@@ -31,6 +31,5 @@
     "cover": "istanbul cover tape -- test/*.js",
     "lint": "jshint -c .jshintrc lib/*.js"
   },
-  "main": "./lib/index",
-  "readme": "README.md"
+  "main": "./lib/index"
 }
