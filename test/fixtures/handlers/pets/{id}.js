@@ -4,7 +4,7 @@ var store = require('../../lib/store');
 
 module.exports = {
     get: [
-        function p1(req, reply) {
+        function (req, reply) {
             reply(store.get(req.params.id));
         },
         function handler(req, reply) {
