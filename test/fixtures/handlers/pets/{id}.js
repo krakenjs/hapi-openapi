@@ -2,7 +2,6 @@
 
 var store = require('../../lib/store');
 
-
 module.exports = {
     get: function (req, reply) {
         reply(store.get(req.params.id));

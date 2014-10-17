@@ -22,7 +22,7 @@ Test('test', function (t) {
             plugin: Swaggerize,
             options: settings
         }, function (err) {
-            t.error(err);
+            t.error(err, 'No error.');
         });
     });
 
@@ -38,7 +38,7 @@ Test('test', function (t) {
     });
 
     t.test('apis', function (t) {
-        t.plan(3);
+        t.plan(5);
 
         server.inject({
             method: 'GET',
@@ -64,6 +64,21 @@ Test('test', function (t) {
         }, function (response) {
             t.strictEqual(response.statusCode, 200, 'OK status.');
         });
+
+        server.inject({
+            method: 'GET',
+            url: '/v1/petstore/pets/0'
+        }, function (response) {
+            t.strictEqual(response.statusCode, 200, 'OK status.');
+        });
+
+        server.inject({
+            method: 'DELETE',
+            url: '/v1/petstore/pets/0'
+        }, function (response) {
+            t.strictEqual(response.statusCode, 200, 'OK status.');
+        });
+
     });
 
 });
