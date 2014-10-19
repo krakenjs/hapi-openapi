@@ -2,7 +2,18 @@
 
 # Swaggerize-Hapi
 
+- Stability: `stable`
+- Changelog: `https://github.com/krakenjs/swaggerize-hapi/blob/master/CHANGELOG.md`
+
 `swaggerize-hapi` is a design-first approach to building RESTful services with [Swagger](http://swagger.io) and [Hapi](http://hapijs.com).
+
+`swaggerize-hapi` uses a [Swagger](http://swagger.io) 2.0 document to build routes automatically in your API.
+
+This is alpha software. Although the api should remain stable, certain features present in [swaggerize-express](https://github.com/krakenjs/swaggerize-express) (such as the generator) have not been developed yet.
+
+See also:
+- [swaggerize-builder](https://github.com/krakenjs/swaggerize-builder)
+- [swaggerize-express](https://github.com/krakenjs/swaggerize-express)
 
 ### Usage
 
