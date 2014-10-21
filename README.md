@@ -14,6 +14,7 @@ This is alpha software. Although the api should remain stable, certain features 
 See also:
 - [swaggerize-builder](https://github.com/krakenjs/swaggerize-builder)
 - [swaggerize-express](https://github.com/krakenjs/swaggerize-express)
+- [generator-swaggerize](https://www.npmjs.org/package/generator-swaggerize)
 
 ### Quick Start with a Generator
 
