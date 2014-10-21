@@ -36,7 +36,11 @@ $ yo swaggerize
 
 Follow the prompts (note: make sure to choose `hapi` as your framework choice).
 
-When asked for a swagger document, you can try this one: `https://raw.githubusercontent.com/wordnik/swagger-spec/master/examples/v2.0/json/petstore.json`.
+When asked for a swagger document, you can try this one:
+
+```
+https://raw.githubusercontent.com/wordnik/swagger-spec/master/examples/v2.0/json/petstore.json
+```
 
 You now have a working api and can use something like [Swagger UI](https://github.com/wordnik/swagger-ui) to explore it.
 
