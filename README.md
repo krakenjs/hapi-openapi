@@ -2,19 +2,27 @@
 
 # Swaggerize-Hapi
 
-- Stability: `stable`
-- Changelog: `https://github.com/krakenjs/swaggerize-hapi/blob/master/CHANGELOG.md`
+`swaggerize-hapi` is a design-driven approach to building RESTful services with [Swagger](http://swagger.io) and [Hapi](http://hapijs.com).
 
-`swaggerize-hapi` is a design-first approach to building RESTful services with [Swagger](http://swagger.io) and [Hapi](http://hapijs.com).
+`swaggerize-hapi` provides the following features:
 
-`swaggerize-hapi` uses a [Swagger](http://swagger.io) 2.0 document to build routes automatically in your API.
-
-This is alpha software. Although the api should remain stable, certain features present in [swaggerize-express](https://github.com/krakenjs/swaggerize-express) (such as the generator) have not been developed yet.
+- API schema validation.
+- Routes based on the Swagger document.
+- API documentation route.
+- Input validation.
 
 See also:
 - [swaggerize-builder](https://github.com/krakenjs/swaggerize-builder)
 - [swaggerize-express](https://github.com/krakenjs/swaggerize-express)
 - [generator-swaggerize](https://www.npmjs.org/package/generator-swaggerize)
+
+### Why "Design First"
+
+There are already a number of modules that help build RESTful APIs with express and swagger. However,
+these modules tend to focus on building the documentation or specification as a side effect of writing
+the application business logic.
+
+`swaggerize-express` begins with the swagger document first. This facilitates writing APIs that are easier to design, review, and test.
 
 ### Quick Start with a Generator
 
@@ -81,6 +89,8 @@ Api `path` values will be prefixed with the swagger document's `basePath` value.
 
 ### Handlers Directory
 
+The `options.handlers` option specifies a directory to scan for handlers. These handlers are bound to the api `paths` defined in the swagger document.
+
 ```
 handlers
   |--foo
@@ -89,7 +99,7 @@ handlers
   |--baz.js
 ```
 
-Routes as:
+Will route as:
 
 ```
 foo.js => /foo
@@ -99,19 +109,19 @@ baz.js => /baz
 
 ### Path Parameters
 
-The file and directory names in the handlers directory can represent path parameters.
+The file and directory names in the handlers directory can also represent path parameters.
 
 For example, to represent the path `/users/{id}`:
 
-```
+```shell
 handlers
   |--users
   |    |--{id}.js
 ```
 
-This works with sub-resources as well:
+This works with directory names as well:
 
-```
+```shell
 handlers
   |--users
   |    |--{id}.js
@@ -123,7 +133,9 @@ To represent `/users/{id}/foo`.
 
 ### Handlers File
 
-Each provided javascript file should follow the format of:
+Each provided javascript file should export an object containing functions with HTTP verbs as keys.
+
+Example:
 
 ```javascript
 module.exports = {
@@ -132,8 +144,6 @@ module.exports = {
     ...
 }
 ```
-
-Where each http method has a handler.
 
 Optionally, `pre` handlers can be used by providing an array of handlers for a method:
 
@@ -145,3 +155,27 @@ module.exports = {
     ],
 }
 ```
+
+### Handlers Object
+
+The directory generation will yield this object, but it can be provided directly as `options.handlers`.
+
+Note that if you are programatically constructing a handlers obj this way, you must namespace HTTP verbs with `$` to
+avoid conflicts with path names. These keys should also be *lowercase*.
+
+Example:
+
+```javascript
+{
+    'foo': {
+        '$get': function (req, reply) { ... },
+        'bar': {
+            '$get': function (req, reply) { ... },
+            '$post': function (req, reply) { ... }
+        }
+    }
+    ...
+}
+```
+
+Handler keys in files do *not* have to be namespaced in this way.
