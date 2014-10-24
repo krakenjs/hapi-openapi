@@ -16,13 +16,13 @@ See also:
 - [swaggerize-express](https://github.com/krakenjs/swaggerize-express)
 - [generator-swaggerize](https://www.npmjs.org/package/generator-swaggerize)
 
-### Why "Design First"
+### Why "Design Driven"
 
-There are already a number of modules that help build RESTful APIs with express and swagger. However,
+There are already a number of modules that help build RESTful APIs for node with swagger. However,
 these modules tend to focus on building the documentation or specification as a side effect of writing
 the application business logic.
 
-`swaggerize-express` begins with the swagger document first. This facilitates writing APIs that are easier to design, review, and test.
+`swaggerize-hapi` begins with the swagger document first. This facilitates writing APIs that are easier to design, review, and test.
 
 ### Quick Start with a Generator
 
