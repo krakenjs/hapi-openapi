@@ -96,6 +96,8 @@ Test('test', function (t) {
         t.test('query', function(t) {
             var queryStringToStatusCode = {
                 'limit=2': 200,
+                'tags=some_tag&tags=some_other_tag': 200,
+                'limit=2&tags=some_tag&tags=some_other_tag': 200,
                 'limit=a_string': 400
             }
 
