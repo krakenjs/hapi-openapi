@@ -98,7 +98,8 @@ Test('test', function (t) {
                 'limit=2': 200,
                 'tags=some_tag&tags=some_other_tag': 200,
                 'limit=2&tags=some_tag&tags=some_other_tag': 200,
-                'limit=a_string': 400
+                'limit=a_string': 400,
+                'unspecified_parameter=value': 400
             }
 
             t.plan(Object.keys(queryStringToStatusCode).length);
