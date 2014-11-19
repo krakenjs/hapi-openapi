@@ -92,4 +92,27 @@ Test('test', function (t) {
 
     });
 
+    t.test('validation', function (t) {
+        t.test('query', function(t) {
+            var queryStringToStatusCode = {
+                'limit=2': 200,
+                'limit=a_string': 400
+            }
+
+            t.plan(Object.keys(queryStringToStatusCode).length);
+
+            for (var queryString in queryStringToStatusCode) {
+                (function(queryString, expectedStatusCode) {
+                    server.inject({
+                        method: 'GET',
+                        url: '/v1/petstore/pets?' + queryString
+                    }, function (response) {
+                        t.strictEqual(response.statusCode, expectedStatusCode, queryString);
+                    });
+                })(queryString, queryStringToStatusCode[queryString]);
+            }
+        });
+    });
+
+
 });
