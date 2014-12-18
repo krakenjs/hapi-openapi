@@ -13,8 +13,10 @@ Test('test', function (t) {
 
         server = new Hapi.Server();
 
-        server.pack.register({
-            plugin: Swaggerize,
+        server.connection({});
+
+        server.register({
+            register: Swaggerize,
             options: {
                 api: Path.join(__dirname, './fixtures/defs/pets.json'),
                 handlers: Path.join(__dirname, './fixtures/handlers'),
@@ -32,8 +34,10 @@ Test('test', function (t) {
 
         server = new Hapi.Server();
 
-        server.pack.register({
-            plugin: Swaggerize,
+        server.connection({});
+
+        server.register({
+            register: Swaggerize,
             options: {
                 api: require('./fixtures/defs/pets.json'),
                 handlers: Path.join(__dirname, './fixtures/handlers'),

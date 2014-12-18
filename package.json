@@ -1,7 +1,7 @@
 {
   "name": "swaggerize-hapi",
   "description": "Design first API development with Swagger and Hapi.",
-  "version": "1.0.0-alpha.9",
+  "version": "1.0.0-rc.1",
   "author": "Trevor Livingston <tlivings@gmail.com>",
   "repository": {
     "type": "git",
@@ -15,16 +15,16 @@
     "node": "~0.10.22"
   },
   "dependencies": {
-    "hapi": "^7.0.0",
+    "hapi": "^8.0.0",
     "hoek": "^2.6.0",
     "swaggerize-builder": "^2.0.0",
     "caller": "^1.0.0",
     "core-util-is": "^1.0.1"
   },
   "devDependencies": {
-    "tape": "^2.4.2",
-    "istanbul": "~0.2.3",
-    "jshint": "^2.4.1"
+    "tape": "^3.0.0",
+    "jshint": "^2.4.1",
+    "istanbul": "~0.2.3"
   },
   "scripts": {
     "test": "tape test/*.js",
