@@ -1,12 +1,12 @@
 'use strict';
 
-var store = require('../lib/store');
+var Store = require('../lib/store');
 
 module.exports = {
     get: function (req, reply) {
-        reply(store.all());
+        reply(Store.all());
     },
     post: function (req, reply) {
-        reply(store.get(store.put(req.payload)));
+        reply(Store.get(Store.put(req.payload)));
     }
 };
