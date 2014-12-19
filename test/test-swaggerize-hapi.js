@@ -1,9 +1,9 @@
 'use strict';
 
-var Test = require('tape'),
-    Path = require('path'),
-    Swaggerize = require('../lib'),
-    Hapi = require('hapi');
+var Test = require('tape');
+var Path = require('path');
+var Swaggerize = require('../lib');
+var Hapi = require('hapi');
 
 Test('test', function (t) {
     var server;
