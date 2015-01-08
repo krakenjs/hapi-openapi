@@ -17,7 +17,7 @@
   "dependencies": {
     "hapi": "^8.0.0",
     "hoek": "^2.6.0",
-    "swaggerize-builder": "^2.0.0",
+    "swaggerize-builder": "git+https://github.com/guybedo/swaggerize-builder",
     "core-util-is": "^1.0.1",
     "joi": "^4.7.0"
   },
