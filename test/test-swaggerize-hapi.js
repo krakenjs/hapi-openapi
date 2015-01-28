@@ -119,6 +119,7 @@ Test('test', function (t) {
         var queryStringToStatusCode = {
             'limit=2': 200,
             'tags=some_tag&tags=some_other_tag': 200,
+            'tags=billy,bob': 200,
             'limit=2&tags=some_tag&tags=some_other_tag': 200,
             'limit=a_string': 400,
             'unspecified_parameter=value': 200
