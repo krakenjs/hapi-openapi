@@ -19,7 +19,7 @@ Test('test', function (t) {
             register: Swaggerize,
             options: {
                 api: Path.join(__dirname, './fixtures/defs/pets.json'),
-                handlers: Path.join(__dirname, './fixtures/handlers'),
+                handlers: Path.join(__dirname, './fixtures/handlers')
             }
         }, function (err) {
             t.error(err, 'No error.');
