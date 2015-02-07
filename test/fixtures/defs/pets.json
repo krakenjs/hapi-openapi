@@ -44,7 +44,7 @@
                         "items": {
                             "type": "string"
                         },
-                        "collectionFormat": "csv"
+                        "collectionFormat": "multi"
                     },
                     {
                         "name": "limit",
