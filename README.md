@@ -86,6 +86,7 @@ The plugin will be registered as `swagger` on `server.plugins` with the followin
 - `docspath` - the path to expose api docs for swagger-ui, etc. Defaults to `/`.
 - `handlers` - either a directory structure for route handlers.
 - `vhost` - *optional* domain string (see [hapi route options](https://github.com/hapijs/hapi/blob/master/docs/Reference.md#route-options)).
+- `cors` - *optional* cors setting (see [hapi route options](https://github.com/hapijs/hapi/blob/master/docs/Reference.md#route-options)).
 
 ### Mount Path
 
