@@ -1,7 +1,7 @@
 {
   "name": "swaggerize-hapi",
   "description": "Design first API development with Swagger and Hapi.",
-  "version": "1.0.0-rc.4",
+  "version": "1.0.0-rc.3",
   "author": "Trevor Livingston <tlivings@gmail.com>",
   "repository": {
     "type": "git",
