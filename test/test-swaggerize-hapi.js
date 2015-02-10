@@ -115,6 +115,34 @@ Test('test', function (t) {
 
     });
 
+    t.test('yaml', function (t) {
+        t.plan(4);
+
+        server = new Hapi.Server();
+
+        server.connection({});
+
+        server.register({
+            register: Swaggerize,
+            options: {
+                api: Path.join(__dirname, './fixtures/defs/pets.yaml'),
+                handlers: Path.join(__dirname, './fixtures/handlers')
+            }
+        }, function (err) {
+            t.error(err, 'No error.');
+            t.ok(server.plugins.swagger.api, 'server.plugins.swagger.api exists.');
+            t.ok(server.plugins.swagger.setHost, 'server.plugins.swagger.setHost exists.');
+        });
+
+        server.inject({
+            method: 'GET',
+            url: '/v1/petstore/pets'
+        }, function (response) {
+            t.strictEqual(response.statusCode, 200, 'OK status.');
+        });
+
+    });
+
     t.test('query validation', function (t) {
         var queryStringToStatusCode = {
             'limit=2': 200,
