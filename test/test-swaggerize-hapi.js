@@ -19,7 +19,7 @@ Test('test', function (t) {
             register: Swaggerize,
             options: {
                 api: Path.join(__dirname, './fixtures/defs/pets.json'),
-                handlers: Path.join(__dirname, './fixtures/handlers'),
+                handlers: Path.join(__dirname, './fixtures/handlers')
             }
         }, function (err) {
             t.error(err, 'No error.');
@@ -115,29 +115,54 @@ Test('test', function (t) {
 
     });
 
-    t.test('validation', function (t) {
-        t.test('query', function(t) {
-            var queryStringToStatusCode = {
-                'limit=2': 200,
-                'tags=some_tag&tags=some_other_tag': 200,
-                'limit=2&tags=some_tag&tags=some_other_tag': 200,
-                'limit=a_string': 400,
-                'unspecified_parameter=value': 400
-            }
+    t.test('yaml', function (t) {
+        t.plan(4);
 
-            t.plan(Object.keys(queryStringToStatusCode).length);
+        server = new Hapi.Server();
 
-            for (var queryString in queryStringToStatusCode) {
-                (function(queryString, expectedStatusCode) {
-                    server.inject({
-                        method: 'GET',
-                        url: '/v1/petstore/pets?' + queryString
-                    }, function (response) {
-                        t.strictEqual(response.statusCode, expectedStatusCode, queryString);
-                    });
-                })(queryString, queryStringToStatusCode[queryString]);
+        server.connection({});
+
+        server.register({
+            register: Swaggerize,
+            options: {
+                api: Path.join(__dirname, './fixtures/defs/pets.yaml'),
+                handlers: Path.join(__dirname, './fixtures/handlers')
             }
+        }, function (err) {
+            t.error(err, 'No error.');
+            t.ok(server.plugins.swagger.api, 'server.plugins.swagger.api exists.');
+            t.ok(server.plugins.swagger.setHost, 'server.plugins.swagger.setHost exists.');
         });
+
+        server.inject({
+            method: 'GET',
+            url: '/v1/petstore/pets'
+        }, function (response) {
+            t.strictEqual(response.statusCode, 200, 'OK status.');
+        });
+
+    });
+
+    t.test('query validation', function (t) {
+        var queryStringToStatusCode = {
+            'limit=2': 200,
+            'tags=some_tag&tags=some_other_tag': 200,
+            'limit=2&tags=some_tag&tags=some_other_tag': 200,
+            'limit=a_string': 400
+        }
+
+        t.plan(Object.keys(queryStringToStatusCode).length);
+
+        for (var queryString in queryStringToStatusCode) {
+            (function(queryString, expectedStatusCode) {
+                server.inject({
+                    method: 'GET',
+                    url: '/v1/petstore/pets?' + queryString
+                }, function (response) {
+                    t.strictEqual(response.statusCode, expectedStatusCode, queryString);
+                });
+            })(queryString, queryStringToStatusCode[queryString]);
+        }
     });
 
 
