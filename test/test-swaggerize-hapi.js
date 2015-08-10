@@ -115,10 +115,86 @@ Test('test', function (t) {
 
     });
 
+    t.test('query validation', function (t) {
+        var queryStringToStatusCode = {
+            'limit=2': 200,
+            'tags=some_tag&tags=some_other_tag': 200,
+            'limit=2&tags=some_tag&tags=some_other_tag': 200,
+            'limit=a_string': 400
+        }
+
+        t.plan(Object.keys(queryStringToStatusCode).length);
+
+        for (var queryString in queryStringToStatusCode) {
+            (function(queryString, expectedStatusCode) {
+                server.inject({
+                    method: 'GET',
+                    url: '/v1/petstore/pets?' + queryString
+                }, function (response) {
+                    t.strictEqual(response.statusCode, expectedStatusCode, queryString);
+                });
+            })(queryString, queryStringToStatusCode[queryString]);
+        }
+    });
+
+});
+
+Test('form data', function (t) {
+    var server;
+
+    t.test('success', function (t) {
+        t.plan(2);
+
+        server = new Hapi.Server();
+
+        server.connection({});
+
+        server.register({
+            register: Swaggerize,
+            options: {
+                api: Path.join(__dirname, './fixtures/defs/pets.json'),
+                handlers: {
+                    upload: {
+                        $post: function (req, reply) {
+                            reply();
+                        }
+                    }
+                }
+            }
+        }, function (err) {
+            t.error(err, 'No error.');
+        });
+
+        server.inject({
+            method: 'POST',
+            url: '/v1/petstore/upload',
+            headers: {
+                'content-type': 'application/x-www-form-urlencoded'
+            },
+            payload: 'name=thing&upload=asdf'
+        }, function (response) {
+            t.strictEqual(response.statusCode, 200, 'OK status.');
+        });
+    });
+
+    t.test('bad content type', function (t) {
+        t.plan(1);
+        
+        server.inject({
+            method: 'POST',
+            url: '/v1/petstore/upload',
+            payload: 'name=thing&upload=asdf'
+        }, function (response) {
+            t.strictEqual(response.statusCode, 400, '400 status.');
+        });
+    });
+});
+
+Test('yaml', function (t) {
     t.test('yaml', function (t) {
         t.plan(4);
 
-        server = new Hapi.Server();
+        var server = new Hapi.Server();
 
         server.connection({});
 
@@ -142,28 +218,4 @@ Test('test', function (t) {
         });
 
     });
-
-    t.test('query validation', function (t) {
-        var queryStringToStatusCode = {
-            'limit=2': 200,
-            'tags=some_tag&tags=some_other_tag': 200,
-            'limit=2&tags=some_tag&tags=some_other_tag': 200,
-            'limit=a_string': 400
-        }
-
-        t.plan(Object.keys(queryStringToStatusCode).length);
-
-        for (var queryString in queryStringToStatusCode) {
-            (function(queryString, expectedStatusCode) {
-                server.inject({
-                    method: 'GET',
-                    url: '/v1/petstore/pets?' + queryString
-                }, function (response) {
-                    t.strictEqual(response.statusCode, expectedStatusCode, queryString);
-                });
-            })(queryString, queryStringToStatusCode[queryString]);
-        }
-    });
-
-
 });
