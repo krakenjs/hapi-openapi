@@ -64,8 +64,10 @@ var Hapi = require('hapi'),
 
 var server = new Hapi.Server();
 
-server.pack.register({
-    plugin: Swaggerize,
+server.connection({ port: 8080 });
+
+server.register({
+    register: Swaggerize,
     options: {
         api: require('./config/pets.json'),
         handlers: Path.join(__dirname, './handlers')
