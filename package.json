@@ -25,7 +25,8 @@
   "devDependencies": {
     "tape": "^3.0.0",
     "jshint": "^2.4.1",
-    "istanbul": "~0.2.3"
+    "istanbul": "~0.2.3",
+    "boom": "~2.8.0"
   },
   "scripts": {
     "test": "tape test/*.js",

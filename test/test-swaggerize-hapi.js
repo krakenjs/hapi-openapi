@@ -4,6 +4,7 @@ var Test = require('tape');
 var Path = require('path');
 var Swaggerize = require('../lib');
 var Hapi = require('hapi');
+var StubAuthTokenScheme = require('./fixtures/lib/stub-auth-token-scheme');
 
 Test('test', function (t) {
     var server;
@@ -137,6 +138,65 @@ Test('test', function (t) {
         }
     });
 
+});
+
+Test('token authentication', function (t) {
+    var server;
+
+    t.test('server setup', function (t) {
+        t.plan(4);
+
+        server = new Hapi.Server();
+
+        server.connection({});
+
+        server.register({ register: StubAuthTokenScheme }, function (err) {
+            t.error(err, 'No error.');
+
+            server.auth.strategy('api_key', 'stub-auth-token', {
+                validateFunc: function (token, callback) {
+                    if (token === '12345') {
+                        return callback(null, true, {});
+                    }
+
+                    callback(null, false);
+                }
+            });
+
+            server.register({
+                register: Swaggerize,
+                options: {
+                    api: require('./fixtures/defs/pets_authed.json'),
+                    handlers: Path.join(__dirname, './fixtures/handlers'),
+                }
+            }, function (err) {
+                t.error(err, 'No error.');
+                t.ok(server.plugins.swagger.api, 'server.plugins.swagger.api exists.');
+                t.ok(server.plugins.swagger.setHost, 'server.plugins.swagger.setHost exists.');
+            });
+        });
+    });
+
+    t.test('token authentication', function (t) {
+        t.plan(2);
+
+        server.inject({
+            method: 'GET',
+            url: '/v1/petstore/pets'
+        }, function (response) {
+            t.strictEqual(response.statusCode, 401, '401 status (unauthorized).');
+
+            server.inject({
+                method: 'GET',
+                url: '/v1/petstore/pets',
+                headers: { authorization: '12345' }
+            }, function (response) {
+                t.strictEqual(response.statusCode, 200, 'OK status.');
+            });
+
+        });
+
+    });
 });
 
 Test('form data', function (t) {
