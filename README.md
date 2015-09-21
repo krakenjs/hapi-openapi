@@ -186,3 +186,32 @@ Example:
 ```
 
 Handler keys in files do *not* have to be namespaced in this way.
+
+### Authentication
+
+Support for swagger `apiKey` [security schemes](http://swagger.io/specification/#securitySchemeObject) requires that relevant authentication scheme and strategy are registered before the swaggerize-hapi plugin. See the [hapi docs](http://hapijs.com/tutorials/auth) for information about authentication schemes and strategies.
+
+The name of the hapi authentication strategy is expected to match the name field of the swagger [security requirement object](http://swagger.io/specification/#securityRequirementObject). 
+
+Example:
+
+```javascript
+server = new Hapi.Server();
+server.connection({});
+
+server.register({ register: AuthTokenScheme }, function (err) {
+    server.auth.strategy('api_key', 'auth-token-scheme', {
+        validateFunc: function (token, callback) {
+          // Implement validation here
+        }
+    });
+
+    server.register({
+        register: Swaggerize,
+        options: {
+            api: require('./config/pets.json'),
+            handlers: Path.join(__dirname, './handlers')
+        }
+    });
+});
+```
