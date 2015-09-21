@@ -14,7 +14,7 @@ exports.register = function (server, options, next) {
 
                 options.validateFunc(token, function (err, isValid, credentials) {
                     if (err || !isValid) {
-                        return reply(Boom.unauthorized(), { credentials: credentials });
+                        return reply(Boom.unauthorized(null, 'stub-auth-token'), { credentials: credentials });
                     }
 
                     return reply.continue({ credentials: credentials });

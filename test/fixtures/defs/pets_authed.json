@@ -31,6 +31,9 @@
                 "security": [
                   {
                     "api_key": []
+                  },
+                  {
+                    "api_key2": []
                   }
                 ],
                 "produces": [
@@ -83,7 +86,12 @@
     "securityDefinitions": {
         "api_key": {
             "type": "apiKey",
-            "name": "Authorization",
+            "name": "authorization",
+            "in": "header"
+        },
+        "api_key2": {
+            "type": "apiKey",
+            "name": "authorization",
             "in": "header"
         }
     },
