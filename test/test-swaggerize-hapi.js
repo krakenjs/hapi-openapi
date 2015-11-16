@@ -208,9 +208,10 @@ Test('authentication', function (t) {
 
 Test('form data', function (t) {
     var server;
+    var payload;
 
     t.test('success', function (t) {
-        t.plan(2);
+        t.plan(3);
 
         server = new Hapi.Server();
 
@@ -223,6 +224,7 @@ Test('form data', function (t) {
                 handlers: {
                     upload: {
                         $post: function (req, reply) {
+                            payload = req.payload;
                             reply();
                         }
                     }
@@ -241,6 +243,7 @@ Test('form data', function (t) {
             payload: 'name=thing&upload=asdf'
         }, function (response) {
             t.strictEqual(response.statusCode, 200, 'OK status.');
+            t.strictEqual(typeof payload, 'object');
         });
     });
 

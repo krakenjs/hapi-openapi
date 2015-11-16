@@ -33,7 +33,7 @@
                     {
                         "name": "upload",
                         "in": "formData",
-                        "type": "file",
+                        "type": "string",
                         "required": true
                     },
                     {
