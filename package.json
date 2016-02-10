@@ -16,7 +16,7 @@
   },
   "dependencies": {
     "core-util-is": "^1.0.1",
-    "hapi": "^8.0.0",
+    "hapi": "^13.0.0",
     "hoek": "^2.6.0",
     "joi": "^6.6.1",
     "js-yaml": "^3.2.6",
