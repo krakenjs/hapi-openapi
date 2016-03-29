@@ -1,6 +1,7 @@
 language: node_js
 node_js:
   - "stable"
+  - "5.7.0"
   - "0.12"
   - "0.10"
   - "iojs"
@@ -9,5 +10,6 @@ branches:
   only:
     - master
 script:
+  - "npm run-script test"
   - "npm run-script cover"
   - "npm run-script lint"
