@@ -5,7 +5,7 @@
   "author": "Trevor Livingston <tlivings@gmail.com>",
   "repository": {
     "type": "git",
-    "url": "git://github.com/krakenjs/swaggerize-hapi.git"
+    "url": "git@github.com:greenfield-innovation/swaggerize-hapi.git"
   },
   "bugs": "http://github.com/krakenjs/swaggerize-hapi/issues",
   "publishConfig": {
@@ -17,7 +17,7 @@
   "dependencies": {
     "async": "^2.0.0-rc.2",
     "core-util-is": "^1.0.1",
-    "hapi": "^13.0.0",
+    "hapi": "^13.2.2",
     "hoek": "^3.0.4",
     "joi": "^8.0.5",
     "js-yaml": "^3.2.6",
