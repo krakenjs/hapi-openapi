@@ -1,7 +1,7 @@
 {
   "name": "swaggerize-hapi",
   "description": "Design-driven apis with swagger 2.0 and hapi.",
-  "version": "1.0.1",
+  "version": "2.0.0",
   "author": "Trevor Livingston <tlivings@gmail.com>",
   "repository": {
     "type": "git",
@@ -12,22 +12,22 @@
     "registry": "https://registry.npmjs.org"
   },
   "engines": {
-    "node": "~0.10.22"
+    "node": "4.x"
   },
   "dependencies": {
     "async": "^1.5.0",
     "core-util-is": "^1.0.1",
-    "hapi": "^13.0.0",
     "hoek": "^2.6.0",
     "joi": "^6.6.1",
     "js-yaml": "^3.2.6",
     "swaggerize-routes": "^1.0.3"
   },
   "devDependencies": {
-    "tape": "^3.0.0",
-    "jshint": "^2.4.1",
+    "boom": "~2.8.0",
+    "hapi": "^13.3.0",
     "istanbul": "~0.2.3",
-    "boom": "~2.8.0"
+    "jshint": "^2.4.1",
+    "tape": "^3.0.0"
   },
   "scripts": {
     "test": "tape test/*.js",
