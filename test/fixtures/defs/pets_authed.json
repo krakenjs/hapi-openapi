@@ -61,6 +61,13 @@
                         "required": false,
                         "type": "integer",
                         "format": "int32"
+                    },
+                    {
+                        "name": "custom-header",
+                        "in": "header",
+                        "description": "A custom header",
+                        "required": false,
+                        "type": "string"
                     }
                 ],
                 "responses": {
