@@ -1,3 +1,8 @@
+### Unreleased
+
+#### Bug fixes
+
+- #50
 
 ### v2.0.0
 
