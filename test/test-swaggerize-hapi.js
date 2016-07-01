@@ -188,7 +188,10 @@ Test('authentication', function (t) {
                     server.inject({
                         method: 'GET',
                         url: '/v1/petstore/pets',
-                        headers: { authorization: '12345' }
+                        headers: {
+                            authorization: '12345',
+                            'custom-header': 'Hello'
+                        }
                     }, function (response) {
                         t.strictEqual(response.statusCode, 200, 'OK status.');
 
