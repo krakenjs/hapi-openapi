@@ -195,6 +195,19 @@ The name of the hapi authentication strategy is expected to match the name field
 
 Example:
 
+```yaml
+securityDefinitions:
+  api_key:
+    type: apiKey
+    name: Authorization
+    in: header
+paths:
+  '/users/':
+    get:
+      security:
+        - api_key: []
+```
+
 ```javascript
 server = new Hapi.Server();
 server.connection({});
