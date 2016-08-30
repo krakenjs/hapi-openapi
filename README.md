@@ -87,8 +87,8 @@ The plugin will be registered as `swagger` on `server.plugins` with the followin
 - `api` - a valid Swagger 2.0 document.
 - `docspath` - the path to expose api docs for swagger-ui, etc. Defaults to `/`.
 - `handlers` - either a directory structure for route handlers.
-- `vhost` - *optional* domain string (see [hapi route options](https://github.com/hapijs/hapi/blob/master/docs/Reference.md#route-options)).
-- `cors` - *optional* cors setting (see [hapi route options](https://github.com/hapijs/hapi/blob/master/docs/Reference.md#route-options)).
+- `vhost` - *optional* domain string (see [hapi route options](http://hapijs.com/api#route-options)).
+- `cors` - *optional* cors setting (see [hapi route options](http://hapijs.com/api#route-options)).
 
 ### Mount Path
 
@@ -191,7 +191,7 @@ Handler keys in files do *not* have to be namespaced in this way.
 
 Support for swagger `apiKey` [security schemes](http://swagger.io/specification/#securitySchemeObject) requires that relevant authentication scheme and strategy are registered before the swaggerize-hapi plugin. See the [hapi docs](http://hapijs.com/tutorials/auth) for information about authentication schemes and strategies.
 
-The name of the hapi authentication strategy is expected to match the name field of the swagger [security requirement object](http://swagger.io/specification/#securityRequirementObject). 
+The name of the hapi authentication strategy is expected to match the name field of the swagger [security requirement object](http://swagger.io/specification/#securityRequirementObject).
 
 Example:
 
