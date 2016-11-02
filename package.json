@@ -24,7 +24,7 @@
   },
   "devDependencies": {
     "boom": "~2.8.0",
-    "hapi": "^13.3.0",
+    "hapi": "^15.2.0",
     "istanbul": "~0.2.3",
     "jshint": "^2.4.1",
     "tape": "^3.0.0"
