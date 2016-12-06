@@ -274,6 +274,21 @@ Test('form data', function (t) {
             t.strictEqual(response.statusCode, 400, '400 status.');
         });
     });
+    
+    t.test('extra payload', function (t) {
+        t.plan(1);
+
+        server.inject({
+            method: 'POST',
+            url: '/v1/petstore/upload',
+            headers: {
+                'content-type': 'application/x-www-form-urlencoded'
+            },
+            payload: 'extra=1&name=thing&upload='
+        }, function (response) {
+            t.strictEqual(response.statusCode, 400, '400 status.');
+        });
+    });
 });
 
 Test('yaml', function (t) {
