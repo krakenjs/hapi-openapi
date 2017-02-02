@@ -1,7 +1,7 @@
 {
   "name": "swaggerize-hapi",
   "description": "Design-driven apis with swagger 2.0 and hapi.",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "author": "Trevor Livingston <tlivings@gmail.com>",
   "repository": {
     "type": "git",
