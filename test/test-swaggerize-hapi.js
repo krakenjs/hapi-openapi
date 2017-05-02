@@ -127,7 +127,7 @@ Test('test', function (t) {
         t.plan(Object.keys(queryStringToStatusCode).length);
 
         for (var queryString in queryStringToStatusCode) {
-            (function(queryString, expectedStatusCode) {
+            (function (queryString, expectedStatusCode) {
                 server.inject({
                     method: 'GET',
                     url: '/v1/petstore/pets?' + queryString
@@ -303,5 +303,70 @@ Test('yaml', function (t) {
             t.strictEqual(response.statusCode, 200, 'OK status.');
         });
 
+    });
+});
+
+Test('docs authentication', function (t) {
+    var server;
+
+    var buildValidateFunc = function (allowedToken) {
+        return function (token, callback) {
+            if (token === allowedToken) {
+                return callback(null, true, {});
+            }
+
+            callback(null, false);
+        }
+    };
+
+    t.test('no authentication', function (t) {
+        t.plan(4);
+
+        server = new Hapi.Server();
+
+        server.connection({});
+
+        server.register({ register: StubAuthTokenScheme }, function (err) {
+            t.error(err, 'No error.');
+
+            server.auth.strategy('api_key', 'stub-auth-token', {
+                validateFunc: buildValidateFunc('12345')
+            });
+            server.auth.strategy('api_key2', 'stub-auth-token', {
+                validateFunc: buildValidateFunc('98765')
+            });
+
+            // note: this is only requires when the default auth is set
+            server.auth.default('api_key');
+
+            server.register({
+                register: Swaggerize,
+                options: {
+                    api: require('./fixtures/defs/pets_authed.json'),
+                    handlers: Path.join(__dirname, './fixtures/handlers'),
+                    docsauth: false
+                }
+            }, function (err) {
+                // server should register without error
+                t.error(err, 'No error.');
+
+                // doc path should be accessible
+                server.inject({
+                    method: 'GET',
+                    url: '/v1/petstore/api-docs'
+                }, function (response) {
+                    t.strictEqual(response.statusCode, 200, 'OK status.');
+
+                    // pets should be inaccessible still
+                    server.inject({
+                        method: 'GET',
+                        url: '/v1/petstore/pets'
+                    }, function (response) {
+                        t.strictEqual(response.statusCode, 401, '401 status (unauthorized).');
+                    });
+                });
+
+            });
+        });
     });
 });
