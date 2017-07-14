@@ -1,11 +1,11 @@
 language: node_js
 node_js:
-  - "stable"
   - "4"
-  - "5"
+  - "6"
+  - "8"
 branches:
   only:
     - master
 script:
-  - "npm run-script cover"
-  - "npm run-script lint"
+  - "npm run cover"
+  - "npm run lint"
