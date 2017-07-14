@@ -1,7 +1,4 @@
-swaggerize-hapi
-===============
-
-Lead Maintainer: [Trevor Livingston](https://github.com/tlivings/)  
+# swaggerize-hapi
 
 [![Build Status](https://travis-ci.org/krakenjs/swaggerize-hapi.svg?branch=master)](https://travis-ci.org/krakenjs/swaggerize-hapi)  
 [![NPM version](https://badge.fury.io/js/swaggerize-hapi.png)](http://badge.fury.io/js/swaggerize-hapi)  
