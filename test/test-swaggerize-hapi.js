@@ -4,7 +4,9 @@ var Test = require('tape');
 var Path = require('path');
 var Swaggerize = require('../lib');
 var Hapi = require('hapi');
+var base64 = require('base-64');
 var StubAuthTokenScheme = require('./fixtures/lib/stub-auth-token-scheme');
+var StubAuthBasicScheme = require('./fixtures/lib/stub-auth-basic-scheme');
 
 Test('test', function (t) {
     var server;
@@ -199,6 +201,63 @@ Test('authentication', function (t) {
                             method: 'GET',
                             url: '/v1/petstore/pets',
                             headers: { authorization: '98765' }
+                        }, function (response) {
+                            t.strictEqual(response.statusCode, 200, 'OK status.');
+                        });
+                    });
+                });
+            });
+        });
+    });
+
+    t.test('basic authentication', function (t) {
+        t.plan(5);
+
+        server = new Hapi.Server();
+
+        server.connection({});
+
+        server.register({ register: StubAuthBasicScheme }, function (err) {
+            t.error(err, 'No error.');
+
+            server.auth.strategy('basic', 'stub-auth-basic', {
+                validateFunc: buildValidateFunc('12345')
+            });
+            server.auth.strategy('basic2', 'stub-auth-basic', {
+                validateFunc: buildValidateFunc('98765')
+            });
+
+            server.register({
+                register: Swaggerize,
+                options: {
+                    api: require('./fixtures/defs/birds_authed.json'),
+                    handlers: Path.join(__dirname, './fixtures/handlers'),
+                }
+            }, function (err) {
+                t.error(err, 'No error.');
+
+                server.inject({
+                    method: 'GET',
+                    url: '/v1/petstore/birds'
+                }, function (response) {
+                    t.strictEqual(response.statusCode, 401, '401 status (unauthorized).');
+
+                    var token1 = base64.encode('mylogin:12345');
+                    server.inject({
+                        method: 'GET',
+                        url: '/v1/petstore/birds',
+                        headers: {
+                            authorization: 'Basic ' + token1,
+                            'custom-header': 'Hello'
+                        }
+                    }, function (response) {
+                        t.strictEqual(response.statusCode, 200, 'OK status.');
+
+                        var token2 = base64.encode('mylogin:98765');
+                        server.inject({
+                            method: 'GET',
+                            url: '/v1/petstore/birds',
+                            headers: { authorization: 'Basic ' + token2 }
                         }, function (response) {
                             t.strictEqual(response.statusCode, 200, 'OK status.');
                         });
