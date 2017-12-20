@@ -4,15 +4,15 @@ var Store = require('../../lib/store');
 
 module.exports = {
     get: [
-        function (req, reply) {
-            reply(Store.get(req.params.id));
+        function (req, h) {
+            return Store.get(req.params.id);
         },
-        function handler(req, reply) {
-            reply(req.pre.p1);
+        function handler(req, h) {
+            return req.pre.p1;
         }
     ],
-    delete: function (req, reply) {
+    delete: function (req, h) {
         Store.delete(req.params.id);
-        reply(Store.all());
+        return Store.all();
     }
 };

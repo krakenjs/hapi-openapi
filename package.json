@@ -12,22 +12,28 @@
     "registry": "https://registry.npmjs.org"
   },
   "engines": {
-    "node": ">=4.x"
+    "node": ">=8"
   },
   "dependencies": {
     "async": "^1.5.0",
-    "core-util-is": "^1.0.1",
-    "hoek": "^2.6.0",
+    "caller": "^1.0.1",
+    "enjoi": "^2.2.0",
+    "entries": "^1.0.1",
+    "hoek": "^2.16.3",
     "joi": "^9.2.0",
-    "js-yaml": "^3.2.6",
+    "merge-object-files": "^1.0.3",
+    "swagger-parser": "^3.4.1",
     "swaggerize-routes": "^1.0.3"
   },
   "devDependencies": {
     "boom": "~2.8.0",
-    "hapi": "^15.2.0",
-    "istanbul": "~0.2.3",
+    "eslint": "^4.13.1",
+    "eslint-config-hapi": "^11.1.0",
+    "eslint-plugin-hapi": "^4.1.0",
+    "hapi": "^17.0.0",
+    "istanbul": "^0.2.16",
     "jshint": "^2.4.1",
-    "tape": "^3.0.0"
+    "tape": "^4.8.0"
   },
   "scripts": {
     "test": "tape test/*.js",
