@@ -1,0 +1,15 @@
+{
+  "extends": ["eslint:recommended", "eslint-config-hapi"],
+  "env": {
+    "browser": false,
+    "node": true,
+    "module": true
+  },
+  "rules": {
+    "strict": [0],
+    "no-cond-assign": [0],
+    "no-console": [0],
+    "hapi/hapi-scope-start": [0],
+    "no-shadow": [0]
+  }
+}

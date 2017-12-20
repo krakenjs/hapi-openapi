@@ -9,8 +9,8 @@ var StubAuthTokenScheme = require('./fixtures/lib/stub-auth-token-scheme');
 Test.only('test', function (t) {
     var server;
 
-    t.test('string api path', async function (t) {
-        t.plan(2);
+    t.test('register', async function (t) {
+        t.plan(3);
 
         server = new Hapi.Server();
 
@@ -23,8 +23,12 @@ Test.only('test', function (t) {
                     handlers: Path.join(__dirname, './fixtures/handlers')
                 }
             });
-            t.ok(server.plugins.swagger.api, 'server.plugins.swagger.api exists.');
+            t.ok(server.plugins.swagger.getApi, 'server.plugins.swagger.api exists.');
             t.ok(server.plugins.swagger.setHost, 'server.plugins.swagger.setHost exists.');
+
+            server.plugins.swagger.setHost('api.paypal.com');
+
+            t.strictEqual(server.plugins.swagger.getApi().host, 'api.paypal.com', 'server.plugins.swagger.setHost set host.');
         }
         catch (error) {
             t.fail(error.message);
@@ -32,30 +36,7 @@ Test.only('test', function (t) {
 
     });
 
-    // t.test('server', function (t) {
-    //     t.plan(4);
-    //
-    //     server = new Hapi.Server();
-    //
-    //     server.connection({});
-    //
-    //     server.register({
-    //         register: Swaggerize,
-    //         options: {
-    //             api: require('./fixtures/defs/pets.json'),
-    //             handlers: Path.join(__dirname, './fixtures/handlers')
-    //         }
-    //     }, function (err) {
-    //         t.error(err, 'No error.');
-    //         t.ok(server.plugins.swagger.api, 'server.plugins.swagger.api exists.');
-    //         t.ok(server.plugins.swagger.setHost, 'server.plugins.swagger.setHost exists.');
-    //
-    //         server.plugins.swagger.setHost('api.paypal.com');
-    //
-    //         t.strictEqual(server.plugins.swagger.api.host, 'api.paypal.com', 'server.plugins.swagger.setHost set host.');
-    //     });
-    //
-    // });
+
     //
     // t.test('api docs', function (t) {
     //     t.plan(1);
