@@ -7,15 +7,13 @@ var Hapi = require('hapi');
 var StubAuthTokenScheme = require('./fixtures/lib/stub-auth-token-scheme');
 
 Test.only('test', function (t) {
-    var server;
 
     t.test('register', async function (t) {
         t.plan(3);
 
-        server = new Hapi.Server();
+        const server = new Hapi.Server();
 
         try {
-
             await server.register({
                 plugin: Swaggerize,
                 options: {
@@ -36,18 +34,32 @@ Test.only('test', function (t) {
 
     });
 
+    t.test('api docs', async function (t) {
+        t.plan(1);
 
-    //
-    // t.test('api docs', function (t) {
-    //     t.plan(1);
-    //
-    //     server.inject({
-    //         method: 'GET',
-    //         url: '/v1/petstore/api-docs'
-    //     }, function (response) {
-    //         t.strictEqual(response.statusCode, 200, 'OK status.');
-    //     });
-    // });
+        const server = new Hapi.Server();
+
+        try {
+            await server.register({
+                plugin: Swaggerize,
+                options: {
+                    api: Path.join(__dirname, './fixtures/defs/pets.json'),
+                    handlers: Path.join(__dirname, './fixtures/handlers')
+                }
+            });
+
+            const response = await server.inject({
+                method: 'GET',
+                url: '/v1/petstore/api-docs'
+            });
+
+            t.strictEqual(response.statusCode, 200, 'OK status.');
+        }
+        catch (error) {
+            t.fail(error.message);
+        }
+    });
+
     //
     // t.test('apis', function (t) {
     //     t.plan(7);
@@ -99,27 +111,42 @@ Test.only('test', function (t) {
     //
     // });
     //
-    // t.test('query validation', function (t) {
-    //     var queryStringToStatusCode = {
-    //         'limit=2': 200,
-    //         'tags=some_tag&tags=some_other_tag': 200,
-    //         'limit=2&tags=some_tag&tags=some_other_tag': 200,
-    //         'limit=a_string': 400
-    //     }
-    //
-    //     t.plan(Object.keys(queryStringToStatusCode).length);
-    //
-    //     for (var queryString in queryStringToStatusCode) {
-    //         (function(queryString, expectedStatusCode) {
-    //             server.inject({
-    //                 method: 'GET',
-    //                 url: '/v1/petstore/pets?' + queryString
-    //             }, function (response) {
-    //                 t.strictEqual(response.statusCode, expectedStatusCode, queryString);
-    //             });
-    //         })(queryString, queryStringToStatusCode[queryString]);
-    //     }
-    // });
+
+    t.test('query validation', async function (t) {
+
+        const server = new Hapi.Server();
+
+        try {
+            await server.register({
+                plugin: Swaggerize,
+                options: {
+                    api: Path.join(__dirname, './fixtures/defs/pets.json'),
+                    handlers: Path.join(__dirname, './fixtures/handlers')
+                }
+            });
+
+            const queryStringToStatusCode = {
+                'limit=2': 200,
+                'tags=some_tag&tags=some_other_tag': 200,
+                'limit=2&tags=some_tag&tags=some_other_tag': 200,
+                'limit=a_string': 400
+            }
+
+            for (const queryString in queryStringToStatusCode) {
+                const response = await server.inject({
+                    method: 'GET',
+                    url: '/v1/petstore/pets?' + queryString
+                });
+
+                t.strictEqual(response.statusCode, queryStringToStatusCode[queryString], queryString);
+            }
+
+            t.end();
+        }
+        catch (error) {
+            t.fail(error.message);
+        }
+    });
 
 });
 

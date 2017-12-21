@@ -17,7 +17,7 @@
   "dependencies": {
     "async": "^1.5.0",
     "caller": "^1.0.1",
-    "enjoi": "^2.2.0",
+    "enjoi": "^2.2.4",
     "entries": "^1.0.1",
     "hoek": "^2.16.3",
     "joi": "^9.2.0",
