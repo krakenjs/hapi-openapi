@@ -2,32 +2,33 @@
 
 var Boom = require('boom');
 
-exports.register = function (server, options, next) {
+const register = function (server, options) {
     server.auth.scheme('stub-auth-token', function (server, options) {
-        var scheme = {
-            authenticate: function (request, reply) {
-                var token = request.raw.req.headers.authorization;
+        const scheme = {
+            authenticate: async function (request, h) {
+                const token = request.headers.authorization;
 
                 if (!token) {
-                    return reply(Boom.unauthorized());
+                    throw Boom.unauthorized();
                 }
 
-                options.validateFunc(token, function (err, isValid, credentials) {
-                    if (err || !isValid) {
-                        return reply(Boom.unauthorized(null, 'stub-auth-token'), { credentials: credentials });
+                try {
+                    const credentials = options.validateFunc(token);
+
+                    if (!credentials) {
+                        throw Boom.unauthorized(null, 'stub-auth-token');
                     }
 
-                    return reply.continue({ credentials: credentials });
-                });
+                    return h.authenticated({ credentials });
+                }
+                catch (error) {
+                    throw error;
+                }
             }
         };
 
         return scheme;
     });
-
-    next();
 };
 
-exports.register.attributes = {
-    name: 'stub-auth-token'
-};
+module.exports = { register, name: 'stub-auth-token' };

@@ -20,7 +20,7 @@
     "enjoi": "^2.2.4",
     "entries": "^1.0.1",
     "hoek": "^2.16.3",
-    "joi": "^9.2.0",
+    "joi": "^13.0.2",
     "merge-object-files": "^1.0.3",
     "swagger-parser": "^3.4.1",
     "swaggerize-routes": "^1.0.3"
