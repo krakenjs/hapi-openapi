@@ -60,57 +60,67 @@ Test.only('test', function (t) {
         }
     });
 
-    //
-    // t.test('apis', function (t) {
-    //     t.plan(7);
-    //
-    //     server.inject({
-    //         method: 'GET',
-    //         url: '/v1/petstore/pets'
-    //     }, function (response) {
-    //         t.strictEqual(response.statusCode, 200, 'OK status.');
-    //
-    //         server.inject({
-    //             method: 'POST',
-    //             url: '/v1/petstore/pets',
-    //         }, function (response) {
-    //             t.strictEqual(response.statusCode, 400, '400 status (required param missing).');
-    //
-    //             server.inject({
-    //                 method: 'POST',
-    //                 url: '/v1/petstore/pets',
-    //                 payload: JSON.stringify({
-    //                     id: 0,
-    //                     name: 'Cat'
-    //                 })
-    //             }, function (response) {
-    //                 t.strictEqual(response.statusCode, 200, 'OK status.');
-    //
-    //                 server.inject({
-    //                     method: 'GET',
-    //                     url: '/v1/petstore/pets/0'
-    //                 }, function (response) {
-    //                     t.strictEqual(response.statusCode, 200, 'OK status.');
-    //                     t.ok(response.result, 'Result exists.');
-    //
-    //                     server.inject({
-    //                         method: 'DELETE',
-    //                         url: '/v1/petstore/pets/0'
-    //                     }, function (response) {
-    //                         t.strictEqual(response.statusCode, 200, 'OK status.');
-    //                         t.ok(response.result, 'Result does not exist anymore.');
-    //                     });
-    //
-    //                 });
-    //
-    //             });
-    //
-    //         });
-    //
-    //     });
-    //
-    // });
-    //
+
+    t.test('apis', async function (t) {
+        t.plan(5);
+
+        const server = new Hapi.Server();
+
+        try {
+            await server.register({
+                plugin: Swaggerize,
+                options: {
+                    api: Path.join(__dirname, './fixtures/defs/pets.json'),
+                    handlers: Path.join(__dirname, './fixtures/handlers')
+                }
+            });
+
+            let response = await server.inject({
+                method: 'GET',
+                url: '/v1/petstore/pets'
+            });
+
+            t.strictEqual(response.statusCode, 200, 'OK status.');
+
+            response = await server.inject({
+                method: 'POST',
+                url: '/v1/petstore/pets',
+            });
+
+            t.strictEqual(response.statusCode, 200, 'OK status.');
+
+            response = await server.inject({
+                method: 'POST',
+                url: '/v1/petstore/pets',
+                payload: JSON.stringify({
+                    id: 0,
+                    name: 'Cat'
+                })
+            });
+
+            t.strictEqual(response.statusCode, 200, 'OK status.');
+
+            response = await server.inject({
+                method: 'GET',
+                url: '/v1/petstore/pets/0'
+            });
+
+            t.strictEqual(response.statusCode, 200, 'OK status.');
+
+            response = await server.inject({
+                method: 'DELETE',
+                url: '/v1/petstore/pets/0'
+            });
+
+            t.strictEqual(response.statusCode, 200, 'OK status.');
+
+        }
+        catch (error) {
+            t.fail(error.message);
+        }
+
+    });
+
 
     t.test('query validation', async function (t) {
 
