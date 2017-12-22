@@ -1,3 +1,9 @@
+
+### Unreleased
+
+- Add tags and description to routes based on API spec.
+- Don't restrict auth types.
+
 ### 3.0
 
 - [BREAKING] Migrated to Hapi 17 and Node 8.
