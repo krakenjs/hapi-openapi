@@ -1,19 +1,8 @@
-#### Bug fixes
+### 3.0
 
-- #66
-- #61
-- #57
-- #53
-- #50
-
-### v2.0.1
-
-- Engines Restriction >=4.x (#66)
-- Adding a header parameter disallows other unspecified headers (#50)
-- Fix the assert error message (#57)
-- update readme (#61)
-- Remove trailing slash from docspath because meaningless trailing slashes should be avoided (#53)
-
-### v2.0.0
-
-- Update dependencies (breaking change requires node 4).
+- [BREAKING] Migrated to Hapi 17 and Node 8.
+- [BREAKING] Severed from `swaggerize-routes` - this module is now standalone.
+- [BREAKING] `server.plugins.swagger.api` is now `server.plugins.swagger.getApi()`.
+- [BREAKING] `handlers` object doesn't namespace http methods using `$` anymore. Assumption is verb is last in object path.
+- [BREAKING] Currently does not work with the `swaggerize-generator`.
+- Routes will specify what they allow based on api spec.

@@ -1,7 +1,7 @@
 {
   "name": "swaggerize-hapi",
   "description": "Design-driven apis with swagger 2.0 and hapi.",
-  "version": "2.0.1",
+  "version": "3.0.0",
   "author": "Trevor Livingston <tlivings@gmail.com>",
   "repository": {
     "type": "git",
@@ -12,27 +12,31 @@
     "registry": "https://registry.npmjs.org"
   },
   "engines": {
-    "node": ">=4.x"
+    "node": ">=8"
   },
   "dependencies": {
-    "async": "^1.5.0",
-    "core-util-is": "^1.0.1",
-    "hoek": "^2.6.0",
-    "joi": "^6.6.1",
-    "js-yaml": "^3.2.6",
-    "swaggerize-routes": "^1.0.3"
+    "caller": "^1.0.1",
+    "enjoi": "^2.2.4",
+    "entries": "^1.0.1",
+    "hoek": "^2.16.3",
+    "joi": "^13.0.2",
+    "js-yaml": "^3.10.0",
+    "merge-object-files": "^1.0.3",
+    "swagger-parser": "^3.4.1"
   },
   "devDependencies": {
-    "boom": "~2.8.0",
-    "hapi": "^15.2.0",
-    "istanbul": "~0.2.3",
-    "jshint": "^2.4.1",
-    "tape": "^3.0.0"
+    "boom": "^7.1.1",
+    "eslint": "^4.13.1",
+    "eslint-config-hapi": "^11.1.0",
+    "eslint-plugin-hapi": "^4.1.0",
+    "hapi": "^17.0.0",
+    "istanbul": "^0.2.16",
+    "tape": "^4.8.0"
   },
   "scripts": {
     "test": "tape test/*.js",
     "cover": "istanbul cover tape -- test/*.js",
-    "lint": "jshint -c .jshintrc lib/*.js"
+    "lint": "eslint lib"
   },
   "license": "Apache-2.0",
   "main": "./lib/index"
