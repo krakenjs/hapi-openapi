@@ -202,7 +202,7 @@ await server.register({ plugin: AuthTokenScheme });
 
 server.auth.strategy('api_key', 'auth-token-scheme', {
     validateFunc: async function (token) {
-      // Implement validation here, return credentials.
+      // Implement validation here, return { credentials, artifacts }.
     }
 });
 
@@ -215,4 +215,4 @@ await server.register({
 });
 ```
 
-Note: the registered `scheme` is responsible for invoking the `validateFunc` from the `authenticate` method.
+Note: the registered `scheme` is responsible for awaiting the `validateFunc` from the `authenticate` method.
