@@ -1,9 +1,12 @@
 {
   "extends": ["eslint:recommended", "eslint-config-hapi"],
+  "parserOptions": {
+    "ecmaVersion": 2017,
+    "sourceType": 'module'
+  },
   "env": {
     "browser": false,
-    "node": true,
-    "module": true
+    "node": true
   },
   "rules": {
     "strict": [0],
