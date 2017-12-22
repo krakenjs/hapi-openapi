@@ -22,7 +22,7 @@ the application business logic.
 
 ### Quick Start with a Generator
 
-[OUTDATED]
+[OUTDATED - CURRENTLY BROKEN]
 
 This guide will let you go from an `api.json` to a service project in no time flat.
 
