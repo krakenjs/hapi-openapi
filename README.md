@@ -12,11 +12,6 @@
 - API documentation route.
 - Input validation.
 
-See also:
-- [swaggerize-builder](https://github.com/krakenjs/swaggerize-builder)
-- [swaggerize-express](https://github.com/krakenjs/swaggerize-express)
-- [generator-swaggerize](https://www.npmjs.org/package/generator-swaggerize)
-
 ### Why "Design Driven"
 
 There are already a number of modules that help build RESTful APIs for node with swagger. However,
@@ -26,6 +21,8 @@ the application business logic.
 `swaggerize-hapi` begins with the swagger document first. This facilitates writing APIs that are easier to design, review, and test.
 
 ### Quick Start with a Generator
+
+[OUTDATED]
 
 This guide will let you go from an `api.json` to a service project in no time flat.
 
@@ -56,15 +53,13 @@ You now have a working api and can use something like [Swagger UI](https://githu
 ### Manual Usage
 
 ```javascript
-var Hapi = require('hapi'),
-    Swaggerize = require('swaggerize-hapi');
+const Hapi = require('hapi');
+const Swaggerize = require('swaggerize-hapi');
 
-var server = new Hapi.Server();
+const server = new Hapi.Server();
 
-server.connection({ port: 8080 });
-
-server.register({
-    register: Swaggerize,
+await server.register({
+    plugin: Swaggerize,
     options: {
         api: require('./config/pets.json'),
         handlers: Path.join(__dirname, './handlers')
@@ -76,7 +71,7 @@ server.register({
 
 The plugin will be registered as `swagger` on `server.plugins` with the following exposed:
 
-- `api` - the Swagger document.
+- `getApi()` - the resolved Swagger document.
 - `setHost(host)` - a helper function for setting the `host` property on the `api`.
 
 ### Configuration Options
@@ -143,8 +138,8 @@ Example:
 
 ```javascript
 module.exports = {
-    get: function (req, reply) { ... },
-    put: function (req, reply) { ... },
+    get: function (req, h) { ... },
+    put: function (req, h) { ... },
     ...
 }
 ```
@@ -154,8 +149,8 @@ Optionally, `pre` handlers can be used by providing an array of handlers for a m
 ```javascript
 module.exports = {
     get: [
-        function p1(req, reply) { ... },
-        function handler(req, reply) { ... }
+        function p1(req, h) { ... },
+        function handler(req, h) { ... }
     ],
 }
 ```
@@ -164,29 +159,24 @@ module.exports = {
 
 The directory generation will yield this object, but it can be provided directly as `options.handlers`.
 
-Note that if you are programatically constructing a handlers obj this way, you must namespace HTTP verbs with `$` to
-avoid conflicts with path names. These keys should also be *lowercase*.
-
 Example:
 
 ```javascript
 {
     'foo': {
-        '$get': function (req, reply) { ... },
+        'get': function (req, h) { ... },
         'bar': {
-            '$get': function (req, reply) { ... },
-            '$post': function (req, reply) { ... }
+            'get': function (req, h) { ... },
+            'post': function (req, h) { ... }
         }
     }
     ...
 }
 ```
 
-Handler keys in files do *not* have to be namespaced in this way.
-
 ### Authentication
 
-Support for swagger `apiKey` [security schemes](http://swagger.io/specification/#securitySchemeObject) requires that relevant authentication scheme and strategy are registered before the swaggerize-hapi plugin. See the [hapi docs](http://hapijs.com/tutorials/auth) for information about authentication schemes and strategies.
+Support for swagger [security schemes](http://swagger.io/specification/#securitySchemeObject) requires that relevant authentication scheme and strategy are registered before the swaggerize-hapi plugin. See the [hapi docs](http://hapijs.com/tutorials/auth) for information about authentication schemes and strategies.
 
 The name of the hapi authentication strategy is expected to match the name field of the swagger [security requirement object](http://swagger.io/specification/#securityRequirementObject).
 
@@ -206,22 +196,23 @@ paths:
 ```
 
 ```javascript
-server = new Hapi.Server();
-server.connection({});
+const server = new Hapi.Server();
 
-server.register({ register: AuthTokenScheme }, function (err) {
-    server.auth.strategy('api_key', 'auth-token-scheme', {
-        validateFunc: function (token, callback) {
-          // Implement validation here
-        }
-    });
+await server.register({ plugin: AuthTokenScheme });
 
-    server.register({
-        register: Swaggerize,
-        options: {
-            api: require('./config/pets.json'),
-            handlers: Path.join(__dirname, './handlers')
-        }
-    });
+server.auth.strategy('api_key', 'auth-token-scheme', {
+    validateFunc: async function (token) {
+      // Implement validation here, return credentials.
+    }
+});
+
+await server.register({
+    register: Swaggerize,
+    options: {
+        api: require('./config/pets.json'),
+        handlers: Path.join(__dirname, './handlers')
+    }
 });
 ```
+
+Note: the registered `scheme` is responsible for invoking the `validateFunc` from the `authenticate` method.
