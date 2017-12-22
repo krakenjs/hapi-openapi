@@ -10,11 +10,12 @@ Test('authentication', function (t) {
 
     const buildValidateFunc = function (allowedToken) {
         return async function (token) {
+
             if (token === allowedToken) {
-                return {};
+                return { credentials: { scope: [ 'api1:read' ] }, artifacts: { }};
             }
 
-            return null;
+            return {};
         }
     };
 

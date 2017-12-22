@@ -30,10 +30,10 @@
                 "operationId": "findPets",
                 "security": [
                   {
-                    "api_key": []
+                    "api_key": [ "api1:read" ]
                   },
                   {
-                    "api_key2": []
+                    "api_key2": [ "api2:read" ]
                   }
                 ],
                 "produces": [

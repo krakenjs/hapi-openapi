@@ -13,13 +13,13 @@ const register = function (server, options) {
                 }
 
                 try {
-                    const credentials = options.validateFunc(token);
+                    const { credentials, artifacts } = await options.validateFunc(token);
 
                     if (!credentials) {
-                        throw Boom.unauthorized(null, 'stub-auth-token');
+                        throw Boom.unauthorized(null, 'stub-auth-token', { credentials });
                     }
 
-                    return h.authenticated({ credentials });
+                    return h.authenticated({ credentials, artifacts });
                 }
                 catch (error) {
                     throw error;
