@@ -1,5 +1,5 @@
 
-### Unreleased
+### 3.1.0
 
 - Add tags and description to routes based on API spec.
 - Don't restrict auth types.
