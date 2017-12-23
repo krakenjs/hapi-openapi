@@ -77,11 +77,12 @@ The plugin will be registered as `swagger` on `server.plugins` with the followin
 ### Configuration Options
 
 - `api` - a valid Swagger 2.0 document.
-- (deprecated) `docspath` - the path to expose api docs for swagger-ui, etc. Defaults to `/api-docs`.
+- *deprecated* `docspath` - the path to expose api docs for swagger-ui, etc. Defaults to `/api-docs`.
 - `docs` - an object used to configure the api docs route.
     - `path` - the path to expose api docs for swagger-ui, etc. Defaults to `/api-docs`.
     - `auth` - options auth config for this route.
 - `handlers` - either a directory structure for route handlers.
+- `extensions` - an array of file extension types to use when scanning for handlers. Defaults to `['js']`.
 - `vhost` - *optional* domain string (see [hapi route options](http://hapijs.com/api#route-options)).
 - `cors` - *optional* cors setting (see [hapi route options](http://hapijs.com/api#route-options)).
 
