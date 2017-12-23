@@ -59,6 +59,62 @@ Test('test', function (t) {
         }
     });
 
+    t.test('api docs change path', async function (t) {
+        t.plan(1);
+
+        const server = new Hapi.Server();
+
+        try {
+            await server.register({
+                plugin: Swaggerize,
+                options: {
+                    api: Path.join(__dirname, './fixtures/defs/pets.json'),
+                    handlers: Path.join(__dirname, './fixtures/handlers'),
+                    docs: {
+                        path: '/spec'
+                    }
+                }
+            });
+
+            const response = await server.inject({
+                method: 'GET',
+                url: '/v1/petstore/spec'
+            });
+
+            t.strictEqual(response.statusCode, 200, `${response.request.path} OK.`);
+        }
+        catch (error) {
+            t.fail(error.message);
+        }
+    });
+
+    t.test('api docs change path old way', async function (t) {
+        t.plan(1);
+
+        const server = new Hapi.Server();
+
+        try {
+            await server.register({
+                plugin: Swaggerize,
+                options: {
+                    api: Path.join(__dirname, './fixtures/defs/pets.json'),
+                    handlers: Path.join(__dirname, './fixtures/handlers'),
+                    docspath: '/spec'
+                }
+            });
+
+            const response = await server.inject({
+                method: 'GET',
+                url: '/v1/petstore/spec'
+            });
+
+            t.strictEqual(response.statusCode, 200, `${response.request.path} OK.`);
+        }
+        catch (error) {
+            t.fail(error.message);
+        }
+    });
+
 
     t.test('routes', async function (t) {
         t.plan(5);

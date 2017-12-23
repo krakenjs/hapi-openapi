@@ -4,6 +4,7 @@
 - Add tags and description to routes based on API spec.
 - Don't restrict auth types.
 - Add route meta data from API spec.
+- `docspath` option is now `docs` and is an object.
 
 ### 3.0
 
