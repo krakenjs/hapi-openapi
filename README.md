@@ -22,7 +22,8 @@ the application business logic.
 
 ### Quick Start with a Generator
 
-[OUTDATED - CURRENTLY BROKEN]
+**NOTE:** Currently the generator uses an older version of this module. You can still use it, but you must manually migrate to
+this version, which will require rewriting some of the code to support Hapi 17.
 
 This guide will let you go from an `api.json` to a service project in no time flat.
 

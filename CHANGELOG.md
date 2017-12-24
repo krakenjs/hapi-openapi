@@ -1,5 +1,5 @@
 
-### Unreleased
+### 3.2.0
 
 - x-handler attribute support.
 
