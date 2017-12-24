@@ -81,7 +81,7 @@ The plugin will be registered as `swagger` on `server.plugins` with the followin
 - `docs` - an object used to configure the api docs route.
     - `path` - the path to expose api docs for swagger-ui, etc. Defaults to `/api-docs`.
     - `auth` - options auth config for this route.
-- `handlers` - either a directory structure for route handlers.
+- `handlers` - either a string directory structure for route handlers, object, or not set if using `x-handler`.
 - `extensions` - an array of file extension types to use when scanning for handlers. Defaults to `['js']`.
 - `vhost` - *optional* domain string (see [hapi route options](http://hapijs.com/api#route-options)).
 - `cors` - *optional* cors setting (see [hapi route options](http://hapijs.com/api#route-options)).
@@ -177,6 +177,22 @@ Example:
     ...
 }
 ```
+
+### X-Handlers
+
+Alternatively the API document can set `x-handler` attribute on each defined `paths` element if `handlers` is not defined.
+
+Example:
+
+```
+"/pets/{id}": {
+    "x-handler": "./routes/pets-by-id.js",
+    .
+    .
+    .
+```
+
+This will construct a `handlers` object from the given `x-handler` files.
 
 ### Authentication
 
