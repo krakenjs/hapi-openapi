@@ -1,4 +1,8 @@
 
+### Unreleased
+
+- x-handler attribute support.
+
 ### 3.1.0
 
 - Add tags and description to routes based on API spec.
