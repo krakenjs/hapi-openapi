@@ -17,7 +17,7 @@ Test('form data', function (t) {
             await server.register({
                 plugin: Swaggerize,
                 options: {
-                    api: Path.join(__dirname, './fixtures/defs/pets.json'),
+                    api: Path.join(__dirname, './fixtures/defs/form.json'),
                     handlers: {
                         upload: {
                             post: function (req, h) {
@@ -30,7 +30,7 @@ Test('form data', function (t) {
 
             const response = await server.inject({
                 method: 'POST',
-                url: '/v1/petstore/upload',
+                url: '/v1/forms/upload',
                 headers: {
                     'content-type': 'application/x-www-form-urlencoded'
                 },
@@ -54,7 +54,7 @@ Test('form data', function (t) {
             await server.register({
                 plugin: Swaggerize,
                 options: {
-                    api: Path.join(__dirname, './fixtures/defs/pets.json'),
+                    api: Path.join(__dirname, './fixtures/defs/form.json'),
                     handlers: {
                         upload: {
                             post: function (req, h) {
@@ -67,7 +67,7 @@ Test('form data', function (t) {
 
             const response = await server.inject({
                 method: 'POST',
-                url: '/v1/petstore/upload',
+                url: '/v1/forms/upload',
                 payload: 'name=thing&upload=data'
             });
 
@@ -89,7 +89,7 @@ Test('form data', function (t) {
             await server.register({
                 plugin: Swaggerize,
                 options: {
-                    api: Path.join(__dirname, './fixtures/defs/pets.json'),
+                    api: Path.join(__dirname, './fixtures/defs/form.json'),
                     handlers: {
                         upload: {
                             post: function (req, h) {
@@ -102,7 +102,7 @@ Test('form data', function (t) {
 
             const response = await server.inject({
                 method: 'POST',
-                url: '/v1/petstore/upload',
+                url: '/v1/forms/upload',
                 headers: {
                     'content-type': 'application/x-www-form-urlencoded'
                 },

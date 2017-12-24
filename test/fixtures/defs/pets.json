@@ -24,34 +24,6 @@
         "application/json"
     ],
     "paths": {
-        "/upload": {
-            "post": {
-                "consumes": [
-                    "application/x-www-form-urlencoded"
-                ],
-                "operationId": "uploadFile",
-                "description": "uploads a file",
-                "parameters": [
-                    {
-                        "name": "upload",
-                        "in": "formData",
-                        "type": "file",
-                        "required": true
-                    },
-                    {
-                        "name": "name",
-                        "in": "formData",
-                        "type": "string",
-                        "required": false
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "default response"
-                    }
-                }
-            }
-        },
         "/pets": {
             "get": {
                 "description": "Returns all pets from the system that the user has access to",
