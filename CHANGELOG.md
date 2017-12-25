@@ -1,4 +1,8 @@
 
+### 3.3.1
+
+- Fixed https://github.com/krakenjs/swaggerize-hapi/issues/72 - allow single item arrays.
+
 ### 3.3.0
 
 - x-auth attribute support.
