@@ -1,4 +1,8 @@
 
+### Unrelease
+
+- x-auth attribute support.
+
 ### 3.2.0
 
 - x-handler attribute support.
