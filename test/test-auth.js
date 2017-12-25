@@ -103,3 +103,43 @@ Test('authentication', function (t) {
         }
     });
 });
+
+Test('authentication with x-auth', function (t) {
+
+    t.test('authenticated', async function (t) {
+        t.plan(2);
+
+        const server = new Hapi.Server();
+
+        try {
+            await server.register({
+                plugin: Swaggerize,
+                options: {
+                    api: Path.join(__dirname, './fixtures/defs/pets_xauthed.json'),
+                    handlers: Path.join(__dirname, './fixtures/handlers')
+                }
+            });
+
+            let response = await server.inject({
+                method: 'GET',
+                url: '/v1/petstore/pets'
+            });
+
+            t.strictEqual(response.statusCode, 401, `${response.request.path} unauthenticated.`);
+
+            response = await server.inject({
+                method: 'GET',
+                url: '/v1/petstore/pets',
+                headers: {
+                    authorization: '12345'
+                }
+            });
+
+            t.strictEqual(response.statusCode, 200, `${response.request.path} OK when authorized and authenticated.`);
+        }
+        catch (error) {
+            t.fail(error.message);
+        }
+    });
+
+});
