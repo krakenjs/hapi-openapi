@@ -2,6 +2,7 @@
 ### Unrelease
 
 - x-auth attribute support.
+- basedir is not an option (officially).
 
 ### 3.2.0
 

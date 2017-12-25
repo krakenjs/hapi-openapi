@@ -240,7 +240,7 @@
   },
   "securityDefinitions": {
     "api_key": {
-      "x-auth": "./fixtures/lib/xauth.js",
+      "x-auth": "../lib/xauth.js",
       "type": "apiKey",
       "name": "authorization",
       "in": "header"
