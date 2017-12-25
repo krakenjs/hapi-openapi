@@ -240,14 +240,32 @@ await server.register({
 
 Alternatively it may be easier to automatically register a plugin to handle registering the necessary schemes and strategies.
 
-The `securityDefinitions` entries can contain an `x-auth` attribute pointing at this plugin.
+**x-auth-schemes**
+
+The root document can contain an `x-auth-schemes` object specifying different plugins responsible for registering auth schemes.
+
+Example:
+
+```
+"x-auth-schemes": {
+    "apiKey": "../lib/xauth-scheme.js"
+}
+```
+
+This plugin will be passed the following options:
+
+- `name` - the auth scheme name, in this example `apiKey`.
+
+**x-auth-strategy**
+
+The `securityDefinitions` entries can contain an `x-auth-strategy` attribute pointing to a plugin responsible for registering auth strategies.
 
 Example:
 
 ```
 "securityDefinitions": {
   "api_key": {
-    "x-auth": "../lib/auth.js",
+    "x-auth-strategy": "../lib/xauth-strategy.js",
     "type": "apiKey",
     "name": "authorization",
     "in": "header"
@@ -255,9 +273,55 @@ Example:
 }
 ```
 
-The plugin contained in this example's `auth.js` will be passed the following options:
+The plugin will be passed the following options:
 
 - `name` - the `securityDefinitions` entry's key. In this example, `api_key`. This is typically used as the strategy name.
-- `type` - the `securityDefinitions` `type`. In this example, `apiKey`. This should be used as the scheme name.
-- `lookup` - `securityDefinitions` entry `name` attribute. Used as the name to look up against `where`.
+- `scheme` - the `securityDefinitions` `type`. In this example, `apiKey`. This should match a `x-auth-scheme` name.
 - `where` - `securityDefinitions` entry `in` attribute. This is search for the `lookup` value; in this example `header`.
+- `lookup` - `securityDefinitions` entry `name` attribute. Used as the name to look up against `where`.
+
+The way you can make these play together is that for every `type`, a scheme exists that delegates some lookup or evaluation to the appropriate strategy.
+
+Example:
+
+```javascript
+//xauth-scheme.js
+
+const register = function (server, { name  }) {
+    server.auth.scheme(name /*apiKey*/, (server, /* options received from the strategy */ { validate }) => {
+        return {
+            authenticate: async function (request, h) {
+                return h.authenticated(await validate(request));
+            }
+        };
+    });
+};
+
+module.exports = { register, name: 'x-auth-scheme' };
+```
+
+and
+
+```javascript
+//xauth-strategy.js
+
+const Boom = require('boom');
+
+const register = function (server, { name, scheme, where, lookup }) {
+    server.auth.strategy(name, /* the scheme to use this strategy with */ scheme, {
+        //Define a validate function for the scheme above to receive
+        validate: async function (request) {
+            const token = request.headers[lookup];
+
+            //Some arbitrary example
+            if (token === '12345') {
+                return { credentials: { scope: ['read'] }, artifacts: { token } };
+            }
+
+            throw Boom.unauthorized();
+        }
+    });
+};
+
+module.exports = { register, name: 'x-auth-strategy' };
+```
