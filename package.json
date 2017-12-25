@@ -1,7 +1,7 @@
 {
   "name": "swaggerize-hapi",
-  "description": "Design-driven apis with swagger 2.0 and hapi.",
-  "version": "3.2.0",
+  "description": "Design-driven apis with OpenAPI (swagger) 2.0 and hapi.",
+  "version": "3.3.0",
   "author": "Trevor Livingston <tlivings@gmail.com>",
   "repository": {
     "type": "git",
@@ -39,5 +39,20 @@
     "lint": "eslint lib"
   },
   "license": "Apache-2.0",
-  "main": "./lib/index"
+  "main": "./lib/index",
+  "keywords": [
+    "openapi",
+    "swagger",
+    "swagger 2.0",
+    "swagger-node",
+    "swagger-express",
+    "swagger-ui",
+    "swagger-hapi",
+    "swaggerize",
+    "hapi",
+    "rest",
+    "restful",
+    "service",
+    "api"
+  ]
 }

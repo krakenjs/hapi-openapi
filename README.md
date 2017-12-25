@@ -3,22 +3,22 @@
 [![Build Status](https://travis-ci.org/krakenjs/swaggerize-hapi.svg?branch=master)](https://travis-ci.org/krakenjs/swaggerize-hapi)  
 [![NPM version](https://badge.fury.io/js/swaggerize-hapi.png)](http://badge.fury.io/js/swaggerize-hapi)  
 
-`swaggerize-hapi` is a design-driven approach to building RESTful services with [Swagger](http://swagger.io) and [Hapi](http://hapijs.com).
+`swaggerize-hapi` is a design-driven approach to building RESTful services with [OpenAPI (Swagger)](http://openapis.org) and [Hapi](http://hapijs.com).
 
 `swaggerize-hapi` provides the following features:
 
 - API schema validation.
-- Routes based on the Swagger document.
+- Routes based on the OpenAPI document.
 - API documentation route.
 - Input validation.
 
 ### Why "Design Driven"
 
-There are already a number of modules that help build RESTful APIs for node with swagger. However,
+There are already a number of modules that help build RESTful APIs for node with OpenAPI. However,
 these modules tend to focus on building the documentation or specification as a side effect of writing
 the application business logic.
 
-`swaggerize-hapi` begins with the swagger document first. This facilitates writing APIs that are easier to design, review, and test.
+`swaggerize-hapi` begins with the OpenAPI document first. This facilitates writing APIs that are easier to design, review, and test.
 
 ### Quick Start with a Generator
 
@@ -42,12 +42,6 @@ $ yo swaggerize
 ```
 
 Follow the prompts (note: make sure to choose `hapi` as your framework choice).
-
-When asked for a swagger document, you can try this one:
-
-```
-https://raw.githubusercontent.com/wordnik/swagger-spec/master/examples/v2.0/json/petstore.json
-```
 
 You now have a working api and can use something like [Swagger UI](https://github.com/wordnik/swagger-ui) to explore it.
 
@@ -89,11 +83,11 @@ The plugin will be registered as `swagger` on `server.plugins` with the followin
 
 ### Mount Path
 
-Api `path` values will be prefixed with the swagger document's `basePath` value.
+Api `path` values will be prefixed with the OpenAPI document's `basePath` value.
 
 ### Handlers Directory
 
-The `options.handlers` option specifies a directory to scan for handlers. These handlers are bound to the api `paths` defined in the swagger document.
+The `options.handlers` option specifies a directory to scan for handlers. These handlers are bound to the api `paths` defined in the OpenAPI document.
 
 ```
 handlers
@@ -197,9 +191,9 @@ This will construct a `handlers` object from the given `x-handler` files.
 
 ### Authentication
 
-Support for swagger [security schemes](http://swagger.io/specification/#securitySchemeObject) requires that relevant authentication scheme and strategy are registered before the swaggerize-hapi plugin. See the [hapi docs](http://hapijs.com/tutorials/auth) for information about authentication schemes and strategies.
+Support for OpenAPI [security schemes](http://swagger.io/specification/#securitySchemeObject) requires that relevant authentication scheme and strategy are registered before the swaggerize-hapi plugin. See the [hapi docs](http://hapijs.com/tutorials/auth) for information about authentication schemes and strategies.
 
-The name of the hapi authentication strategy is expected to match the name field of the swagger [security requirement object](http://swagger.io/specification/#securityRequirementObject).
+The name of the hapi authentication strategy is expected to match the name field of the OpenAPI [security requirement object](http://swagger.io/specification/#securityRequirementObject).
 
 Example:
 
