@@ -140,6 +140,10 @@ Test('test', function (t) {
             response = await server.inject({
                 method: 'POST',
                 url: '/v1/petstore/pets',
+                payload: {
+                    id: 0,
+                    name: 'Cat'
+                }
             });
 
             t.strictEqual(response.statusCode, 200, `${response.request.path} OK.`);
@@ -147,13 +151,12 @@ Test('test', function (t) {
             response = await server.inject({
                 method: 'POST',
                 url: '/v1/petstore/pets',
-                payload: JSON.stringify({
-                    id: 0,
-                    name: 'Cat'
-                })
+                payload: {
+                    name: 123
+                }
             });
 
-            t.strictEqual(response.statusCode, 200, `${response.request.path} OK.`);
+            t.strictEqual(response.statusCode, 400, `${response.request.path} payload bad.`);
 
             response = await server.inject({
                 method: 'GET',
@@ -177,7 +180,7 @@ Test('test', function (t) {
     });
 
     t.test('routes x-handler', async function (t) {
-        t.plan(5);
+        t.plan(4);
 
         const server = new Hapi.Server();
 
@@ -199,17 +202,10 @@ Test('test', function (t) {
             response = await server.inject({
                 method: 'POST',
                 url: '/v1/petstore/pets',
-            });
-
-            t.strictEqual(response.statusCode, 200, `${response.request.path} OK.`);
-
-            response = await server.inject({
-                method: 'POST',
-                url: '/v1/petstore/pets',
-                payload: JSON.stringify({
+                payload: {
                     id: 0,
                     name: 'Cat'
-                })
+                }
             });
 
             t.strictEqual(response.statusCode, 200, `${response.request.path} OK.`);
@@ -252,6 +248,7 @@ Test('test', function (t) {
             const queryStringToStatusCode = {
                 'limit=2': 200,
                 'tags=some_tag&tags=some_other_tag': 200,
+                'tags=single_tag': 200,
                 'limit=2&tags=some_tag&tags=some_other_tag': 200,
                 'limit=a_string': 400
             }
