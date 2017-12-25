@@ -236,4 +236,28 @@ await server.register({
 });
 ```
 
-Note: the registered `scheme` is responsible for awaiting the `validateFunc` from the `authenticate` method.
+### X-Auth
+
+Alternatively it may be easier to automatically register a plugin to handle registering the necessary schemes and strategies.
+
+The `securityDefinitions` entries can contain an `x-auth` attribute pointing at this plugin.
+
+Example:
+
+```
+"securityDefinitions": {
+  "api_key": {
+    "x-auth": "../lib/auth.js",
+    "type": "apiKey",
+    "name": "authorization",
+    "in": "header"
+  }
+}
+```
+
+The plugin contained in this example's `auth.js` will be passed the following options:
+
+- `name` - the `securityDefinitions` entry's key. In this example, `api_key`. This is typically used as the strategy name.
+- `type` - the `securityDefinitions` `type`. In this example, `apiKey`. This should be used as the scheme name.
+- `lookup` - `securityDefinitions` entry `name` attribute. Used as the name to look up against `where`.
+- `where` - `securityDefinitions` entry `in` attribute. This is search for the `lookup` value; in this example `header`.
