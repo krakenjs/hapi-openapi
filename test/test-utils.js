@@ -83,4 +83,16 @@ Test('utils', function (t) {
         t.ok(!Utils.endsWith('foobar', 'x'), 'foobar doesn\'t end with x');
     });
 
+    t.test('is httpMethod', function (t) {
+        const verbs = Utils.verbs;
+
+        t.plan(verbs.length + 1);
+
+        for (const verb of verbs) {
+            t.ok(Utils.isHttpMethod(verb), `${verb} is an http method.`);
+        }
+
+        t.ok(!Utils.isHttpMethod('Blerg'), 'Blerg is not an http method.');
+    });
+
 });
