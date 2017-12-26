@@ -1,4 +1,8 @@
 
+### 3.3.2
+
+- Fixed YAML parsing for api-docs route.
+
 ### 3.3.1
 
 - Fixed https://github.com/krakenjs/swaggerize-hapi/issues/72 - allow single item arrays.
