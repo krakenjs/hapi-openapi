@@ -275,7 +275,7 @@ Test('test', function (t) {
 
 Test('yaml', function (t) {
     t.test('yaml', async function (t) {
-        t.plan(2);
+        t.plan(3);
 
         const server = new Hapi.Server();
 
@@ -290,10 +290,16 @@ Test('yaml', function (t) {
 
             t.ok(server.plugins.swagger.getApi, 'server.plugins.swagger.getApi exists.');
             t.ok(server.plugins.swagger.setHost, 'server.plugins.swagger.setHost exists.');
+
+            const response = await server.inject({
+                method: 'GET',
+                url: '/v1/petstore/pets'
+            });
+
+            t.strictEqual(response.statusCode, 200, `${response.request.path} OK.`);
         }
         catch (error) {
-            console.log(error.stack)
-            //t.fail(error.message);
+            t.fail(error.message);
         }
 
     });
