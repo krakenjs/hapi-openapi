@@ -20,6 +20,8 @@ the application business logic.
 
 `swaggerize-hapi` begins with the OpenAPI document first. This facilitates writing APIs that are easier to design, review, and test.
 
+At runtime, `swaggerize-hapi` uses the API specification to build routes from previously defined paths. This ensures that everything specified is what is implemented.
+
 ### Quick Start with a Generator
 
 **NOTE:** Currently the generator uses an older version of this module. You can still use it, but you must manually migrate to
@@ -80,6 +82,7 @@ The plugin will be registered as `swagger` on `server.plugins` with the followin
 - `extensions` - an array of file extension types to use when scanning for handlers. Defaults to `['js']`.
 - `vhost` - *optional* domain string (see [hapi route options](http://hapijs.com/api#route-options)).
 - `cors` - *optional* cors setting (see [hapi route options](http://hapijs.com/api#route-options)).
+- `outputvalidation` - *optional* validate response data.
 
 ### Mount Path
 

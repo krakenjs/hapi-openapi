@@ -1,3 +1,6 @@
+### 3.4.0
+
+- Added support for output validation (optional).
 
 ### 3.3.2
 
