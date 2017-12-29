@@ -141,7 +141,7 @@ Test('test', function (t) {
                 method: 'POST',
                 url: '/v1/petstore/pets',
                 payload: {
-                    id: 0,
+                    id: '0',
                     name: 'Cat'
                 }
             });
@@ -205,7 +205,7 @@ Test('test', function (t) {
                 method: 'POST',
                 url: '/v1/petstore/pets',
                 payload: {
-                    id: 0,
+                    id: '0',
                     name: 'Cat'
                 }
             });
@@ -304,7 +304,7 @@ Test('test', function (t) {
                 method: 'POST',
                 url: '/v1/petstore/pets',
                 payload: {
-                    id: 0,
+                    id: '0',
                     name: 'Cat'
                 }
             });

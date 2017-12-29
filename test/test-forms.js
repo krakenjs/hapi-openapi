@@ -93,7 +93,7 @@ Test('form data', function (t) {
                     handlers: {
                         upload: {
                             post: function (req, h) {
-                                return '';
+                                return;
                             }
                         }
                     }
