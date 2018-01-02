@@ -289,7 +289,7 @@ Test('test plugin', function (t) {
             await server.register({
                 plugin: Swaggerize,
                 options: {
-                    api: Path.join(__dirname, './fixtures/defs/xhandlers.json')
+                    api: Path.join(__dirname, './fixtures/defs/pets_xhandlers.json')
                 }
             });
 
