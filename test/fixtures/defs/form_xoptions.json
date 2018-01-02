@@ -38,6 +38,9 @@
                         "required": false
                     }
                 ],
+                "x-hapi-options": {
+                    "isInternal": true
+                },
                 "responses": {
                     "200": {
                         "description": "default response",

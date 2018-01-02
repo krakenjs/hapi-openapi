@@ -1,4 +1,9 @@
 
+### 4.0.0
+
+- [BREAKING] x-* attribute support renamed to x-hapi-*.
+- New support for `x-hapi-options` on operations.
+
 ### 3.4.2
 
 - Updated to file validation which addresses #68.

@@ -78,7 +78,7 @@ The plugin will be registered as `swagger` on `server.plugins` with the followin
 - `docs` - an object used to configure the api docs route.
     - `path` - the path to expose api docs for swagger-ui, etc. Defaults to `/api-docs`.
     - `auth` - options auth config for this route.
-- `handlers` - either a string directory structure for route handlers, object, or not set if using `x-handler`.
+- `handlers` - either a string directory structure for route handlers, object, or not set if using `x-hapi-handler`.
 - `extensions` - an array of file extension types to use when scanning for handlers. Defaults to `['js']`.
 - `vhost` - *optional* domain string (see [hapi route options](http://hapijs.com/api#route-options)).
 - `cors` - *optional* cors setting (see [hapi route options](http://hapijs.com/api#route-options)).
@@ -176,21 +176,40 @@ Example:
 }
 ```
 
-### X-Handlers
+### X-Hapi-Handler
 
-Alternatively the API document can set `x-handler` attribute on each defined `paths` element if `handlers` is not defined.
+Alternatively the API document can set `x-hapi-handler` attribute on each defined `paths` element if `handlers` is not defined.
 
 Example:
 
 ```
 "/pets/{id}": {
-    "x-handler": "./routes/pets-by-id.js",
+    "x-hapi-handler": "./routes/pets-by-id.js",
     .
     .
     .
 ```
 
-This will construct a `handlers` object from the given `x-handler` files.
+This will construct a `handlers` object from the given `x-hapi-handler` files.
+
+### X-Hapi-Options
+
+There is now support at the operations level for `x-hapi-options` which represent individual [Hapi Route Optijons](https://github.com/hapijs/hapi/blob/master/API.md#route-options). 
+
+This support is limited to configuration supported by the JSON file type.
+
+Example:
+
+```
+"/internal": {
+  "post": {
+    "x-hapi-options": {
+      "isInternal": true
+    }
+    .
+    .
+    .
+```
 
 ### Authentication
 
@@ -233,18 +252,18 @@ await server.register({
 });
 ```
 
-### X-Auth
+### X-Hapi-Auth
 
 Alternatively it may be easier to automatically register a plugin to handle registering the necessary schemes and strategies.
 
-**x-auth-schemes**
+**x-hapi-auth-schemes**
 
-The root document can contain an `x-auth-schemes` object specifying different plugins responsible for registering auth schemes.
+The root document can contain an `x-hapi-auth-schemes` object specifying different plugins responsible for registering auth schemes.
 
 Example:
 
 ```
-"x-auth-schemes": {
+"x-hapi-auth-schemes": {
     "apiKey": "../lib/xauth-scheme.js"
 }
 ```
@@ -253,16 +272,16 @@ This plugin will be passed the following options:
 
 - `name` - the auth scheme name, in this example `apiKey`.
 
-**x-auth-strategy**
+**x-hapi-auth-strategy**
 
-The `securityDefinitions` entries can contain an `x-auth-strategy` attribute pointing to a plugin responsible for registering auth strategies.
+The `securityDefinitions` entries can contain an `x-hapi-auth-strategy` attribute pointing to a plugin responsible for registering auth strategies.
 
 Example:
 
 ```
 "securityDefinitions": {
   "api_key": {
-    "x-auth-strategy": "../lib/xauth-strategy.js",
+    "x-hapi-auth-strategy": "../lib/xauth-strategy.js",
     "type": "apiKey",
     "name": "authorization",
     "in": "header"
@@ -273,7 +292,7 @@ Example:
 The plugin will be passed the following options:
 
 - `name` - the `securityDefinitions` entry's key. In this example, `api_key`. This is typically used as the strategy name.
-- `scheme` - the `securityDefinitions` `type`. In this example, `apiKey`. This should match a `x-auth-scheme` name.
+- `scheme` - the `securityDefinitions` `type`. In this example, `apiKey`. This should match a `x-hapi-auth-scheme` name.
 - `where` - `securityDefinitions` entry `in` attribute. This is search for the `lookup` value; in this example `header`.
 - `lookup` - `securityDefinitions` entry `name` attribute. Used as the name to look up against `where`.
 
@@ -294,7 +313,7 @@ const register = function (server, { name  }) {
     });
 };
 
-module.exports = { register, name: 'x-auth-scheme' };
+module.exports = { register, name: 'x-hapi-auth-scheme' };
 ```
 
 and
@@ -320,5 +339,5 @@ const register = function (server, { name, scheme, where, lookup }) {
     });
 };
 
-module.exports = { register, name: 'x-auth-strategy' };
+module.exports = { register, name: 'x-hapi-auth-strategy' };
 ```

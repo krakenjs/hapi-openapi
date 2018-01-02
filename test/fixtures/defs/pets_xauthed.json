@@ -240,12 +240,12 @@
             }
         }
     },
-    "x-auth-schemes": {
+    "x-hapi-auth-schemes": {
         "apiKey": "../lib/xauth-scheme.js"
     },
     "securityDefinitions": {
         "api_key": {
-            "x-auth-strategy": "../lib/xauth-strategy.js",
+            "x-hapi-auth-strategy": "../lib/xauth-strategy.js",
             "type": "apiKey",
             "name": "authorization",
             "in": "header"

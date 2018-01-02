@@ -21,10 +21,13 @@ Test('form data', function (t) {
                     handlers: {
                         upload: {
                             post: function (req, h) {
-                                return req.payload;
+                                return  {
+                                    upload: req.payload.toString()
+                                };
                             }
                         }
-                    }
+                    },
+                    outputvalidation: true
                 }
             });
 
