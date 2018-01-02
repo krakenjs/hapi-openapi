@@ -5,7 +5,7 @@ const Path = require('path');
 const Swaggerize = require('../lib');
 const Hapi = require('hapi');
 
-Test('test', function (t) {
+Test('test plugin', function (t) {
 
     t.test('register', async function (t) {
         t.plan(3);
@@ -374,8 +374,8 @@ Test('test', function (t) {
 
 
 
-Test('yaml', function (t) {
-    t.test('yaml', async function (t) {
+Test('yaml support', function (t) {
+    t.test('register', async function (t) {
         t.plan(3);
 
         const server = new Hapi.Server();
