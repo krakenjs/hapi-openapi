@@ -1,3 +1,8 @@
+
+### 3.4.2
+
+- Updated to file validation which addresses #68.
+
 ### 3.4.1
 
 - Upgraded `enjoi`.
