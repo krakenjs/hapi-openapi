@@ -1,3 +1,7 @@
+### 3.4.1
+
+- Upgraded `enjoi`.
+
 ### 3.4.0
 
 - Added support for output validation (optional).
