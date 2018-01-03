@@ -58,7 +58,7 @@ const server = new Hapi.Server();
 await server.register({
     plugin: Swaggerize,
     options: {
-        api: require('./config/pets.json'),
+        api: Path.join(__dirname, './config/pets.json'),
         handlers: Path.join(__dirname, './handlers')
     }
 });
