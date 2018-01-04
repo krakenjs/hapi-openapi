@@ -1,4 +1,11 @@
 
+### 4.1.0
+
+- Fixes trailing spaces #104.
+- Fixes empty base path #106.
+- Fixes no operation parameters #108.
+- Adds support for API as object instead of file path #102
+
 ### 4.0.0
 
 - [BREAKING] x-* attribute support renamed to x-hapi-*.

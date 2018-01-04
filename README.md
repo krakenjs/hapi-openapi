@@ -73,7 +73,7 @@ The plugin will be registered as `swagger` on `server.plugins` with the followin
 
 ### Configuration Options
 
-- `api` - a path to a valid Swagger 2.0 document.
+- `api` - a path to a valid OpenAPI 2.0 document, or a valid document in the form of an object.
 - *deprecated* `docspath` - the path to expose api docs for swagger-ui, etc. Defaults to `/api-docs`.
 - `docs` - an object used to configure the api docs route.
     - `path` - the path to expose api docs for swagger-ui, etc. Defaults to `/api-docs`.
