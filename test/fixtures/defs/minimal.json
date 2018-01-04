@@ -1,0 +1,18 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Test a very minimal schema (validating the specs)"
+  },
+  "paths": {
+    "/pets": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "default response"
+          }
+        }
+      }
+    }
+  }
+}
