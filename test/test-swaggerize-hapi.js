@@ -115,6 +115,33 @@ Test('test plugin', function (t) {
         }
     });
 
+    t.test('minimal', async function (t) {
+        t.plan(1);
+
+        const server = new Hapi.Server();
+
+        try {
+            await server.register({
+                plugin: Swaggerize,
+                options: {
+                    api: Path.join(__dirname, './fixtures/defs/minimal.json'),
+                    handlers: Path.join(__dirname, './fixtures/handlers')
+                }
+            });
+
+            let response = await server.inject({
+                method: 'GET',
+                url: '/pets'
+            });
+
+            t.strictEqual(response.statusCode, 200, `${response.request.path} OK.`);
+
+        }
+        catch (error) {
+            t.fail(error.message);
+        }
+
+    });
 
     t.test('routes', async function (t) {
         t.plan(5);
