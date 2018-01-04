@@ -2,7 +2,7 @@
   "extends": ["eslint:recommended", "eslint-config-hapi"],
   "parserOptions": {
     "ecmaVersion": 2017,
-    "sourceType": 'module'
+    "sourceType": "module"
   },
   "env": {
     "browser": false,
@@ -13,6 +13,7 @@
     "no-cond-assign": [0],
     "no-console": [0],
     "hapi/hapi-scope-start": [0],
-    "no-shadow": [0]
+    "no-shadow": [0],
+    "no-trailing-spaces": [0]
   }
 }
