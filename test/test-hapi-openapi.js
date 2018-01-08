@@ -2,7 +2,7 @@
 
 const Test = require('tape');
 const Path = require('path');
-const Swaggerize = require('../lib');
+const OpenAPI = require('../lib');
 const Hapi = require('hapi');
 
 Test('test plugin', function (t) {
@@ -14,18 +14,18 @@ Test('test plugin', function (t) {
 
         try {
             await server.register({
-                plugin: Swaggerize,
+                plugin: OpenAPI,
                 options: {
                     api: Path.join(__dirname, './fixtures/defs/pets.json'),
                     handlers: Path.join(__dirname, './fixtures/handlers')
                 }
             });
-            t.ok(server.plugins.swagger.getApi, 'server.plugins.swagger.api exists.');
-            t.ok(server.plugins.swagger.setHost, 'server.plugins.swagger.setHost exists.');
+            t.ok(server.plugins.openapi.getApi, 'server.plugins.openapi.api exists.');
+            t.ok(server.plugins.openapi.setHost, 'server.plugins.openapi.setHost exists.');
 
-            server.plugins.swagger.setHost('api.paypal.com');
+            server.plugins.openapi.setHost('api.paypal.com');
 
-            t.strictEqual(server.plugins.swagger.getApi().host, 'api.paypal.com', 'server.plugins.swagger.setHost set host.');
+            t.strictEqual(server.plugins.openapi.getApi().host, 'api.paypal.com', 'server.plugins.openapi.setHost set host.');
         }
         catch (error) {
             t.fail(error.message);
@@ -67,7 +67,7 @@ Test('test plugin', function (t) {
         
         try {
             await server.register({
-                plugin: Swaggerize,
+                plugin: OpenAPI,
                 options: {
                     api,
                     handlers: {
@@ -80,12 +80,12 @@ Test('test plugin', function (t) {
                 }
             });
 
-            t.ok(server.plugins.swagger.getApi, 'server.plugins.swagger.api exists.');
-            t.ok(server.plugins.swagger.setHost, 'server.plugins.swagger.setHost exists.');
+            t.ok(server.plugins.openapi.getApi, 'server.plugins.openapi.api exists.');
+            t.ok(server.plugins.openapi.setHost, 'server.plugins.openapi.setHost exists.');
 
-            server.plugins.swagger.setHost('api.paypal.com');
+            server.plugins.openapi.setHost('api.paypal.com');
 
-            t.strictEqual(server.plugins.swagger.getApi().host, 'api.paypal.com', 'server.plugins.swagger.setHost set host.');
+            t.strictEqual(server.plugins.openapi.getApi().host, 'api.paypal.com', 'server.plugins.openapi.setHost set host.');
         }
         catch (error) {
             console.log(error.stack)
@@ -101,7 +101,7 @@ Test('test plugin', function (t) {
 
         try {
             await server.register({
-                plugin: Swaggerize,
+                plugin: OpenAPI,
                 options: {
                     api: Path.join(__dirname, './fixtures/defs/pets.json'),
                     handlers: Path.join(__dirname, './fixtures/handlers')
@@ -127,7 +127,7 @@ Test('test plugin', function (t) {
 
         try {
             await server.register({
-                plugin: Swaggerize,
+                plugin: OpenAPI,
                 options: {
                     api: Path.join(__dirname, './fixtures/defs/pets.json'),
                     handlers: Path.join(__dirname, './fixtures/handlers'),
@@ -156,7 +156,7 @@ Test('test plugin', function (t) {
 
         try {
             await server.register({
-                plugin: Swaggerize,
+                plugin: OpenAPI,
                 options: {
                     api: Path.join(__dirname, './fixtures/defs/pets.json'),
                     handlers: Path.join(__dirname, './fixtures/handlers'),
@@ -202,7 +202,7 @@ Test('test plugin', function (t) {
         
         try {
             await server.register({
-                plugin: Swaggerize,
+                plugin: OpenAPI,
                 options: {
                     api,
                     handlers: {
@@ -255,7 +255,7 @@ Test('test plugin', function (t) {
         
         try {
             await server.register({
-                plugin: Swaggerize,
+                plugin: OpenAPI,
                 options: {
                     api,
                     handlers: {
@@ -289,7 +289,7 @@ Test('test plugin', function (t) {
 
         try {
             await server.register({
-                plugin: Swaggerize,
+                plugin: OpenAPI,
                 options: {
                     api: Path.join(__dirname, './fixtures/defs/pets.json'),
                     handlers: Path.join(__dirname, './fixtures/handlers')
@@ -352,7 +352,7 @@ Test('test plugin', function (t) {
 
         try {
             await server.register({
-                plugin: Swaggerize,
+                plugin: OpenAPI,
                 options: {
                     api: Path.join(__dirname, './fixtures/defs/pets.json'),
                     handlers: Path.join(__dirname, './fixtures/handlers'),
@@ -416,7 +416,7 @@ Test('test plugin', function (t) {
 
         try {
             await server.register({
-                plugin: Swaggerize,
+                plugin: OpenAPI,
                 options: {
                     api: Path.join(__dirname, './fixtures/defs/pets.json'),
                     handlers: {
@@ -453,7 +453,7 @@ Test('test plugin', function (t) {
 
         try {
             await server.register({
-                plugin: Swaggerize,
+                plugin: OpenAPI,
                 options: {
                     api: Path.join(__dirname, './fixtures/defs/pets_xhandlers.json')
                 }
@@ -505,7 +505,7 @@ Test('test plugin', function (t) {
 
         try {
             await server.register({
-                plugin: Swaggerize,
+                plugin: OpenAPI,
                 options: {
                     api: Path.join(__dirname, './fixtures/defs/pets.json'),
                     handlers: Path.join(__dirname, './fixtures/handlers')
@@ -548,15 +548,15 @@ Test('yaml support', function (t) {
 
         try {
             await server.register({
-                plugin: Swaggerize,
+                plugin: OpenAPI,
                 options: {
                     api: Path.join(__dirname, './fixtures/defs/pets.yaml'),
                     handlers: Path.join(__dirname, './fixtures/handlers')
                 }
             });
 
-            t.ok(server.plugins.swagger.getApi, 'server.plugins.swagger.getApi exists.');
-            t.ok(server.plugins.swagger.setHost, 'server.plugins.swagger.setHost exists.');
+            t.ok(server.plugins.openapi.getApi, 'server.plugins.openapi.getApi exists.');
+            t.ok(server.plugins.openapi.setHost, 'server.plugins.openapi.setHost exists.');
 
             const response = await server.inject({
                 method: 'GET',

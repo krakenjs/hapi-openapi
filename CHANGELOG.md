@@ -1,4 +1,9 @@
 
+### 1.0.0 Rename
+
+- Renamed to hapi-openapi.
+- Dropped version down to 1.0.0.
+
 ### 4.1.0
 
 - Fixes trailing spaces #104.
