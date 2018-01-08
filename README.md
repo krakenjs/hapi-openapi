@@ -24,9 +24,6 @@ At runtime, `swaggerize-hapi` uses the API specification to build routes from pr
 
 ### Quick Start with a Generator
 
-**NOTE:** Currently the generator uses an older version of this module. You can still use it, but you must manually migrate to
-this version, which will require rewriting some of the code to support Hapi 17.
-
 This guide will let you go from an `api.json` to a service project in no time flat.
 
 First install `generator-swaggerize` (and `yo` if you haven't already):
@@ -45,7 +42,7 @@ $ yo swaggerize
 
 Follow the prompts (note: make sure to choose `hapi` as your framework choice).
 
-You now have a working api and can use something like [Swagger UI](https://github.com/wordnik/swagger-ui) to explore it.
+You now have a working api and can use something like [SwaggerHub](https://swaggerhub.com/?_ga=2.118604234.2143392684.1515431456-1673703125.1481054263) to explore it.
 
 ### Manual Usage
 
