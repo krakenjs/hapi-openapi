@@ -2,7 +2,7 @@
 
 const Test = require('tape');
 const Path = require('path');
-const Swaggerize = require('../lib');
+const OpenAPI = require('../lib');
 const Hapi = require('hapi');
 const StubAuthTokenScheme = require('./fixtures/lib/stub-auth-token-scheme');
 
@@ -36,7 +36,7 @@ Test('authentication', function (t) {
             });
 
             await server.register({
-                plugin: Swaggerize,
+                plugin: OpenAPI,
                 options: {
                     api: Path.join(__dirname, './fixtures/defs/pets_authed.json'),
                     handlers: Path.join(__dirname, './fixtures/handlers')
@@ -81,7 +81,7 @@ Test('authentication', function (t) {
             });
 
             await server.register({
-                plugin: Swaggerize,
+                plugin: OpenAPI,
                 options: {
                     api: Path.join(__dirname, './fixtures/defs/pets_authed.json'),
                     handlers: Path.join(__dirname, './fixtures/handlers')
@@ -113,7 +113,7 @@ Test('authentication with x-auth', function (t) {
 
         try {
             await server.register({
-                plugin: Swaggerize,
+                plugin: OpenAPI,
                 options: {
                     api: Path.join(__dirname, './fixtures/defs/pets_xauthed.json'),
                     handlers: Path.join(__dirname, './fixtures/handlers')

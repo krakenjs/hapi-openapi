@@ -1,11 +1,11 @@
-# swaggerize-hapi
+# hapi-openapi
 
-[![Build Status](https://travis-ci.org/krakenjs/swaggerize-hapi.svg?branch=master)](https://travis-ci.org/krakenjs/swaggerize-hapi)  
-[![NPM version](https://badge.fury.io/js/swaggerize-hapi.png)](http://badge.fury.io/js/swaggerize-hapi)  
+[![Build Status](https://travis-ci.org/krakenjs/hapi-openapi.svg?branch=master)](https://travis-ci.org/krakenjs/hapi-openapi)  
+[![NPM version](https://badge.fury.io/js/hapi-openapi.png)](http://badge.fury.io/js/hapi-openapi)  
 
-`swaggerize-hapi` is a design-driven approach to building RESTful services with [OpenAPI (Swagger)](http://openapis.org) and [Hapi](http://hapijs.com).
+`hapi-openapi` is a design-driven approach to building RESTful services with [OpenAPI (Swagger)](http://openapis.org) and [Hapi](http://hapijs.com).
 
-`swaggerize-hapi` provides the following features:
+`hapi-openapi` provides the following features:
 
 - API schema validation.
 - Routes based on the OpenAPI document.
@@ -18,11 +18,13 @@ There are already a number of modules that help build RESTful APIs for node with
 these modules tend to focus on building the documentation or specification as a side effect of writing
 the application business logic.
 
-`swaggerize-hapi` begins with the OpenAPI document first. This facilitates writing APIs that are easier to design, review, and test.
+`hapi-openapi` begins with the OpenAPI document first. This facilitates writing APIs that are easier to design, review, and test.
 
-At runtime, `swaggerize-hapi` uses the API specification to build routes from previously defined paths. This ensures that everything specified is what is implemented.
+At runtime, `hapi-openapi` uses the API specification to build routes from previously defined paths. This ensures that everything specified is what is implemented.
 
 ### Quick Start with a Generator
+
+**Note:** After running the generator you will need to manually switch from `swaggerize-hapi` to `hapi-openapi`.
 
 This guide will let you go from an `api.json` to a service project in no time flat.
 
@@ -48,12 +50,11 @@ You now have a working api and can use something like [SwaggerHub](https://swagg
 
 ```javascript
 const Hapi = require('hapi');
-const Swaggerize = require('swaggerize-hapi');
 
 const server = new Hapi.Server();
 
 await server.register({
-    plugin: Swaggerize,
+    plugin: require('hapi-openapi'),
     options: {
         api: Path.join(__dirname, './config/pets.json'),
         handlers: Path.join(__dirname, './handlers')
@@ -63,7 +64,7 @@ await server.register({
 
 ### Hapi Plugin
 
-The plugin will be registered as `swagger` on `server.plugins` with the following exposed:
+The plugin will be registered as `openapi` on `server.plugins` with the following exposed:
 
 - `getApi()` - the resolved Swagger document.
 - `setHost(host)` - a helper function for setting the `host` property on the `api`.
@@ -210,7 +211,7 @@ Example:
 
 ### Authentication
 
-Support for OpenAPI [security schemes](http://swagger.io/specification/#securitySchemeObject) requires that relevant authentication scheme and strategy are registered before the swaggerize-hapi plugin. See the [hapi docs](http://hapijs.com/tutorials/auth) for information about authentication schemes and strategies.
+Support for OpenAPI [security schemes](http://swagger.io/specification/#securitySchemeObject) requires that relevant authentication scheme and strategy are registered before the hapi-openapi plugin. See the [hapi docs](http://hapijs.com/tutorials/auth) for information about authentication schemes and strategies.
 
 The name of the hapi authentication strategy is expected to match the name field of the OpenAPI [security requirement object](http://swagger.io/specification/#securityRequirementObject).
 
@@ -241,7 +242,7 @@ server.auth.strategy('api_key', 'auth-token-scheme', {
 });
 
 await server.register({
-    register: Swaggerize,
+    plugin: require('hapi-openapi'),
     options: {
         api: require('./config/pets.json'),
         handlers: Path.join(__dirname, './handlers')

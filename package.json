@@ -1,13 +1,13 @@
 {
-  "name": "swaggerize-hapi",
-  "description": "Design-driven apis with OpenAPI (swagger) 2.0 and hapi.",
-  "version": "4.1.0",
+  "name": "hapi-openapi",
+  "description": "Design-driven apis with OpenAPI (formerly Swagger) 2.0/3.0 and hapi.",
+  "version": "1.0.0",
   "author": "Trevor Livingston <tlivings@gmail.com>",
   "repository": {
     "type": "git",
-    "url": "git://github.com/krakenjs/swaggerize-hapi.git"
+    "url": "git://github.com/krakenjs/hapi-openapi.git"
   },
-  "bugs": "http://github.com/krakenjs/swaggerize-hapi/issues",
+  "bugs": "http://github.com/krakenjs/hapi-openapi/issues",
   "publishConfig": {
     "registry": "https://registry.npmjs.org"
   },
@@ -22,7 +22,7 @@
     "joi": "^13.0.2",
     "js-yaml": "^3.10.0",
     "merge-object-files": "^1.0.3",
-    "swagger-parser": "^3.4.2"
+    "swagger-parser": "^4.0.0"
   },
   "devDependencies": {
     "boom": "^7.1.1",
@@ -43,12 +43,6 @@
   "keywords": [
     "openapi",
     "swagger",
-    "swagger 2.0",
-    "swagger-node",
-    "swagger-express",
-    "swagger-ui",
-    "swagger-hapi",
-    "swaggerize",
     "hapi",
     "rest",
     "restful",

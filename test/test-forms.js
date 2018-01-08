@@ -2,7 +2,7 @@
 
 const Test = require('tape');
 const Path = require('path');
-const Swaggerize = require('../lib');
+const OpenAPI = require('../lib');
 const Hapi = require('hapi');
 
 
@@ -15,7 +15,7 @@ Test('form data', function (t) {
             const server = new Hapi.Server();
 
             await server.register({
-                plugin: Swaggerize,
+                plugin: OpenAPI,
                 options: {
                     api: Path.join(__dirname, './fixtures/defs/form.json'),
                     handlers: {
@@ -55,7 +55,7 @@ Test('form data', function (t) {
             const server = new Hapi.Server();
 
             await server.register({
-                plugin: Swaggerize,
+                plugin: OpenAPI,
                 options: {
                     api: Path.join(__dirname, './fixtures/defs/form.json'),
                     handlers: {
@@ -90,7 +90,7 @@ Test('form data', function (t) {
             const server = new Hapi.Server();
 
             await server.register({
-                plugin: Swaggerize,
+                plugin: OpenAPI,
                 options: {
                     api: Path.join(__dirname, './fixtures/defs/form.json'),
                     handlers: {
