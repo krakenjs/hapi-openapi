@@ -3,7 +3,7 @@
 [![Build Status](https://travis-ci.org/krakenjs/hapi-openapi.svg?branch=master)](https://travis-ci.org/krakenjs/hapi-openapi)  
 [![NPM version](https://badge.fury.io/js/hapi-openapi.png)](http://badge.fury.io/js/hapi-openapi)  
 
-`hapi-openapi` is a design-driven approach to building RESTful services with [OpenAPI (Swagger)](http://openapis.org) and [Hapi](http://hapijs.com).
+`hapi-openapi` is a design-driven approach to building RESTful services with [OpenAPI (Swagger)](http://openapis.org) and [Hapi](http://hapijs.com) (OpenAPI 3.0 support coming soon).
 
 `hapi-openapi` provides the following features:
 
