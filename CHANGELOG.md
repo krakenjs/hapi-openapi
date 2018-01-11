@@ -1,4 +1,8 @@
 
+### 4.2.0
+
+- Delegating to `hapi-openapi`.
+
 ### 4.1.0
 
 - Fixes trailing spaces #104.

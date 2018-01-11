@@ -15,14 +15,9 @@
     "node": ">=8"
   },
   "dependencies": {
-    "dot-prop": "^4.2.0",
-    "enjoi": "^3.1.0",
-    "entries": "^1.0.1",
+    "hapi-openapi": "^1.0.0",
     "hoek": "^5.0.2",
-    "joi": "^13.0.2",
-    "js-yaml": "^3.10.0",
-    "merge-object-files": "^1.0.3",
-    "swagger-parser": "^3.4.2"
+    "joi": "^13.0.2"
   },
   "devDependencies": {
     "boom": "^7.1.1",
