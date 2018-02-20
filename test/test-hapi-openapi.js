@@ -64,7 +64,7 @@ Test('test plugin', function (t) {
                 }
             }
         };
-        
+
         try {
             await server.register({
                 plugin: OpenAPI,
@@ -199,7 +199,7 @@ Test('test plugin', function (t) {
                 }
             }
         };
-        
+
         try {
             await server.register({
                 plugin: OpenAPI,
@@ -252,7 +252,7 @@ Test('test plugin', function (t) {
                 }
             }
         };
-        
+
         try {
             await server.register({
                 plugin: OpenAPI,
@@ -530,6 +530,53 @@ Test('test plugin', function (t) {
             }
 
             t.end();
+        }
+        catch (error) {
+            t.fail(error.message);
+        }
+    });
+
+    t.test('skip empty path descriptions', async function (t) {
+        t.plan(1);
+
+        const server = new Hapi.Server();
+
+        const api = {
+            swagger: '2.0',
+            info: {
+                title: 'Minimal',
+                version: '1.0.0'
+            },
+            paths: {
+                '/test': {
+                    get: {
+                        description: '',
+                        responses: {
+                            200: {
+                                description: 'default response'
+                            }
+                        }
+                    }
+                }
+            }
+        };
+
+        try {
+            await server.register({
+                plugin: OpenAPI,
+                options: {
+                    api,
+                    handlers: {
+                        test: {
+                            get(request, h) {
+                                return 'test';
+                            }
+                        }
+                    }
+                }
+            });
+
+            t.pass();
         }
         catch (error) {
             t.fail(error.message);
