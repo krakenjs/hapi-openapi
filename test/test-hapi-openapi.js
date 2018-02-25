@@ -536,53 +536,96 @@ Test('test plugin', function (t) {
         }
     });
 
-    t.test('skip empty path descriptions', async function (t) {
-        t.plan(1);
+    t.test('parse description from api definition', async function(t) {
+        t.test('do not break with empty descriptions', async function(t) {
+            t.plan(1);
 
-        const server = new Hapi.Server();
+            const server = new Hapi.Server();
 
-        const api = {
-            swagger: '2.0',
-            info: {
-                title: 'Minimal',
-                version: '1.0.0'
-            },
-            paths: {
-                '/test': {
-                    get: {
-                        description: '',
-                        responses: {
-                            200: {
-                                description: 'default response'
+            try {
+                await server.register({
+                    plugin: OpenAPI,
+                    options: {
+                        api: {
+                            swagger: '2.0',
+                            info: {
+                                title: 'Minimal',
+                                version: '1.0.0'
+                            },
+                            paths: {
+                                '/test': {
+                                    get: {
+                                        description: '',
+                                        responses: {
+                                            200: {
+                                                description: 'default response'
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        handlers: {
+                            test: {
+                                get(request, h) {
+                                    return 'test';
+                                }
                             }
                         }
                     }
-                }
+                });
+
+                t.pass();
+            } catch (error) {
+                t.fail(error.message);
             }
-        };
+        });
 
-        try {
-            await server.register({
-                plugin: OpenAPI,
-                options: {
-                    api,
-                    handlers: {
-                        test: {
-                            get(request, h) {
-                                return 'test';
+        t.test('create the right description for the route', async function(t) {
+            t.plan(1);
+
+            const server = new Hapi.Server();
+
+            try {
+                await server.register({
+                    plugin: OpenAPI,
+                    options: {
+                        api: {
+                            swagger: '2.0',
+                            info: {
+                                title: 'Minimal',
+                                version: '1.0.0'
+                            },
+                            paths: {
+                                '/test': {
+                                    get: {
+                                        description: 'A simple description for the route',
+                                        responses: {
+                                            200: {
+                                                description: 'default response'
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        handlers: {
+                            test: {
+                                get(request, h) {
+                                    return 'test';
+                                }
                             }
                         }
                     }
-                }
-            });
+                });
 
-            t.pass();
-        }
-        catch (error) {
-            t.fail(error.message);
-        }
+                const response = await server.inject({ method: 'GET', url: '/test' });
+                t.strictEqual(response.request.route.settings.description, 'A simple description for the route');
+            } catch (error) {
+                t.fail(error.message);
+            }
+        });
     });
-
 });
 
 
