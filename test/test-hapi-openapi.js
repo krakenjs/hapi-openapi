@@ -64,7 +64,7 @@ Test('test plugin', function (t) {
                 }
             }
         };
-        
+
         try {
             await server.register({
                 plugin: OpenAPI,
@@ -199,7 +199,7 @@ Test('test plugin', function (t) {
                 }
             }
         };
-        
+
         try {
             await server.register({
                 plugin: OpenAPI,
@@ -252,7 +252,7 @@ Test('test plugin', function (t) {
                 }
             }
         };
-        
+
         try {
             await server.register({
                 plugin: OpenAPI,
@@ -536,6 +536,96 @@ Test('test plugin', function (t) {
         }
     });
 
+    t.test('parse description from api definition', async function(t) {
+        t.test('do not break with empty descriptions', async function(t) {
+            t.plan(1);
+
+            const server = new Hapi.Server();
+
+            try {
+                await server.register({
+                    plugin: OpenAPI,
+                    options: {
+                        api: {
+                            swagger: '2.0',
+                            info: {
+                                title: 'Minimal',
+                                version: '1.0.0'
+                            },
+                            paths: {
+                                '/test': {
+                                    get: {
+                                        description: '',
+                                        responses: {
+                                            200: {
+                                                description: 'default response'
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        handlers: {
+                            test: {
+                                get(request, h) {
+                                    return 'test';
+                                }
+                            }
+                        }
+                    }
+                });
+
+                t.pass();
+            } catch (error) {
+                t.fail(error.message);
+            }
+        });
+
+        t.test('create the right description for the route', async function(t) {
+            t.plan(1);
+
+            const server = new Hapi.Server();
+
+            try {
+                await server.register({
+                    plugin: OpenAPI,
+                    options: {
+                        api: {
+                            swagger: '2.0',
+                            info: {
+                                title: 'Minimal',
+                                version: '1.0.0'
+                            },
+                            paths: {
+                                '/test': {
+                                    get: {
+                                        description: 'A simple description for the route',
+                                        responses: {
+                                            200: {
+                                                description: 'default response'
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        handlers: {
+                            test: {
+                                get(request, h) {
+                                    return 'test';
+                                }
+                            }
+                        }
+                    }
+                });
+
+                const response = await server.inject({ method: 'GET', url: '/test' });
+                t.strictEqual(response.request.route.settings.description, 'A simple description for the route');
+            } catch (error) {
+                t.fail(error.message);
+            }
+        });
+    });
 });
 
 

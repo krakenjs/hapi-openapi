@@ -26,6 +26,7 @@ launch.json
 .iml
 *.sublime-workspace
 *.sublime-project
+.vscode
 
 .DS_Store*
 ehthumbs.db
