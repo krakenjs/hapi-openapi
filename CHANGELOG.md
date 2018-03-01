@@ -1,4 +1,8 @@
 
+### 1.0.1
+
+- Fixes issue #117 (breaking on empty description).
+
 ### 1.0.0 Rename
 
 - Renamed to hapi-openapi.
