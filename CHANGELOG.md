@@ -1,4 +1,8 @@
 
+### 1.0.2
+
+- Allow registering multiple of this plugin.
+
 ### 1.0.1
 
 - Fixes issue #117 (breaking on empty description).
