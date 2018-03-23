@@ -628,7 +628,154 @@ Test('test plugin', function (t) {
     });
 });
 
+Test('multi-register', function (t) {
 
+    const api1 = {
+        swagger: '2.0',
+        info: {
+            title: 'API 1',
+            version: '1.0.0'
+        },
+        basePath: '/api1',
+        paths: {
+            '/test': {
+                get: {
+                    responses: {
+                        200: {
+                            description: 'default response'
+                        }
+                    }
+                }
+            }
+        }
+    };
+
+    const api2 = {
+        swagger: '2.0',
+        info: {
+            title: 'API 2',
+            version: '1.0.0'
+        },
+        basePath: '/api2',
+        paths: {
+            '/test': {
+                get: {
+                    responses: {
+                        200: {
+                            description: 'default response'
+                        }
+                    }
+                }
+            }
+        }
+    };
+
+    t.test('support register multiple', async function (t) {
+        t.plan(2);
+
+        const server = new Hapi.Server();
+
+        try {
+            await server.register([
+                {
+                    plugin: OpenAPI,
+                    options: {
+                        api: api1,
+                        handlers: {
+                            test: {
+                                get(request, h) {
+                                    return 'test';
+                                }
+                            }
+                        }
+                    }
+                },
+                {
+                    plugin: OpenAPI,
+                    options: {
+                        api: api2,
+                        handlers: {
+                            test: {
+                                get(request, h) {
+                                    return 'test';
+                                }
+                            }
+                        }
+                    }
+                }
+            ]);
+
+            let response = await server.inject({
+                method: 'GET',
+                url: '/api1/test'
+            });
+
+            t.strictEqual(response.statusCode, 200, `${response.request.path} OK.`);
+
+            response = await server.inject({
+                method: 'GET',
+                url: '/api2/test'
+            });
+
+            t.strictEqual(response.statusCode, 200, `${response.request.path} OK.`);
+
+        }
+        catch (error) {
+            t.fail(error.message);
+        }
+
+    });
+
+    t.test('support fail on conflicts', async function (t) {
+        t.plan(1);
+
+        const server = new Hapi.Server();
+
+        try {
+            await server.register([
+                {
+                    plugin: OpenAPI,
+                    options: {
+                        api: api1,
+                        docs: {
+                            path: 'docs1'
+                        },
+                        handlers: {
+                            test: {
+                                get(request, h) {
+                                    return 'test';
+                                }
+                            }
+                        }
+                    }
+                },
+                {
+                    plugin: OpenAPI,
+                    options: {
+                        api: api1,
+                        docs: {
+                            path: 'docs2'
+                        },
+                        handlers: {
+                            test: {
+                                get(request, h) {
+                                    return 'test';
+                                }
+                            }
+                        }
+                    }
+                }
+            ]);
+
+            t.fail('should have errored');
+        }
+        catch (error) {
+            t.pass('expected failure');
+        }
+
+    });
+
+});
 
 Test('yaml support', function (t) {
     t.test('register', async function (t) {
