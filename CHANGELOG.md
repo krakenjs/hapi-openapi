@@ -1,4 +1,8 @@
 
+### 1.0.3
+
+- Resolves https://github.com/krakenjs/hapi-openapi/issues/125, correcting `date-time` format.
+
 ### 1.0.2
 
 - Allow registering multiple of this plugin.
