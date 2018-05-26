@@ -29,12 +29,12 @@
     "eslint-config-hapi": "^11.1.0",
     "eslint-plugin-hapi": "^4.1.0",
     "hapi": "^17.4.0",
-    "istanbul": "^0.4.5",
+    "nyc": "^11.6.0",
     "tape": "^4.9.0"
   },
   "scripts": {
     "test": "tape test/*.js",
-    "cover": "istanbul cover tape -- test/*.js",
+    "cover": "nyc npm test",
     "lint": "eslint lib"
   },
   "license": "Apache-2.0",
