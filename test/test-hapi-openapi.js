@@ -536,6 +536,72 @@ Test('test plugin', function (t) {
         }
     });
 
+    t.test('query validation with arrays', async function (t) {
+
+        const server = new Hapi.Server();
+
+        try {
+            await server.register({
+                plugin: OpenAPI,
+                options: {
+                    api: {
+                        swagger: '2.0',
+                        info: {
+                            title: 'Minimal',
+                            version: '1.0.0'
+                        },
+                        paths: {
+                            '/test': {
+                                get: {
+                                    description: '',
+                                    parameters: [
+                                        {
+                                            name: 'tags',
+                                            in: 'query',
+                                            required: false,
+                                            type: 'array',
+                                            items: {
+                                                type: 'string'
+                                            },
+                                            collectionFormat: 'csv'
+                                        }
+                                    ],
+                                    responses: {
+                                        200: {
+                                            description: 'default response'
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    handlers: {
+                        test: {
+                            get(request, h) {
+                                t.ok(request.query.tags, 'query exists.');
+                                t.equal(request.query.tags.length, 2, 'two array elements.');
+                                t.equal(request.query.tags[0], 'some_tag', 'values correct.');
+                                return 'test';
+                            }
+                        }
+                    }
+                }
+            });
+
+            const response = await server.inject({
+                method: 'GET',
+                url: '/test?tags=some_tag,some_other_tag'
+            });
+
+            t.strictEqual(response.statusCode, 200, 'csv format supported.');
+
+            t.end();
+        }
+        catch (error) {
+            t.fail(error.message);
+        }
+    });
+
     t.test('parse description from api definition', async function(t) {
         t.test('do not break with empty descriptions', async function(t) {
             t.plan(1);
