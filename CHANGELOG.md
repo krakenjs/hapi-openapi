@@ -1,4 +1,8 @@
 
+### 1.0.4
+
+- Resolves https://github.com/krakenjs/hapi-openapi/issues/123, fixing array format support in parameters.
+
 ### 1.0.3
 
 - Resolves https://github.com/krakenjs/hapi-openapi/issues/125, correcting `date-time` format.
