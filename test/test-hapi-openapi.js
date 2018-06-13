@@ -120,6 +120,35 @@ Test('test plugin', function (t) {
         }
     });
 
+    t.test('api docs auth false', async function (t) {
+        t.plan(1);
+
+        const server = new Hapi.Server();
+
+        try {
+            await server.register({
+                plugin: OpenAPI,
+                options: {
+                    api: Path.join(__dirname, './fixtures/defs/pets.json'),
+                    handlers: Path.join(__dirname, './fixtures/handlers'),
+                    docs: {
+                        auth: false
+                    }
+                }
+            });
+
+            const response = await server.inject({
+                method: 'GET',
+                url: '/v1/petstore/api-docs'
+            });
+
+            t.strictEqual(response.statusCode, 200, `${response.request.path} OK.`);
+        }
+        catch (error) {
+            t.fail(error.message);
+        }
+    });
+
     t.test('api docs change path', async function (t) {
         t.plan(1);
 
