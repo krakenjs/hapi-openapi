@@ -1,4 +1,8 @@
 
+### 1.0.5
+
+- Allow auth in doc options to be `false` (#134).
+
 ### 1.0.4
 
 - Resolves https://github.com/krakenjs/hapi-openapi/issues/123, fixing array format support in parameters.
