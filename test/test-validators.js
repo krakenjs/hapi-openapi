@@ -30,6 +30,7 @@ Test('validator special types', function (t) {
             }
         }
     };
+    
     const validator = Validators.create(api);
 
     t.test('valid date-time', async function (t) {
