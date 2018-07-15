@@ -721,6 +721,82 @@ Test('test plugin', function (t) {
             }
         });
     });
+
+    t.test('hapi payload options (assert via parse:false)', async function (t) {
+        t.plan(1);
+
+        const server = new Hapi.Server();
+
+        const api = {
+            swagger: '2.0',
+            info: {
+                title: 'Minimal',
+                version: '1.0.0'
+            },
+            paths: {
+                '/test': {
+                    post: {
+                        'x-hapi-options': {
+                            payload: {
+                                parse: false
+                            }
+                        },
+                        parameters: [
+                            {
+                                name: 'thing',
+                                in: 'body',
+                                schema: {
+                                    type: 'object',
+                                    properties: {
+                                        id: {
+                                            type: 'string'
+                                        }
+                                    }
+                                }
+                            }
+                        ],
+                        responses: {
+                            200: {
+                                description: 'default response'
+                            }
+                        }
+                    }
+                }
+            }
+        };
+
+        try {
+            await server.register({
+                plugin: OpenAPI,
+                options: {
+                    api,
+                    handlers: {
+                        test: {
+                            post() {
+                                return 'test';
+                            }
+                        }
+                    }
+                }
+            });
+
+            let response = await server.inject({
+                method: 'POST',
+                url: '/test',
+                payload: {
+                    id: 1 //won't fail because parse is false
+                }
+            });
+
+            t.strictEqual(response.statusCode, 200, `${response.request.path} OK.`);
+
+        }
+        catch (error) {
+            t.fail(error.message);
+        }
+
+    });
+
 });
 
 Test('multi-register', function (t) {
