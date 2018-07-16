@@ -1,4 +1,8 @@
 
+### 1.1.0
+
+- Allow override of payload options via `x-hapi-options` (#137).
+
 ### 1.0.5
 
 - Allow auth in doc options to be `false` (#134).
