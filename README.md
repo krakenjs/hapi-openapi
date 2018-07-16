@@ -26,8 +26,6 @@ At runtime, `hapi-openapi` uses the API specification to build routes from previ
 
 ### Quick Start with a Generator
 
-**Note:** After running the generator you will need to manually switch from `swaggerize-hapi` to `hapi-openapi`.
-
 This guide will let you go from an `api.json` to a service project in no time flat.
 
 First install `generator-swaggerize` (and `yo` if you haven't already):
