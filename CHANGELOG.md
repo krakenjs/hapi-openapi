@@ -1,4 +1,9 @@
 
+### 1.1.1
+
+- Vendor extensions are now stripped from the API docs end point.
+- Bumped to Enjoi 4.x.
+
 ### 1.1.0
 
 - Allow override of payload options via `x-hapi-options` (#137).
