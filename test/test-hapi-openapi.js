@@ -95,7 +95,7 @@ Test('test plugin', function (t) {
     });
 
     t.test('api docs', async function (t) {
-        t.plan(1);
+        t.plan(2);
 
         const server = new Hapi.Server();
 
@@ -114,6 +114,10 @@ Test('test plugin', function (t) {
             });
 
             t.strictEqual(response.statusCode, 200, `${response.request.path} OK.`);
+
+            const body = JSON.parse(response.payload);
+            
+            t.equal(body.info['x-meta'], undefined, 'stripped x-');
         }
         catch (error) {
             t.fail(error.message);
