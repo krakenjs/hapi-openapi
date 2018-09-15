@@ -48,7 +48,8 @@
                         "items": {
                             "type": "string"
                         },
-                        "collectionFormat": "multi"
+                        "collectionFormat": "multi",
+                        "x-meta": "test"
                     },
                     {
                         "name": "limit",
