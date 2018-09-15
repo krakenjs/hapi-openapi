@@ -16,9 +16,9 @@
   },
   "dependencies": {
     "dot-prop": "^4.2.0",
-    "enjoi": "^3.2.3",
+    "enjoi": "^4.0.0",
     "hoek": "^5.0.3",
-    "joi": "^13.2.0",
+    "joi": "^13.6.0",
     "js-yaml": "^3.11.0",
     "merge-object-files": "^2.0.0",
     "swagger-parser": "^4.1.0"
