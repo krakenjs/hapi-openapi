@@ -76,6 +76,7 @@ The plugin will be registered as `openapi` on `server.plugins` with the followin
 - `docs` - an object used to configure the api docs route.
     - `path` - the path to expose api docs for swagger-ui, etc. Defaults to `/api-docs`.
     - `auth` - options auth config for this route.
+    - `stripExtensions` - strip vendor extensions from docs. Defaults to true.
 - `handlers` - either a string directory structure for route handlers, object, or not set if using `x-hapi-handler`.
 - `extensions` - an array of file extension types to use when scanning for handlers. Defaults to `['js']`.
 - `vhost` - *optional* domain string (see [hapi route options](http://hapijs.com/api#route-options)).
