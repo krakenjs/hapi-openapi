@@ -95,7 +95,7 @@ Test('test plugin', function (t) {
     });
 
     t.test('api docs', async function (t) {
-        t.plan(2);
+        t.plan(3);
 
         const server = new Hapi.Server();
 
@@ -116,8 +116,43 @@ Test('test plugin', function (t) {
             t.strictEqual(response.statusCode, 200, `${response.request.path} OK.`);
 
             const body = JSON.parse(response.payload);
-            
+
             t.equal(body.info['x-meta'], undefined, 'stripped x-');
+            t.equal(body.paths['/pets'].get.parameters[0]['x-meta'], undefined, 'stripped x- from array.');
+        }
+        catch (error) {
+            t.fail(error.message);
+        }
+    });
+
+    t.test('api docs strip vendor extensions false', async function (t) {
+        t.plan(3);
+
+        const server = new Hapi.Server();
+
+        try {
+            await server.register({
+                plugin: OpenAPI,
+                options: {
+                    api: Path.join(__dirname, './fixtures/defs/pets.json'),
+                    handlers: Path.join(__dirname, './fixtures/handlers'),
+                    docs: {
+                        stripExtensions: false
+                    }
+                }
+            });
+
+            const response = await server.inject({
+                method: 'GET',
+                url: '/v1/petstore/api-docs'
+            });
+
+            t.strictEqual(response.statusCode, 200, `${response.request.path} OK.`);
+
+            const body = JSON.parse(response.payload);
+
+            t.equal(body.info['x-meta'], 'test');
+            t.equal(body.paths['/pets'].get.parameters[0]['x-meta'], 'test');
         }
         catch (error) {
             t.fail(error.message);
