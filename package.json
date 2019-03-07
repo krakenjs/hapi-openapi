@@ -29,7 +29,7 @@
     "eslint-config-hapi": "^11.1.0",
     "eslint-plugin-hapi": "^4.1.0",
     "hapi": "^17.4.0",
-    "nyc": "^11.6.0",
+    "nyc": "^13.3.0",
     "tape": "^4.9.0"
   },
   "scripts": {
