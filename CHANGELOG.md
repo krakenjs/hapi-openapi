@@ -1,4 +1,8 @@
 
+### 1.2.1
+
+- Version bump for NPM security audit
+
 ### 1.2.0
 
 - Vendor extensions are now stripped from the API docs end point (option `docs.stripExtensions`).
