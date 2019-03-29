@@ -5,7 +5,7 @@ const Path = require('path');
 const OpenAPI = require('../lib');
 const Hapi = require('hapi');
 
-Test('test plugin', (t) => {
+Test('test plugin', function (t) {
 
     t.test('register', async function (t) {
         t.plan(3);
@@ -868,7 +868,7 @@ Test('test plugin', (t) => {
 
 });
 
-Test('multi-register', (t) => {
+Test('multi-register', function (t) {
 
     const api1 = {
         swagger: '2.0',
@@ -1017,7 +1017,7 @@ Test('multi-register', (t) => {
 
 });
 
-Test('yaml support', (t) => {
+Test('yaml support', function (t) {
     t.test('register', async function (t) {
         t.plan(3);
 
