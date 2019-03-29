@@ -77,6 +77,7 @@ The plugin will be registered as `openapi` on `server.plugins` with the followin
     - `path` - the path to expose api docs for swagger-ui, etc. Defaults to `/api-docs`.
     - `auth` - options auth config for this route.
     - `stripExtensions` - strip vendor extensions from docs. Defaults to true.
+    - `prefixBasePath` - prefix path of docs with he OpenAPI document's `basePath` value. Defaults to true.
 - `handlers` - either a string directory structure for route handlers, object, or not set if using `x-hapi-handler`.
 - `extensions` - an array of file extension types to use when scanning for handlers. Defaults to `['js']`.
 - `vhost` - *optional* domain string (see [hapi route options](http://hapijs.com/api#route-options)).
@@ -85,7 +86,7 @@ The plugin will be registered as `openapi` on `server.plugins` with the followin
 
 ### Mount Path
 
-Api `path` values will be prefixed with the OpenAPI document's `basePath` value.
+Api `path` values will be prefixed with the OpenAPI document's `basePath` value.  This behavior can be negated if you set the option `docs.prefixBasePath` to `false`.
 
 ### Handlers Directory
 
