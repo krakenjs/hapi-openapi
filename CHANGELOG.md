@@ -1,4 +1,8 @@
 
+### 1.2.2
+
+- Addresses #149: allow ignoring basePath for api docs path.
+
 ### 1.2.1
 
 - Version bump for NPM security audit
