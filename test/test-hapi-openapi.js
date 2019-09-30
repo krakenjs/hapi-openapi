@@ -33,6 +33,65 @@ Test('test plugin', function (t) {
 
     });
 
+    t.test('register with cors options', async function (t) {
+        t.plan(3);
+
+        const server = new Hapi.Server();
+
+        try {
+            await server.register({
+                plugin: OpenAPI,
+                options: {
+                    api: Path.join(__dirname, './fixtures/defs/pets.json'),
+                    handlers: Path.join(__dirname, './fixtures/handlers'),
+                    cors: {
+                        origin: ["*"],
+                        maxAge: 86400,
+                        headers: ["Accept", "Authorization", "Content-Type", "If-None-Match"],
+                        exposedHeaders: ["x-count", "link"]
+                    }
+                }
+            });
+            t.ok(server.plugins.openapi.getApi, 'server.plugins.openapi.api exists.');
+            t.ok(server.plugins.openapi.setHost, 'server.plugins.openapi.setHost exists.');
+
+            server.plugins.openapi.setHost('api.paypal.com');
+
+            t.strictEqual(server.plugins.openapi.getApi().host, 'api.paypal.com', 'server.plugins.openapi.setHost set host.');
+        }
+        catch (error) {
+            t.fail(error.message);
+        }
+
+    });
+
+    t.test('register with boolean cors', async function (t) {
+        t.plan(3);
+
+        const server = new Hapi.Server();
+
+        try {
+            await server.register({
+                plugin: OpenAPI,
+                options: {
+                    api: Path.join(__dirname, './fixtures/defs/pets.json'),
+                    handlers: Path.join(__dirname, './fixtures/handlers'),
+                    cors: true
+                }
+            });
+            t.ok(server.plugins.openapi.getApi, 'server.plugins.openapi.api exists.');
+            t.ok(server.plugins.openapi.setHost, 'server.plugins.openapi.setHost exists.');
+
+            server.plugins.openapi.setHost('api.paypal.com');
+
+            t.strictEqual(server.plugins.openapi.getApi().host, 'api.paypal.com', 'server.plugins.openapi.setHost set host.');
+        }
+        catch (error) {
+            t.fail(error.message);
+        }
+
+    });
+
     t.test('register with object api', async function (t) {
         t.plan(3);
 
