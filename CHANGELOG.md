@@ -1,4 +1,10 @@
 
+### 1.2.3
+
+- Fixes #156
+- Fixes #153
+- Fixes #152
+
 ### 1.2.2
 
 - Addresses #149: allow ignoring basePath for api docs path.
