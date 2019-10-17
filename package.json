@@ -1,7 +1,7 @@
 {
   "name": "hapi-openapi",
   "description": "Design-driven apis with OpenAPI (formerly Swagger) 2.0 and hapi.",
-  "version": "1.2.3",
+  "version": "1.2.4",
   "author": "Trevor Livingston <tlivings@gmail.com>",
   "repository": {
     "type": "git",

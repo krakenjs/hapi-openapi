@@ -925,6 +925,120 @@ Test('test plugin', function (t) {
 
     });
 
+    t.test('hapi operation tags', async function (t) {
+        t.plan(1);
+
+        const server = new Hapi.Server();
+
+        const api = {
+            swagger: '2.0',
+            info: {
+                title: 'Minimal',
+                version: '1.0.0'
+            },
+            paths: {
+                '/test': {
+                    get: {
+                        tags: [
+                            'sample1',
+                            'sample2'
+                        ],
+                        responses: {
+                            200: {
+                                description: 'default response'
+                            }
+                        }
+                    }
+                }
+            }
+        };
+        const expectedTags = ['api', 'sample1', 'sample2']
+
+        try {
+            await server.register({
+                plugin: OpenAPI,
+                options: {
+                    api,
+                    handlers: {
+                        test: {
+                            get() {
+                                return 'test';
+                            }
+                        }
+                    }
+                }
+            });
+
+            let response = await server.inject({
+                method: 'GET',
+                url: '/test'
+            });
+            const responsteTags = response.request.route.settings.tags
+
+            t.deepEqual(responsteTags, expectedTags, 'additional tags successfully configured');
+
+        }
+        catch (error) {
+            t.fail(error.message);
+        }
+
+    });
+
+    t.test('hapi operation tags omitted', async function (t) {
+        t.plan(1);
+
+        const server = new Hapi.Server();
+
+        const api = {
+            swagger: '2.0',
+            info: {
+                title: 'Minimal',
+                version: '1.0.0'
+            },
+            paths: {
+                '/test': {
+                    get: {
+                        responses: {
+                            200: {
+                                description: 'default response'
+                            }
+                        }
+                    }
+                }
+            }
+        };
+        const expectedDefaultTags = ['api']
+
+        try {
+            await server.register({
+                plugin: OpenAPI,
+                options: {
+                    api,
+                    handlers: {
+                        test: {
+                            get() {
+                                return 'test';
+                            }
+                        }
+                    }
+                }
+            });
+
+            let response = await server.inject({
+                method: 'GET',
+                url: '/test'
+            });
+            const responsteTags = response.request.route.settings.tags
+
+            t.deepEqual(responsteTags, expectedDefaultTags, 'returned default tags');
+
+        }
+        catch (error) {
+            t.fail(error.message);
+        }
+
+    });
+
 });
 
 Test('multi-register', function (t) {
