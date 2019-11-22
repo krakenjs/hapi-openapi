@@ -102,6 +102,43 @@ Test('authentication', function (t) {
             t.fail(error.message);
         }
     });
+
+    t.test('with root auth', async function (t) {
+        t.plan(1);
+
+        const server = new Hapi.Server();
+
+        try {
+            await server.register({ plugin: StubAuthTokenScheme });
+
+            server.auth.strategy('api_key', 'stub-auth-token', {
+                validateFunc: async function (token) {
+                    return { credentials: { scope: [ 'api3:read' ] }, artifacts: { }};
+                }
+            });
+
+            await server.register({
+                plugin: OpenAPI,
+                options: {
+                    api: Path.join(__dirname, './fixtures/defs/pets_root_authed.json'),
+                    handlers: Path.join(__dirname, './fixtures/handlers')
+                }
+            });
+
+            const response = await server.inject({
+                method: 'GET',
+                url: '/v1/petstore/pets',
+                headers: {
+                    authorization: '12345'
+                }
+            });
+
+            t.strictEqual(response.statusCode, 403, `${response.request.path} unauthorized.`);
+        }
+        catch (error) {
+            t.fail(error.message);
+        }
+    });
 });
 
 Test('authentication with x-auth', function (t) {
