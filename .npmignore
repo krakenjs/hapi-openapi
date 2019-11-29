@@ -65,3 +65,17 @@ typings/
 
 # package-lock
 package-lock.json
+
+# tests
+test/
+
+# misc
+.npmignore
+.travis.yml
+.editorconfig
+.eslintrc
+.gitignore
+README.md
+TODO.md
+CODE_OF_CONDUCT.md
+CONTRIBUTING.md

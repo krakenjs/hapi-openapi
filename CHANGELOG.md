@@ -1,3 +1,7 @@
+### 1.2.6
+
+- Reduced package size
+
 ### 1.2.5
 
 - Support api level security definitions #162
