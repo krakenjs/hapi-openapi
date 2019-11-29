@@ -1,3 +1,9 @@
+### 1.2.5
+
+- Support api level security definitions #162
+- Better cors support #159
+
+### 1.2.4
 
 ### 1.2.3
 
