@@ -24,11 +24,11 @@
     "swagger-parser": "^4.1.0"
   },
   "devDependencies": {
+    "@hapi/hapi": "^19.1.1",
     "boom": "^7.2.0",
     "eslint": "^4.19.1",
     "eslint-config-hapi": "^11.1.0",
     "eslint-plugin-hapi": "^4.1.0",
-    "hapi": "^17.4.0",
     "nyc": "^13.3.0",
     "tape": "^4.9.0"
   },
