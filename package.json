@@ -15,10 +15,10 @@
     "node": ">=8"
   },
   "dependencies": {
+    "@hapi/hoek": "^9.0.4",
     "@hapi/joi": "^15.1.1",
     "dot-prop": "^4.2.0",
     "enjoi": "^6.0.1",
-    "hoek": "^5.0.3",
     "js-yaml": "^3.11.0",
     "merge-object-files": "^2.0.0",
     "swagger-parser": "^4.1.0"
