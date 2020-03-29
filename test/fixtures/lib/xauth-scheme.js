@@ -1,6 +1,6 @@
 'use strict';
 
-var Boom = require('boom');
+var Boom = require('@hapi/boom');
 
 const register = function (server, { name  }) {
     server.auth.scheme(name /*apiKey*/, (server, { validate }) => {

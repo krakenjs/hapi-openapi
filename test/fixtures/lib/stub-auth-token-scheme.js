@@ -1,6 +1,6 @@
 'use strict';
 
-var Boom = require('boom');
+var Boom = require('@hapi/boom');
 
 const register = function (server, options) {
     server.auth.scheme('stub-auth-token', function (server, options) {

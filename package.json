@@ -24,8 +24,8 @@
     "swagger-parser": "^9.0.1"
   },
   "devDependencies": {
+    "@hapi/boom": "^9.1.0",
     "@hapi/hapi": "^19.1.1",
-    "boom": "^7.2.0",
     "eslint": "^4.19.1",
     "eslint-config-hapi": "^11.1.0",
     "eslint-plugin-hapi": "^4.1.0",
