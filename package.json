@@ -21,7 +21,7 @@
     "enjoi": "^6.0.1",
     "js-yaml": "^3.11.0",
     "merge-object-files": "^2.0.0",
-    "swagger-parser": "^4.1.0"
+    "swagger-parser": "^9.0.1"
   },
   "devDependencies": {
     "@hapi/hapi": "^19.1.1",
