@@ -3,7 +3,7 @@
 const Test = require('tape');
 const Path = require('path');
 const OpenAPI = require('../lib');
-const Hapi = require('hapi');
+const Hapi = require('@hapi/hapi');
 
 Test('test plugin', function (t) {
 

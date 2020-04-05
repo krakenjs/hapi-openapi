@@ -1,6 +1,6 @@
 'use strict';
 
-const Boom = require('boom');
+const Boom = require('@hapi/boom');
 
 const register = function (server, { name, scheme, where, lookup }) {
     server.auth.strategy(name, scheme, {

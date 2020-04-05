@@ -1,7 +1,7 @@
 # hapi-openapi
 
-[![Build Status](https://travis-ci.org/krakenjs/hapi-openapi.svg?branch=master)](https://travis-ci.org/krakenjs/hapi-openapi)  
-[![NPM version](https://badge.fury.io/js/hapi-openapi.png)](http://badge.fury.io/js/hapi-openapi)  
+[![Build Status](https://travis-ci.org/krakenjs/hapi-openapi.svg?branch=master)](https://travis-ci.org/krakenjs/hapi-openapi)
+[![NPM version](https://badge.fury.io/js/hapi-openapi.png)](http://badge.fury.io/js/hapi-openapi)
 
 ### Note: this project was renamed from 'swaggerize-hapi' to 'hapi-openapi'.
 
@@ -49,7 +49,7 @@ You now have a working api and can use something like [SwaggerHub](https://swagg
 ### Manual Usage
 
 ```javascript
-const Hapi = require('hapi');
+const Hapi = require('@hapi/hapi');
 
 const server = new Hapi.Server();
 
@@ -194,7 +194,7 @@ This will construct a `handlers` object from the given `x-hapi-handler` files.
 
 ### X-Hapi-Options
 
-There is now support at the operations level for `x-hapi-options` which represent individual [Hapi Route Optijons](https://github.com/hapijs/hapi/blob/master/API.md#route-options). 
+There is now support at the operations level for `x-hapi-options` which represent individual [Hapi Route Optijons](https://github.com/hapijs/hapi/blob/master/API.md#route-options).
 
 This support is limited to configuration supported by the JSON file type.
 
@@ -321,7 +321,7 @@ and
 ```javascript
 //xauth-strategy.js
 
-const Boom = require('boom');
+const Boom = require('@hapi/boom');
 
 const register = function (server, { name, scheme, where, lookup }) {
     server.auth.strategy(name, /* the scheme to use this strategy with */ scheme, {

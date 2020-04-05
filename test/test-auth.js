@@ -3,7 +3,7 @@
 const Test = require('tape');
 const Path = require('path');
 const OpenAPI = require('../lib');
-const Hapi = require('hapi');
+const Hapi = require('@hapi/hapi');
 const StubAuthTokenScheme = require('./fixtures/lib/stub-auth-token-scheme');
 
 Test('authentication', function (t) {
@@ -80,6 +80,10 @@ Test('authentication', function (t) {
                 }
             });
 
+            server.auth.strategy('api_key2', 'stub-auth-token', {
+                validateFunc: () => ({ isValid: true })
+            });
+
             await server.register({
                 plugin: OpenAPI,
                 options: {
@@ -115,6 +119,10 @@ Test('authentication', function (t) {
                 validateFunc: async function (token) {
                     return { credentials: { scope: [ 'api3:read' ] }, artifacts: { }};
                 }
+            });
+
+            server.auth.strategy('api_key2', 'stub-auth-token', {
+                validateFunc: () => ({ isValid: true })
             });
 
             await server.register({
