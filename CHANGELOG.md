@@ -1,3 +1,7 @@
+### 2.0.0
+
+- [BREAKING] Upgraded hapi support to v19 and other dependencies (#173)
+
 ### 1.2.6
 
 - Reduced package size
