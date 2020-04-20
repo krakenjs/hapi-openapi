@@ -289,7 +289,7 @@ Test('test plugin', function (t) {
                     handlers: Path.join(__dirname, './fixtures/handlers'),
                     docs: {
                         path: '/spec',
-						prefixBasePath: false
+                        prefixBasePath: false
                     }
                 }
             });
@@ -759,8 +759,8 @@ Test('test plugin', function (t) {
         }
     });
 
-    t.test('parse description from api definition', async function(t) {
-        t.test('do not break with empty descriptions', async function(t) {
+    t.test('parse description from api definition', async function (t) {
+        t.test('do not break with empty descriptions', async function (t) {
             t.plan(1);
 
             const server = new Hapi.Server();
@@ -804,7 +804,7 @@ Test('test plugin', function (t) {
             }
         });
 
-        t.test('create the right description for the route', async function(t) {
+        t.test('create the right description for the route', async function (t) {
             t.plan(1);
 
             const server = new Hapi.Server();
@@ -992,6 +992,89 @@ Test('test plugin', function (t) {
                     id: 'string-id',
                     excessive: 42
                 }
+            });
+
+            t.strictEqual(response.statusCode, 200, `${response.request.path} OK.`);
+
+        }
+        catch (error) {
+            t.fail(error.message);
+        }
+
+    });
+
+    t.test('hapi array parameters', async function (t) {
+        t.plan(1);
+
+        const server = new Hapi.Server();
+
+        const api = {
+            swagger: '2.0',
+            info: {
+                title: 'Minimal',
+                version: '1.0.0'
+            },
+            paths: {
+                '/test': {
+                    post: {
+                        parameters: [
+                            {
+                                name: 'body',
+                                in: 'body',
+                                schema: {
+                                    type: "array",
+                                    items: {
+                                        type: "object",
+                                        properties: {
+                                            name: {
+                                                type: "string"
+                                            },
+                                            breed: {
+                                                type: "string"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        ],
+                        responses: {
+                            200: {
+                                description: 'default response'
+                            }
+                        }
+                    }
+                }
+            }
+        };
+
+        try {
+            await server.register({
+                plugin: OpenAPI,
+                options: {
+                    api,
+                    handlers: {
+                        test: {
+                            post() {
+                                return 'test';
+                            }
+                        }
+                    }
+                }
+            });
+
+            let response = await server.inject({
+                method: 'POST',
+                url: '/test',
+                payload: [
+                    {
+                        name: 'Fido',
+                        breed: 'Pointer'
+                    },
+                    {
+                        name: 'Frodo',
+                        breed: 'Beagle'
+                    }
+                ]
             });
 
             t.strictEqual(response.statusCode, 200, `${response.request.path} OK.`);
