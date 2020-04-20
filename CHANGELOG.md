@@ -1,3 +1,8 @@
+### 2.0.1 
+
+- Removed left over console.log file
+- Fixed `unknown` being used on all joi schemas as opposed to just objects
+
 ### 2.0.0
 
 - [BREAKING] Upgraded hapi support to v19 and other dependencies (#173)
