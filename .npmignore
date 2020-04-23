@@ -60,6 +60,9 @@ typings/
 # next.js build output
 .next
 
+# vscode launch and config
+.vscode
+
 # nyc
 .nyc_output
 
