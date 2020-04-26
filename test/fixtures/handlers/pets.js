@@ -1,6 +1,5 @@
 'use strict';
 
-const Hoek = require('@hapi/hoek');
 const Store = require('../lib/store');
 
 module.exports = {
@@ -8,6 +7,6 @@ module.exports = {
         return Store.all();
     },
     post: function (req, h) {
-        return Store.get(Store.put(Hoek.reach(req.payload, 'value')));
+        return Store.get(Store.put(req.payload));
     }
 };
