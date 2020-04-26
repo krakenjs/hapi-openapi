@@ -16,21 +16,21 @@
   },
   "dependencies": {
     "@hapi/hoek": "^9.0.4",
-    "@hapi/joi": "^14.5.0",
-    "dot-prop": "^4.2.0",
-    "enjoi": "^6.0.1",
+    "@hapi/joi": "^17.1.0",
+    "dot-prop": "^5.2.0",
+    "enjoi": "git://github.com/sprootshift/enjoi",
     "js-yaml": "^3.11.0",
     "merge-object-files": "^2.0.0",
     "swagger-parser": "^9.0.1"
   },
   "devDependencies": {
     "@hapi/boom": "^9.1.0",
+    "@hapi/eslint-config-hapi": "^13.0.2",
+    "@hapi/eslint-plugin-hapi": "^4.3.5",
     "@hapi/hapi": "^19.1.1",
-    "eslint": "^4.19.1",
-    "eslint-config-hapi": "^11.1.0",
-    "eslint-plugin-hapi": "^4.1.0",
+    "eslint": "^6.8.0",
     "nyc": "^15.0.0",
-    "tape": "^4.9.0"
+    "tape": "^5.0.0"
   },
   "scripts": {
     "test": "tape test/*.js",

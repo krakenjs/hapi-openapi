@@ -88,7 +88,7 @@ Test('validator special types', function(t) {
 
     const v = validator.makeAll(api.paths['/test/{foo*}'].get.parameters);
 
-    const keys = Object.keys(v.validate.params.describe().children);
+    const keys = Object.keys(v.validate.params.describe().keys);
 
     if (keys.length === 1 && keys[0] === 'foo') {
       return t.pass(`${keys.join(', ')} are valid.`);
