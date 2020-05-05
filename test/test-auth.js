@@ -6,20 +6,20 @@ const OpenAPI = require('../lib');
 const Hapi = require('@hapi/hapi');
 const StubAuthTokenScheme = require('./fixtures/lib/stub-auth-token-scheme');
 
-Test('authentication', function (t) {
+Test('authentication', (t) => {
 
     const buildValidateFunc = function (allowedToken) {
-        return async function (token) {
+        return function (token) {
 
             if (token === allowedToken) {
-                return { credentials: { scope: [ 'api1:read' ] }, artifacts: { }};
+                return { credentials: { scope: ['api1:read'] }, artifacts: { } };
             }
 
             return {};
-        }
+        };
     };
 
-    t.test('token authentication', async function (t) {
+    t.test('token authentication', async (t) => {
         t.plan(2);
 
         const server = new Hapi.Server();
@@ -66,7 +66,7 @@ Test('authentication', function (t) {
         }
     });
 
-    t.test('unauthorized', async function (t) {
+    t.test('unauthorized', async (t) => {
         t.plan(1);
 
         const server = new Hapi.Server();
@@ -75,8 +75,8 @@ Test('authentication', function (t) {
             await server.register({ plugin: StubAuthTokenScheme });
 
             server.auth.strategy('api_key', 'stub-auth-token', {
-                validateFunc: async function (token) {
-                    return { credentials: { scope: [ 'api3:read' ] }, artifacts: { }};
+                validateFunc: function (token) {
+                    return { credentials: { scope: ['api3:read'] }, artifacts: { } };
                 }
             });
 
@@ -107,7 +107,7 @@ Test('authentication', function (t) {
         }
     });
 
-    t.test('with root auth', async function (t) {
+    t.test('with root auth', async (t) => {
         t.plan(1);
 
         const server = new Hapi.Server();
@@ -116,8 +116,8 @@ Test('authentication', function (t) {
             await server.register({ plugin: StubAuthTokenScheme });
 
             server.auth.strategy('api_key', 'stub-auth-token', {
-                validateFunc: async function (token) {
-                    return { credentials: { scope: [ 'api3:read' ] }, artifacts: { }};
+                validateFunc: function (token) {
+                    return { credentials: { scope: ['api3:read'] }, artifacts: { } };
                 }
             });
 
@@ -149,9 +149,9 @@ Test('authentication', function (t) {
     });
 });
 
-Test('authentication with x-auth', function (t) {
+Test('authentication with x-auth', (t) => {
 
-    t.test('authenticated', async function (t) {
+    t.test('authenticated', async (t) => {
         t.plan(2);
 
         const server = new Hapi.Server();
