@@ -26,6 +26,25 @@ Test('validator special types', function(t) {
               description: 'default response'
             }
           }
+        },
+        post: {
+          description: '',
+          parameters: [
+            {
+              name: 'payload',
+              in: 'body',
+              required: true,
+              schema: {
+                type: 'object',
+                required: ['requiredProperty'],
+                properties: {
+                  requiredProperty: {
+                    type: 'string'
+                  }
+                }
+              }
+            }
+          ]
         }
       },
       '/test/{foo*}': {
@@ -59,7 +78,7 @@ Test('validator special types', function(t) {
     );
 
     try {
-      await validate('1995-09-07T10:40:52Z');
+      validate('1995-09-07T10:40:52Z');
       t.pass('valid date-time');
     } catch (error) {
       t.fail(error.message);
@@ -76,7 +95,7 @@ Test('validator special types', function(t) {
     const timestamp = Date.now();
 
     try {
-      await validate(timestamp);
+      validate(timestamp);
       t.fail(`${timestamp} should be invalid.`);
     } catch (error) {
       t.pass(`${timestamp} is invalid.`);
@@ -95,4 +114,30 @@ Test('validator special types', function(t) {
     }
     t.fail(`${keys.join(', ')} are invalid.`);
   });
+
+  t.test('validate missing body parameter', async function(t) {
+      t.plan(1);
+
+      const { validate } = validator.makeValidator(api.paths['/test'].post.parameters[0]);
+
+      try {
+          validate();
+          t.fail('"undefined" should be invalid');
+      } catch (error) {
+          t.equal(error.message, '"payload" is required', "received expected payload error message");
+      }
+  });
+
+  t.test('validate empty object with required property', async function(t) {
+      t.plan(1);
+
+      const { validate } = validator.makeValidator(api.paths['/test'].post.parameters[0]);
+
+      try {
+          validate({});
+          t.fail('"undefined" should be invalid');
+      } catch (error) {
+          t.match(error.message, /"requiredProperty" is required/, "received expected property error message");
+      }
+  })
 });
