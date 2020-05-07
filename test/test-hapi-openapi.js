@@ -153,6 +153,65 @@ Test('test plugin', function (t) {
 
     });
 
+    t.test('register with optional query parameters does not change "request.orig"', async function (t) {
+        t.plan(1);
+
+        const server = new Hapi.Server();
+
+        const api = {
+            swagger: '2.0',
+            info: {
+                title: 'Test Optional Query Params',
+                version: '1.0.0'
+            },
+            paths: {
+                '/test': {
+                    get: {
+                        parameters: [
+                            {
+                                name: 'optionalParameter',
+                                in: 'query',
+                                required: false,
+                                type: 'string',
+                            },
+                        ],
+                        responses: {
+                            200: {
+                                description: 'OK'
+                            }
+                        }
+                    }
+                }
+            }
+        };
+
+        try {
+            await server.register({
+                plugin: OpenAPI,
+                options: {
+                    api,
+                    handlers: {
+                        test: {
+                            get(request, h) {
+                                return request.orig;
+                            }
+                        }
+                    }
+                }
+            });
+
+            const { result } = await server.inject({
+                method: 'GET',
+                url: '/test'
+            });
+
+            t.deepEqual(result.query, {}, 'request.orig was not modified');
+        }
+        catch (error) {
+            t.fail(error.message);
+        }
+    });
+
     t.test('api docs', async function (t) {
         t.plan(3);
 
