@@ -204,8 +204,7 @@ Test('test plugin', function (t) {
                 method: 'GET',
                 url: '/test'
             });
-
-            t.deepEqual(result.query, {}, 'request.orig was not modified');
+            t.ok(Object.entries(result.query).length === 0, 'request.orig was not modified');
         }
         catch (error) {
             t.fail(error.message);
