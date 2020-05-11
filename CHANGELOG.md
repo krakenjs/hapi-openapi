@@ -1,3 +1,8 @@
+### 2.0.2
+
+- Don't set undefined parameters on request in `routeExt` (#180)
+- Update enjoi and @hapi/joi to Joi 17 (#176)
+
 ### 2.0.1 
 
 - Removed left over console.log file
