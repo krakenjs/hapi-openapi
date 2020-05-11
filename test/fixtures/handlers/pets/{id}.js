@@ -1,6 +1,6 @@
 'use strict';
 
-var Store = require('../../lib/store');
+const Store = require('../../lib/store');
 
 module.exports = {
     get: [
