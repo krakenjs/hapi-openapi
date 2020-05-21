@@ -1257,7 +1257,6 @@ Test('test plugin', function (t) {
         }
 
     });
-
 });
 
 Test('multi-register', function (t) {
