@@ -31,4 +31,15 @@ const register = function (server, options) {
     });
 };
 
-module.exports = { register, name: 'stub-auth-token' };
+const buildValidateFunc = function (allowedToken) {
+    return async function (token) {
+
+        if (token === allowedToken) {
+            return { credentials: { scope: [ 'api1:read' ] }, artifacts: { }};
+        }
+
+        return {};
+    }
+};
+
+module.exports = { register, name: 'stub-auth-token', buildValidateFunc};
