@@ -19,172 +19,178 @@ Test('authentication', (t) => {
         };
     };
 
-    t.test('token authentication', async (t) => {
-        t.plan(2);
+    for (const schemaVersion of ['oas2', 'oas3']) {
 
-        const server = new Hapi.Server();
+        t.test('token authentication', async (t) => {
+            t.plan(2);
 
-        try {
-            await server.register({ plugin: StubAuthTokenScheme });
+            const server = new Hapi.Server();
 
-            server.auth.strategy('api_key', 'stub-auth-token', {
-                validateFunc: buildValidateFunc('12345')
-            });
+            try {
+                await server.register({ plugin: StubAuthTokenScheme });
 
-            server.auth.strategy('api_key2', 'stub-auth-token', {
-                validateFunc: buildValidateFunc('98765')
-            });
+                server.auth.strategy('api_key', 'stub-auth-token', {
+                    validateFunc: buildValidateFunc('12345')
+                });
 
-            await server.register({
-                plugin: OpenAPI,
-                options: {
-                    api: Path.join(__dirname, './fixtures/defs/pets_authed.json'),
-                    handlers: Path.join(__dirname, './fixtures/handlers')
-                }
-            });
+                server.auth.strategy('api_key2', 'stub-auth-token', {
+                    validateFunc: buildValidateFunc('98765')
+                });
 
-            let response = await server.inject({
-                method: 'GET',
-                url: '/v1/petstore/pets'
-            });
+                await server.register({
+                    plugin: OpenAPI,
+                    options: {
+                        api: Path.join(__dirname, `./fixtures/defs/${schemaVersion}/pets_authed.json`),
+                        handlers: Path.join(__dirname, './fixtures/handlers')
+                    }
+                });
 
-            t.strictEqual(response.statusCode, 401, `${response.request.path} unauthenticated.`);
+                let response = await server.inject({
+                    method: 'GET',
+                    url: '/v1/petstore/pets'
+                });
 
-            response = await server.inject({
-                method: 'GET',
-                url: '/v1/petstore/pets',
-                headers: {
-                    authorization: '12345',
-                    'custom-header': 'Hello'
-                }
-            });
+                t.strictEqual(response.statusCode, 401, `${schemaVersion} ${response.request.path} unauthenticated.`);
 
-            t.strictEqual(response.statusCode, 200, `${response.request.path} OK when authorized and authenticated.`);
-        }
-        catch (error) {
-            t.fail(error.message);
-        }
-    });
+                response = await server.inject({
+                    method: 'GET',
+                    url: '/v1/petstore/pets',
+                    headers: {
+                        authorization: '12345',
+                        'custom-header': 'Hello'
+                    }
+                });
 
-    t.test('unauthorized', async (t) => {
-        t.plan(1);
+                t.strictEqual(response.statusCode, 200, `${schemaVersion} ${response.request.path} OK when authorized and authenticated.`);
+            }
+            catch (error) {
+                t.fail(error.message);
+            }
+        });
 
-        const server = new Hapi.Server();
+        t.test('unauthorized', async (t) => {
+            t.plan(1);
 
-        try {
-            await server.register({ plugin: StubAuthTokenScheme });
+            const server = new Hapi.Server();
 
-            server.auth.strategy('api_key', 'stub-auth-token', {
-                validateFunc: function (token) {
-                    return { credentials: { scope: ['api3:read'] }, artifacts: { } };
-                }
-            });
+            try {
+                await server.register({ plugin: StubAuthTokenScheme });
 
-            server.auth.strategy('api_key2', 'stub-auth-token', {
-                validateFunc: () => ({ isValid: true })
-            });
+                server.auth.strategy('api_key', 'stub-auth-token', {
+                    validateFunc: function (token) {
+                        return { credentials: { scope: ['api3:read'] }, artifacts: { } };
+                    }
+                });
 
-            await server.register({
-                plugin: OpenAPI,
-                options: {
-                    api: Path.join(__dirname, './fixtures/defs/pets_authed.json'),
-                    handlers: Path.join(__dirname, './fixtures/handlers')
-                }
-            });
+                server.auth.strategy('api_key2', 'stub-auth-token', {
+                    validateFunc: () => ({ isValid: true })
+                });
 
-            const response = await server.inject({
-                method: 'GET',
-                url: '/v1/petstore/pets',
-                headers: {
-                    authorization: '12345'
-                }
-            });
+                await server.register({
+                    plugin: OpenAPI,
+                    options: {
+                        api: Path.join(__dirname, `./fixtures/defs/${schemaVersion}/pets_authed.json`),
+                        handlers: Path.join(__dirname, './fixtures/handlers')
+                    }
+                });
 
-            t.strictEqual(response.statusCode, 403, `${response.request.path} unauthorized.`);
-        }
-        catch (error) {
-            t.fail(error.message);
-        }
-    });
+                const response = await server.inject({
+                    method: 'GET',
+                    url: '/v1/petstore/pets',
+                    headers: {
+                        authorization: '12345'
+                    }
+                });
 
-    t.test('with root auth', async (t) => {
-        t.plan(1);
+                t.strictEqual(response.statusCode, 403, `${schemaVersion} ${response.request.path} unauthorized.`);
+            }
+            catch (error) {
+                t.fail(error.message);
+            }
+        });
 
-        const server = new Hapi.Server();
+        t.test('with root auth', async (t) => {
+            t.plan(1);
 
-        try {
-            await server.register({ plugin: StubAuthTokenScheme });
+            const server = new Hapi.Server();
 
-            server.auth.strategy('api_key', 'stub-auth-token', {
-                validateFunc: function (token) {
-                    return { credentials: { scope: ['api3:read'] }, artifacts: { } };
-                }
-            });
+            try {
+                await server.register({ plugin: StubAuthTokenScheme });
 
-            server.auth.strategy('api_key2', 'stub-auth-token', {
-                validateFunc: () => ({ isValid: true })
-            });
+                server.auth.strategy('api_key', 'stub-auth-token', {
+                    validateFunc: function (token) {
+                        return { credentials: { scope: ['api3:read'] }, artifacts: { } };
+                    }
+                });
 
-            await server.register({
-                plugin: OpenAPI,
-                options: {
-                    api: Path.join(__dirname, './fixtures/defs/pets_root_authed.json'),
-                    handlers: Path.join(__dirname, './fixtures/handlers')
-                }
-            });
+                server.auth.strategy('api_key2', 'stub-auth-token', {
+                    validateFunc: () => ({ isValid: true })
+                });
 
-            const response = await server.inject({
-                method: 'GET',
-                url: '/v1/petstore/pets',
-                headers: {
-                    authorization: '12345'
-                }
-            });
+                await server.register({
+                    plugin: OpenAPI,
+                    options: {
+                        api: Path.join(__dirname, `./fixtures/defs/${schemaVersion}/pets_root_authed.json`),
+                        handlers: Path.join(__dirname, './fixtures/handlers')
+                    }
+                });
 
-            t.strictEqual(response.statusCode, 403, `${response.request.path} unauthorized.`);
-        }
-        catch (error) {
-            t.fail(error.message);
-        }
-    });
+                const response = await server.inject({
+                    method: 'GET',
+                    url: '/v1/petstore/pets',
+                    headers: {
+                        authorization: '12345'
+                    }
+                });
+
+                t.strictEqual(response.statusCode, 403, `${schemaVersion} ${response.request.path} unauthorized.`);
+            }
+            catch (error) {
+                t.fail(error.message);
+            }
+        });
+    }
 });
 
 Test('authentication with x-auth', (t) => {
 
-    t.test('authenticated', async (t) => {
-        t.plan(2);
+    for (const schemaVersion of ['oas2', 'oas3']) {
 
-        const server = new Hapi.Server();
+        t.test('authenticated', async (t) => {
+            t.plan(2);
 
-        try {
-            await server.register({
-                plugin: OpenAPI,
-                options: {
-                    api: Path.join(__dirname, './fixtures/defs/pets_xauthed.json'),
-                    handlers: Path.join(__dirname, './fixtures/handlers')
-                }
-            });
+            const server = new Hapi.Server();
 
-            let response = await server.inject({
-                method: 'GET',
-                url: '/v1/petstore/pets'
-            });
+            try {
 
-            t.strictEqual(response.statusCode, 401, `${response.request.path} unauthenticated.`);
+                await server.register({
+                    plugin: OpenAPI,
+                    options: {
+                        api: Path.join(__dirname, `./fixtures/defs/${schemaVersion}/pets_xauthed.json`),
+                        handlers: Path.join(__dirname, './fixtures/handlers')
+                    }
+                });
 
-            response = await server.inject({
-                method: 'GET',
-                url: '/v1/petstore/pets',
-                headers: {
-                    authorization: '12345'
-                }
-            });
+                let response = await server.inject({
+                    method: 'GET',
+                    url: '/v1/petstore/pets'
+                });
 
-            t.strictEqual(response.statusCode, 200, `${response.request.path} OK when authorized and authenticated.`);
-        }
-        catch (error) {
-            t.fail(error.message);
-        }
-    });
+                t.strictEqual(response.statusCode, 401, `${schemaVersion} ${response.request.path} unauthenticated.`);
 
+                response = await server.inject({
+                    method: 'GET',
+                    url: '/v1/petstore/pets',
+                    headers: {
+                        authorization: '12345'
+                    }
+                });
+
+                t.strictEqual(response.statusCode, 200, `${schemaVersion} ${response.request.path} OK when authorized and authenticated.`);
+            }
+            catch (error) {
+                t.fail(error.message);
+            }
+        });
+    }
 });

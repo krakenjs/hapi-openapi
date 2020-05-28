@@ -31,7 +31,7 @@ Test('api dto mapper', (t) => {
         };
         const oas3 = {
             ...baseOas3Doc,
-            servers: ['/basePath'],
+            servers: [{ url: '/basePath' }],
         };
 
         for (const api of [oas2, oas3]) {
@@ -79,7 +79,7 @@ Test('api dto mapper', (t) => {
         };
         const oas3 = {
             ...baseOas3Doc,
-            servers: ['/basePath/'],
+            servers: [{ url: '/basePath/' }],
         }
 
         for (const api of [oas2, oas3]) {
@@ -98,7 +98,7 @@ Test('api dto mapper', (t) => {
         };
         const oas3 = {
             ...baseOas3Doc,
-            servers: ['basePath'],
+            servers: [{ url: 'basePath' }],
         };
 
         for (const api of [oas2, oas3]) {
@@ -113,7 +113,7 @@ Test('api dto mapper', (t) => {
 
         const oas3 = {
             ...baseOas3Doc,
-            servers: ['/server1', '/server2'],
+            servers: [{ url: '/server1' }, { url: '/server2' }],
         };
 
         const { basePath } = Mapper.toDto(oas3);
