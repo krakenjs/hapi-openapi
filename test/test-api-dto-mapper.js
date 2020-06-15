@@ -677,6 +677,7 @@ Test('api dto mapper', (t) => {
                 '/testPath': {
                     post: {
                         requestBody: {
+                            required: true,
                             content: {
                                 'application/json': {
                                     schema: { type: 'object' },
@@ -687,7 +688,7 @@ Test('api dto mapper', (t) => {
                 },
             };
             const oas3 = { ...baseOas3Doc, paths };
-            const expectedParameter = { name: 'payload', in: 'body', schema: { type: 'object' } };
+            const expectedParameter = { name: 'payload', in: 'body', required: true, schema: { type: 'object' } };
 
             const { operations } = Mapper.toDto(oas3);
 
@@ -745,6 +746,44 @@ Test('api dto mapper', (t) => {
             const { operations } = Mapper.toDto(oas3);
 
             t.deepEqual(operations[0].responses, expectedResponses, 'oas3 response body mapped to schema');
+        });
+
+        t.test('get operation by method and path', async (t) => {
+            t.plan(8);
+
+            const paths = {
+                '/testPath1': {
+                    get: {
+                        description: 'GET testPath1',
+                        response: { '200': { description: 'OK' } }
+                    },
+                    post: {
+                        description: 'POST testPath1',
+                        response: { '200': { description: 'OK' } }
+                    },
+                },
+                '/testPath2': {
+                    get: {
+                        description: 'GET testPath2',
+                        response: { '200': { description: 'OK' } }
+                    },
+                    post: {
+                        description: 'POST testPath2',
+                        response: { '200': { description: 'OK' } }
+                    },
+                }
+            };
+            const oas2 = { ...baseOas2Doc, paths };
+            const oas3 = { ...baseOas3Doc, paths };
+
+            for (const api of [oas2, oas3]) {
+                const dto = Mapper.toDto(api);
+
+                t.equal(dto.getOperation('get', '/testPath1').description, 'GET testPath1', `${api.info.title} retrieved GET /testPath1`);
+                t.equal(dto.getOperation('post', '/testPath1').description, 'POST testPath1', `${api.info.title} retrieved POST /testPath1`);
+                t.equal(dto.getOperation('get', '/testPath2').description, 'GET testPath2', `${api.info.title} retrieved GET /testPath2`);
+                t.equal(dto.getOperation('post', '/testPath2').description, 'POST testPath2', `${api.info.title} retrieved POST /testPath2`);
+            }
         });
     });
 });
