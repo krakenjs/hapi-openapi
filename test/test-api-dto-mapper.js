@@ -22,7 +22,7 @@ Test('api dto mapper', (t) => {
         },
     };
 
-    t.test('maps basePath', async (t) => {
+    t.test('maps relative basePath', async (t) => {
         t.plan(2);
 
         const oas2 = {
@@ -106,6 +106,19 @@ Test('api dto mapper', (t) => {
 
             t.equal(basePath, '/basePath', `${api.info.title} basePath was prefixed`);
         }
+    });
+
+    t.test('maps OAS3 basePath from full url', async (t) => {
+        t.plan(1);
+
+        const oas3 = {
+            ...baseOas3Doc,
+            servers: [{ url: 'http://example.com/basePath' }],
+        };
+
+        const { basePath } = Mapper.toDto(oas3);
+
+        t.equal(basePath, '/basePath', 'oas3 basePath was mapped');
     });
 
     t.test('defaults OAS3 basePath to "/" if multiple servers', async (t) => {

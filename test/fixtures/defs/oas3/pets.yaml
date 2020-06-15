@@ -14,7 +14,7 @@ info:
     name: MIT
     url: 'http://opensource.org/licenses/MIT'
 servers:
-  - url: /v1/petstore
+  - url: http://petstore.swagger.io/v1/petstore
 paths:
   /pets:
     get:

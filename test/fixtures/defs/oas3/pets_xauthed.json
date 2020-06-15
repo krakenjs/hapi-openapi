@@ -17,7 +17,7 @@
     },
     "servers": [
         {
-            "url": "/v1/petstore"
+            "url": "http://petstore.swagger.io/v1/petstore"
         }
     ],
     "paths": {
