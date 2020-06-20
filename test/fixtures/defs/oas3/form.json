@@ -1,0 +1,58 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "version": "1.0.0",
+        "title": "Upload Test",
+        "description": "Form data validation"
+    },
+    "servers": [
+        {
+            "url": "http://example.com/v1/forms"
+        }
+    ],
+    "paths": {
+        "/upload": {
+            "post": {
+                "operationId": "uploadFile",
+                "description": "uploads a file",
+                "requestBody": {
+                    "content": {
+                        "application/x-www-form-unlencoded": {
+                            "schema": {
+                                "type": "object",
+                                "required": ["upload"],
+                                "properties": {
+                                    "upload": {
+                                        "type": "string",
+                                        "format": "binary"
+                                    },
+                                    "name": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "default response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "upload": {
+                                            "type": "string",
+                                            "format": "binary"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
