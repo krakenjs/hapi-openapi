@@ -193,4 +193,41 @@ Test('authentication with x-auth', (t) => {
             }
         });
     }
+
+    t.test('oas3 bearer authentication', async (t) => {
+        t.plan(2);
+
+        const server = new Hapi.Server();
+
+        try {
+
+            await server.register({
+                plugin: OpenAPI,
+                options: {
+                    api: Path.join(__dirname, `./fixtures/defs/oas3/pets_xauthed_bearer.json`),
+                    handlers: Path.join(__dirname, './fixtures/handlers')
+                }
+            });
+
+            let response = await server.inject({
+                method: 'GET',
+                url: '/v1/petstore/pets'
+            });
+
+            t.strictEqual(response.statusCode, 401, `oas3 ${response.request.path} unauthenticated.`);
+
+            response = await server.inject({
+                method: 'GET',
+                url: '/v1/petstore/pets',
+                headers: {
+                    authorization: '12345'
+                }
+            });
+
+            t.strictEqual(response.statusCode, 200, `oas3 ${response.request.path} OK when authorized and authenticated.`);
+        }
+        catch (error) {
+            t.fail(error.message);
+        }
+    });
 });

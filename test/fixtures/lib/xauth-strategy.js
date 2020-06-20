@@ -2,7 +2,7 @@
 
 const Boom = require('@hapi/boom');
 
-const register = function (server, { name, scheme, where, lookup }) {
+const register = function (server, { name, scheme, where, lookup = 'authorization' }) {
     server.auth.strategy(name, scheme, {
         validate: async function (request) {
             const token = request.headers[lookup];
