@@ -17,7 +17,7 @@
   "dependencies": {
     "@hapi/hoek": "^9.0.4",
     "dot-prop": "^5.2.0",
-    "enjoi": "git://github.com/sprootshift/enjoi",
+    "enjoi": "^9.0.0",
     "joi": "^17.1.0",
     "js-yaml": "^3.11.0",
     "merge-object-files": "^2.0.0",
