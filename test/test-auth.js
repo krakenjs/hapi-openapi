@@ -3,22 +3,10 @@
 const Test = require('tape');
 const Path = require('path');
 const OpenAPI = require('../lib');
-const Hapi = require('hapi');
+const Hapi = require('@hapi/hapi');
 const StubAuthTokenScheme = require('./fixtures/lib/stub-auth-token-scheme');
 
 Test('authentication', function (t) {
-
-    const buildValidateFunc = function (allowedToken) {
-        return async function (token) {
-
-            if (token === allowedToken) {
-                return { credentials: { scope: [ 'api1:read' ] }, artifacts: { }};
-            }
-
-            return {};
-        }
-    };
-
     t.test('token authentication', async function (t) {
         t.plan(2);
 
@@ -28,11 +16,11 @@ Test('authentication', function (t) {
             await server.register({ plugin: StubAuthTokenScheme });
 
             server.auth.strategy('api_key', 'stub-auth-token', {
-                validateFunc: buildValidateFunc('12345')
+                validateFunc: StubAuthTokenScheme.buildValidateFunc('12345')
             });
 
             server.auth.strategy('api_key2', 'stub-auth-token', {
-                validateFunc: buildValidateFunc('98765')
+                validateFunc: StubAuthTokenScheme.buildValidateFunc('98765')
             });
 
             await server.register({
@@ -80,6 +68,10 @@ Test('authentication', function (t) {
                 }
             });
 
+            server.auth.strategy('api_key2', 'stub-auth-token', {
+                validateFunc: () => ({ isValid: true })
+            });
+
             await server.register({
                 plugin: OpenAPI,
                 options: {
@@ -115,6 +107,10 @@ Test('authentication', function (t) {
                 validateFunc: async function (token) {
                     return { credentials: { scope: [ 'api3:read' ] }, artifacts: { }};
                 }
+            });
+
+            server.auth.strategy('api_key2', 'stub-auth-token', {
+                validateFunc: () => ({ isValid: true })
             });
 
             await server.register({

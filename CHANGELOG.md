@@ -1,3 +1,21 @@
+### 3.0.0
+
+- Preliminary OpenAPI 3 support
+
+### 2.0.2
+
+- Don't set undefined parameters on request in `routeExt` (#180)
+- Update enjoi and @hapi/joi to Joi 17 (#176)
+
+### 2.0.1 
+
+- Removed left over console.log file
+- Fixed `unknown` being used on all joi schemas as opposed to just objects
+
+### 2.0.0
+
+- [BREAKING] Upgraded hapi support to v19 and other dependencies (#173)
+
 ### 1.2.6
 
 - Reduced package size

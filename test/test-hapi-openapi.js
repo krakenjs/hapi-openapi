@@ -3,7 +3,7 @@
 const Test = require('tape');
 const Path = require('path');
 const OpenAPI = require('../lib');
-const Hapi = require('hapi');
+const Hapi = require('@hapi/hapi');
 
 Test('test plugin', function (t) {
 
@@ -153,6 +153,64 @@ Test('test plugin', function (t) {
 
     });
 
+    t.test('register with optional query parameters does not change "request.orig"', async function (t) {
+        t.plan(1);
+
+        const server = new Hapi.Server();
+
+        const api = {
+            swagger: '2.0',
+            info: {
+                title: 'Test Optional Query Params',
+                version: '1.0.0'
+            },
+            paths: {
+                '/test': {
+                    get: {
+                        parameters: [
+                            {
+                                name: 'optionalParameter',
+                                in: 'query',
+                                required: false,
+                                type: 'string',
+                            },
+                        ],
+                        responses: {
+                            200: {
+                                description: 'OK'
+                            }
+                        }
+                    }
+                }
+            }
+        };
+
+        try {
+            await server.register({
+                plugin: OpenAPI,
+                options: {
+                    api,
+                    handlers: {
+                        test: {
+                            get(request, h) {
+                                return request.orig;
+                            }
+                        }
+                    }
+                }
+            });
+
+            const { result } = await server.inject({
+                method: 'GET',
+                url: '/test'
+            });
+            t.ok(Object.entries(result.query).length === 0, 'request.orig was not modified');
+        }
+        catch (error) {
+            t.fail(error.message);
+        }
+    });
+
     t.test('api docs', async function (t) {
         t.plan(3);
 
@@ -289,7 +347,7 @@ Test('test plugin', function (t) {
                     handlers: Path.join(__dirname, './fixtures/handlers'),
                     docs: {
                         path: '/spec',
-						prefixBasePath: false
+                        prefixBasePath: false
                     }
                 }
             });
@@ -759,8 +817,8 @@ Test('test plugin', function (t) {
         }
     });
 
-    t.test('parse description from api definition', async function(t) {
-        t.test('do not break with empty descriptions', async function(t) {
+    t.test('parse description from api definition', async function (t) {
+        t.test('do not break with empty descriptions', async function (t) {
             t.plan(1);
 
             const server = new Hapi.Server();
@@ -804,7 +862,7 @@ Test('test plugin', function (t) {
             }
         });
 
-        t.test('create the right description for the route', async function(t) {
+        t.test('create the right description for the route', async function (t) {
             t.plan(1);
 
             const server = new Hapi.Server();
@@ -914,6 +972,167 @@ Test('test plugin', function (t) {
                 payload: {
                     id: 1 //won't fail because parse is false
                 }
+            });
+
+            t.strictEqual(response.statusCode, 200, `${response.request.path} OK.`);
+
+        }
+        catch (error) {
+            t.fail(error.message);
+        }
+
+    });
+
+    t.test('hapi allowUnknown request payload properties', async function (t) {
+        t.plan(1);
+
+        const server = new Hapi.Server();
+
+        const api = {
+            swagger: '2.0',
+            info: {
+                title: 'Minimal',
+                version: '1.0.0'
+            },
+            paths: {
+                '/test': {
+                    post: {
+                        'x-hapi-options': {
+                            validate: {
+                                options: {
+                                    allowUnknown: true
+                                }
+                            }
+                        },
+                        parameters: [
+                            {
+                                name: 'thing',
+                                in: 'body',
+                                schema: {
+                                    type: 'object',
+                                    properties: {
+                                        id: {
+                                            type: 'string'
+                                        }
+                                    }
+                                }
+                            }
+                        ],
+                        responses: {
+                            200: {
+                                description: 'default response'
+                            }
+                        }
+                    }
+                }
+            }
+        };
+
+        try {
+            await server.register({
+                plugin: OpenAPI,
+                options: {
+                    api,
+                    handlers: {
+                        test: {
+                            post() {
+                                return 'test';
+                            }
+                        }
+                    }
+                }
+            });
+
+            let response = await server.inject({
+                method: 'POST',
+                url: '/test',
+                payload: {
+                    id: 'string-id',
+                    excessive: 42
+                }
+            });
+
+            t.strictEqual(response.statusCode, 200, `${response.request.path} OK.`);
+
+        }
+        catch (error) {
+            t.fail(error.message);
+        }
+
+    });
+
+    t.test('hapi array parameters', async function (t) {
+        t.plan(1);
+
+        const server = new Hapi.Server();
+
+        const api = {
+            swagger: '2.0',
+            info: {
+                title: 'Minimal',
+                version: '1.0.0'
+            },
+            paths: {
+                '/test': {
+                    post: {
+                        parameters: [
+                            {
+                                name: 'body',
+                                in: 'body',
+                                schema: {
+                                    type: "array",
+                                    items: {
+                                        type: "object",
+                                        properties: {
+                                            name: {
+                                                type: "string"
+                                            },
+                                            breed: {
+                                                type: "string"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        ],
+                        responses: {
+                            200: {
+                                description: 'default response'
+                            }
+                        }
+                    }
+                }
+            }
+        };
+
+        try {
+            await server.register({
+                plugin: OpenAPI,
+                options: {
+                    api,
+                    handlers: {
+                        test: {
+                            post() {
+                                return 'test';
+                            }
+                        }
+                    }
+                }
+            });
+
+            let response = await server.inject({
+                method: 'POST',
+                url: '/test',
+                payload: [
+                    {
+                        name: 'Fido',
+                        breed: 'Pointer'
+                    },
+                    {
+                        name: 'Frodo',
+                        breed: 'Beagle'
+                    }
+                ]
             });
 
             t.strictEqual(response.statusCode, 200, `${response.request.path} OK.`);

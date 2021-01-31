@@ -1,7 +1,7 @@
 {
   "name": "hapi-openapi",
   "description": "Design-driven apis with OpenAPI (formerly Swagger) 2.0 and hapi.",
-  "version": "1.2.6",
+  "version": "3.0.0",
   "author": "Trevor Livingston <tlivings@gmail.com>",
   "repository": {
     "type": "git",
@@ -12,25 +12,27 @@
     "registry": "https://registry.npmjs.org"
   },
   "engines": {
-    "node": ">=8"
+    "node": ">=12"
   },
   "dependencies": {
-    "dot-prop": "^4.2.0",
-    "enjoi": "^4.0.0",
-    "hoek": "^5.0.3",
-    "joi": "^13.6.0",
+    "@hapi/hoek": "^9.0.4",
+    "dot-prop": "^5.2.0",
+    "enjoi": "^9.0.0",
+    "joi": "^17.1.0",
     "js-yaml": "^3.11.0",
     "merge-object-files": "^2.0.0",
-    "swagger-parser": "^4.1.0"
+    "swagger-parser": "^9.0.1"
   },
   "devDependencies": {
-    "boom": "^7.2.0",
-    "eslint": "^4.19.1",
-    "eslint-config-hapi": "^11.1.0",
+    "@hapi/boom": "^9.1.0",
+    "@hapi/eslint-config-hapi": "^13.0.2",
+    "@hapi/eslint-plugin-hapi": "^4.3.5",
+    "@hapi/hapi": "^20.0.3",
+    "eslint": "^6.8.0",
+    "eslint-config-hapi": "^12.0.0",
     "eslint-plugin-hapi": "^4.1.0",
-    "hapi": "^17.4.0",
-    "nyc": "^13.3.0",
-    "tape": "^4.9.0"
+    "nyc": "^15.0.0",
+    "tape": "^5.0.0"
   },
   "scripts": {
     "test": "tape test/*.js",

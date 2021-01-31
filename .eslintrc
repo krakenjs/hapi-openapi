@@ -1,7 +1,7 @@
 {
   "extends": ["eslint:recommended", "eslint-config-hapi"],
   "parserOptions": {
-    "ecmaVersion": 2017,
+    "ecmaVersion": 2018,
     "sourceType": "module"
   },
   "env": {
