@@ -5,7 +5,7 @@
 
 ### Note: this project was renamed from 'swaggerize-hapi' to 'hapi-openapi'.
 
-`hapi-openapi` is a design-driven approach to building RESTful services with [OpenAPI (Swagger)](http://openapis.org) and [Hapi](http://hapijs.com) (OpenAPI 3.0 support coming soon).
+`hapi-openapi` is a design-driven approach to building RESTful services with [OpenAPI (Swagger)](http://openapis.org) and [Hapi](http://hapijs.com).
 
 `hapi-openapi` provides the following features:
 
