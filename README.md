@@ -50,16 +50,23 @@ You now have a working api and can use something like [SwaggerHub](https://swagg
 
 ```javascript
 const Hapi = require('@hapi/hapi');
+const Path = require("path");
 
-const server = new Hapi.Server();
+const server = new Hapi.Server( { port: 3000 } );
 
-await server.register({
+async function init () {
+  await server.register({
     plugin: require('hapi-openapi'),
     options: {
         api: Path.join(__dirname, './config/pets.json'),
         handlers: Path.join(__dirname, './handlers')
     }
-});
+  });
+  await server.start();
+  console.log( server.info.uri );
+}
+
+init();
 ```
 
 ### Hapi Plugin
