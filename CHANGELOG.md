@@ -1,3 +1,7 @@
+### 3.0.0
+
+- Preliminary OpenAPI 3 support
+
 ### 2.0.2
 
 - Don't set undefined parameters on request in `routeExt` (#180)
