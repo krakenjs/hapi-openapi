@@ -9,7 +9,7 @@ const register = function (server, options) {
                 const token = request.headers.authorization;
 
                 if (!token) {
-                    throw Boom.unauthorized();
+                    throw Boom.unauthorized(null, 'stub-auth-token');
                 }
 
                 try {

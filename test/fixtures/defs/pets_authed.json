@@ -39,7 +39,8 @@
                         "api_key2": [
                             "api2:read"
                         ]
-                    }
+                    },
+                    {}
                 ],
                 "description": "Returns all pets from the system that the user has access to",
                 "operationId": "findPets",
@@ -96,6 +97,18 @@
                 }
             },
             "post": {
+                "security": [
+                    {
+                        "api_key": [
+                            "api1:read"
+                        ]
+                    },
+                    {
+                        "api_key2": [
+                            "api2:read"
+                        ]
+                    }
+                ],
                 "description": "Creates a new pet in the store.  Duplicates are allowed",
                 "operationId": "addPet",
                 "produces": [
