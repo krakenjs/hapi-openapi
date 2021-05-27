@@ -63,5 +63,3 @@ typings/
 # nyc
 .nyc_output
 
-#package-lock
-package-lock.json
