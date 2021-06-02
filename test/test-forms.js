@@ -6,9 +6,9 @@ const OpenAPI = require('../lib');
 const Hapi = require('@hapi/hapi');
 
 
-Test('form data', function (t) {
+Test('form data', (t) => {
 
-    t.test('upload', async function (t) {
+    t.test('upload', async (t) => {
         t.plan(1);
 
         try {
@@ -21,7 +21,7 @@ Test('form data', function (t) {
                     handlers: {
                         upload: {
                             post: function (req, h) {
-                                return  {
+                                return {
                                     upload: req.payload.toString()
                                 };
                             }
@@ -48,7 +48,7 @@ Test('form data', function (t) {
 
     });
 
-    t.test('bad content type', async function (t) {
+    t.test('bad content type', async (t) => {
         t.plan(1);
 
         try {
@@ -83,7 +83,7 @@ Test('form data', function (t) {
     });
 
 
-    t.test('invalid payload', async function (t) {
+    t.test('invalid payload', async (t) => {
         t.plan(1);
 
         try {
@@ -112,7 +112,7 @@ Test('form data', function (t) {
                 payload: 'name=thing&upload='
             });
 
-            t.strictEqual(response.statusCode, 400, `${response.request.path} validation error.`);
+            t.strictEqual(response.statusCode, 422, `${response.request.path} validation error.`);
         }
         catch (error) {
             t.fail(error.message);
