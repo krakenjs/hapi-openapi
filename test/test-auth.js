@@ -8,7 +8,7 @@ const StubAuthTokenScheme = require('./fixtures/lib/stub-auth-token-scheme');
 
 Test('authentication', function (t) {
     t.test('token authentication', async function (t) {
-        t.plan(2);
+        t.plan(3);
 
         const server = new Hapi.Server();
 
@@ -34,6 +34,17 @@ Test('authentication', function (t) {
             let response = await server.inject({
                 method: 'GET',
                 url: '/v1/petstore/pets'
+            });
+
+            t.strictEqual(response.statusCode, 200, `${response.request.path} unauthenticated.`);
+
+            response = await server.inject({
+                method: 'POST',
+                url: '/v1/petstore/pets',
+                payload: {
+                    id: '0',
+                    name: 'Cat'
+                }
             });
 
             t.strictEqual(response.statusCode, 401, `${response.request.path} unauthenticated.`);
