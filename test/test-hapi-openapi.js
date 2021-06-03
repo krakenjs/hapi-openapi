@@ -498,7 +498,7 @@ Test('test plugin', function (t) {
     });
 
     t.test('routes', async function (t) {
-        t.plan(5);
+        t.plan(6);
 
         const server = new Hapi.Server();
 
@@ -552,6 +552,13 @@ Test('test plugin', function (t) {
             });
 
             t.strictEqual(response.statusCode, 200, `${response.request.path} OK.`);
+
+            response = await server.inject({
+                method: 'GET',
+                url: '/v1/petstore/path.with.period'
+            });
+
+            t.strictEqual(response.statusCode, 204, `${response.request.path} OK.`);
 
         }
         catch (error) {

@@ -28,6 +28,17 @@
         "application/json"
     ],
     "paths": {
+        "/path.with.period": {
+            "get": {
+                "description": "Test a path with periods",
+                "parameters": [],
+                "responses": {
+                    "204": {
+                        "description": "empty response"
+                    }
+                }
+            }
+        },
         "/pets": {
             "get": {
                 "description": "Returns all pets from the system that the user has access to",
