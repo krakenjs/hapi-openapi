@@ -1,6 +1,6 @@
-'use strict';
+"use strict";
 
-const Store = require('../../lib/store');
+const Store = require("../../lib/store");
 
 module.exports = {
     get: [
@@ -9,10 +9,10 @@ module.exports = {
         },
         function handler(req, h) {
             return req.pre.p1;
-        }
+        },
     ],
     delete: function (req, h) {
         Store.delete(req.params.id);
         return Store.all();
-    }
+    },
 };

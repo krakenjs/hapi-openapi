@@ -1,6 +1,6 @@
-'use strict';
+"use strict";
 
-const Store = require('../lib/store');
+const Store = require("../lib/store");
 
 module.exports = {
     get: function (req, h) {
@@ -8,5 +8,5 @@ module.exports = {
     },
     post: function (req, h) {
         return Store.get(Store.put(req.payload));
-    }
+    },
 };

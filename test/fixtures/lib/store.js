@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 var store = [];
 
@@ -15,5 +15,5 @@ module.exports = {
     },
     all: function () {
         return store;
-    }
+    },
 };

@@ -14,19 +14,13 @@
             "name": "MIT",
             "url": "http://opensource.org/licenses/MIT"
         },
-        "x-meta" : "test"
+        "x-meta": "test"
     },
     "host": "petstore.swagger.io",
     "basePath": "/v1/petstore",
-    "schemes": [
-        "http"
-    ],
-    "consumes": [
-        "application/json"
-    ],
-    "produces": [
-        "application/json"
-    ],
+    "schemes": ["http"],
+    "consumes": ["application/json"],
+    "produces": ["application/json"],
     "paths": {
         "/path.with.period": {
             "get": {
@@ -92,9 +86,7 @@
             "post": {
                 "description": "Creates a new pet in the store.  Duplicates are allowed",
                 "operationId": "addPet",
-                "produces": [
-                    "application/json"
-                ],
+                "produces": ["application/json"],
                 "parameters": [
                     {
                         "name": "pet",
@@ -187,10 +179,7 @@
     "definitions": {
         "pet": {
             "type": "object",
-            "required": [
-                "id",
-                "name"
-            ],
+            "required": ["id", "name"],
             "properties": {
                 "id": {
                     "type": "integer",
@@ -206,9 +195,7 @@
         },
         "newPet": {
             "type": "object",
-            "required": [
-                "name"
-            ],
+            "required": ["name"],
             "properties": {
                 "id": {
                     "type": "integer",
@@ -224,10 +211,7 @@
         },
         "errorModel": {
             "type": "object",
-            "required": [
-                "code",
-                "message"
-            ],
+            "required": ["code", "message"],
             "properties": {
                 "code": {
                     "type": "integer",

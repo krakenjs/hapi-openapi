@@ -32,12 +32,15 @@
     "eslint-config-hapi": "^12.0.0",
     "eslint-plugin-hapi": "^4.1.0",
     "nyc": "^15.0.0",
+    "prettier": "^2.3.0",
     "tape": "^5.0.0"
   },
   "scripts": {
     "test": "tape test/*.js",
     "cover": "nyc npm test",
-    "lint": "eslint lib"
+    "lint": "eslint lib",
+    "format": "prettier -w lib test",
+    "format-check": "prettier --check lib test"
   },
   "license": "Apache-2.0",
   "main": "./lib/index",
