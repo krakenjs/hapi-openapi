@@ -87,8 +87,8 @@ The plugin will be registered as `openapi` on `server.plugins` with the followin
     - `prefixBasePath` - prefix path of docs with he OpenAPI document's `basePath` value. Defaults to true.
 - `handlers` - either a string directory structure for route handlers, object, or not set if using `x-hapi-handler`.
 - `extensions` - an array of file extension types to use when scanning for handlers. Defaults to `['js']`.
-- `vhost` - *optional* domain string (see [hapi route options](http://hapijs.com/api#route-options)).
-- `cors` - *optional* cors setting (see [hapi route options](http://hapijs.com/api#route-options)).
+- `vhost` - *optional* domain string (see [hapi route options](http://hapi.dev/api#route-options)).
+- `cors` - *optional* cors setting (see [hapi route options](http://hapi.dev/api#route-options)).
 - `outputvalidation` - *optional* validate response data.
 
 ### Mount Path
