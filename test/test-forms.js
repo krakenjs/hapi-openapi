@@ -1,14 +1,14 @@
-'use strict';
+import Test from 'tape';
+import Path from 'path';
+import OpenAPI from '../lib/index.js';
+import Hapi from '@hapi/hapi';
 
-const Test = require('tape');
-const Path = require('path');
-const OpenAPI = require('../lib');
-const Hapi = require('@hapi/hapi');
+import { fileURLToPath } from 'url';
+const __dirname = Path.dirname(fileURLToPath(import.meta.url));
 
+Test('form data', (t) => {
 
-Test('form data', function (t) {
-
-    t.test('upload', async function (t) {
+    t.test('upload', async (t) => {
         t.plan(1);
 
         try {
@@ -48,7 +48,7 @@ Test('form data', function (t) {
 
     });
 
-    t.test('bad content type', async function (t) {
+    t.test('bad content type', async (t) => {
         t.plan(1);
 
         try {
@@ -83,7 +83,7 @@ Test('form data', function (t) {
     });
 
 
-    t.test('invalid payload', async function (t) {
+    t.test('invalid payload', async (t) => {
         t.plan(1);
 
         try {

@@ -1,14 +1,14 @@
-'use strict';
+import Test from 'tape';
+import Path from 'path';
+import OpenAPI from '../lib/index.js';
+import Hapi from '@hapi/hapi';
 
-const Test = require('tape');
-const Path = require('path');
-const OpenAPI = require('../lib');
-const Hapi = require('@hapi/hapi');
+import { fileURLToPath } from "url";
+const __dirname = Path.dirname(fileURLToPath(import.meta.url));
 
+Test('x-hapi-options', (t) => {
 
-Test('x-hapi-options', function (t) {
-
-    t.test('overrides', async function (t) {
+    t.test('overrides', async (t) => {
         t.plan(1);
 
         try {

@@ -1,6 +1,4 @@
-'use strict';
-
-const Boom = require('@hapi/boom');
+import Boom from '@hapi/boom';
 
 const register = function (server, { name, scheme, where, lookup }) {
     server.auth.strategy(name, scheme, {
@@ -16,4 +14,4 @@ const register = function (server, { name, scheme, where, lookup }) {
     });
 };
 
-module.exports = { register, name: 'x-auth-strategy' };
+export default { register, name: 'x-auth-strategy' };

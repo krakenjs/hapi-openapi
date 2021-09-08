@@ -1,6 +1,4 @@
-'use strict';
-
-module.exports = {
+export default {
     get: function (req, h) {
         return null
     }

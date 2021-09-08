@@ -1,8 +1,6 @@
-'use strict';
+import Store from '../lib/store.js';
 
-const Store = require('../lib/store');
-
-module.exports = {
+export default {
     get: function (req, h) {
         return Store.all();
     },

@@ -1,6 +1,4 @@
-'use strict';
-
-var Boom = require('@hapi/boom');
+import Boom from '@hapi/boom';
 
 const register = function (server, { name  }) {
     server.auth.scheme(name /*apiKey*/, (server, { validate }) => {
@@ -12,4 +10,4 @@ const register = function (server, { name  }) {
     });
 };
 
-module.exports = { register, name: 'x-auth-scheme' };
+export default { register, name: 'x-auth-scheme' };

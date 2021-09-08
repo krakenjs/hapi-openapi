@@ -1674,10 +1674,10 @@ make-dir@^3.0.0, make-dir@^3.0.2:
   dependencies:
     semver "^6.0.0"
 
-merge-object-files@^2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/merge-object-files/-/merge-object-files-2.0.0.tgz#e020878caf340a1ac23bb46bc189a1128118bc43"
-  integrity sha512-3PqpQPQ9x8ONbUB30TnQw6+giAynlr7zPuGX0RCTHp/oxG0R0A6+WIFH7soFLoZnIKomA7thQrZ+oYFRNzzTww==
+merge-object-files-es6@^1.0.0:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/merge-object-files-es6/-/merge-object-files-es6-1.0.3.tgz#16280851afe211dd1b4a45db8cb2112f81c43aac"
+  integrity sha512-A0PGfIlDRa88vSNuy+1yG78wkloj1HBcfP+RCX5X0T+tVCVV8iMjTA2W6mz6tjkC16EL93+FDj29RkabgJJ3zQ==
 
 mime-db@1.x.x:
   version "1.49.0"
