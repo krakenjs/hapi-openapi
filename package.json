@@ -1,7 +1,7 @@
 {
   "name": "hapi-openapi-es6",
   "description": "Design-driven apis with OpenAPI (formerly Swagger) 2.0 and hapi.",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "author": "Trevor Livingston <tlivings@gmail.com>",
   "type": "module",
   "repository": {
