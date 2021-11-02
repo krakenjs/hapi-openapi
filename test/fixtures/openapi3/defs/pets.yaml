@@ -83,6 +83,9 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/newPet'
+          text/x-yaml:
+            schema:
+              $ref: '#/components/schemas/newPet'
         required: true
       responses:
         200:
