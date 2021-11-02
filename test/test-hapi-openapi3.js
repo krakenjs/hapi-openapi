@@ -74,7 +74,6 @@ Test('test plugin', function (t) {
         }
     });
 
-
     t.test('validate yaml', async function (t) {
         t.plan(2);
 
@@ -111,7 +110,6 @@ Test('test plugin', function (t) {
         }
 
     });
-
 
     t.test('routes with output validation', async function (t) {
         t.plan(5);

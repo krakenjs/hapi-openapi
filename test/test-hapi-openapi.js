@@ -496,6 +496,7 @@ Test('test plugin', function (t) {
         }
 
     });
+
     t.test('routes', async function (t) {
         t.plan(5);
 
