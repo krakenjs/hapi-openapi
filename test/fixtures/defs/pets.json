@@ -22,7 +22,8 @@
         "http"
     ],
     "consumes": [
-        "application/json"
+        "application/json",
+        "text/x-yaml"
     ],
     "produces": [
         "application/json"
