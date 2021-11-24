@@ -8,7 +8,7 @@ const StubAuthTokenScheme = require('./fixtures/lib/stub-auth-token-scheme');
 
 Test('test plugin', function (t) {
     t.test('basic API', async function (t) {
-        t.plan(8);
+        t.plan(9);
 
         const server = new Hapi.Server();
 
@@ -65,6 +65,13 @@ Test('test plugin', function (t) {
             response = await server.inject({
                 method: 'DELETE',
                 url: '/v1/petstore/pets/0'
+            });
+
+            t.strictEqual(response.statusCode, 200, `${response.request.path} OK.`);
+
+            response = await server.inject({
+                method: 'GET',
+                url: '/v1/petstore/pets?filter%5Bbreeds%5D=bully&filter%5Bbreeds%5D=chartreux'
             });
 
             t.strictEqual(response.statusCode, 200, `${response.request.path} OK.`);
