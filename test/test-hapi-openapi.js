@@ -720,6 +720,66 @@ Test('test plugin', function (t) {
 
     });
 
+    t.test('routes x-handler handlersPath', async function (t) {
+        t.plan(5);
+
+        const server = new Hapi.Server();
+
+        try {
+            await server.register({
+                plugin: OpenAPI,
+                options: {
+                    api: Path.join(__dirname, './fixtures/defs/pets_xhandlers_handlersPath.json'),
+                    handlersPath: Path.join(__dirname, './fixtures/handlers')
+                }
+            });
+
+            let response = await server.inject({
+                method: 'GET',
+                url: '/v1/petstore/pets'
+            });
+
+            t.strictEqual(response.statusCode, 200, `${response.request.path} OK.`);
+
+            response = await server.inject({
+                method: 'POST',
+                url: '/v1/petstore/pets',
+                payload: {
+                    id: '0',
+                    name: 'Cat'
+                }
+            });
+
+            t.strictEqual(response.statusCode, 200, `${response.request.path} OK.`);
+
+            response = await server.inject({
+                method: 'GET',
+                url: '/v1/petstore/pets/0'
+            });
+
+            t.strictEqual(response.statusCode, 200, `${response.request.path} OK.`);
+
+            response = await server.inject({
+                method: 'DELETE',
+                url: '/v1/petstore/pets/0'
+            });
+
+            t.strictEqual(response.statusCode, 200, `${response.request.path} OK.`);
+
+            response = await server.inject({
+                method: 'GET',
+                url: '/v1/petstore/firstPet'
+            });
+
+            t.strictEqual(response.statusCode, 200, `${response.request.path} OK.`);
+
+        }
+        catch (error) {
+            t.fail(error.message);
+        }
+
+    });
+
 
     t.test('query validation', async function (t) {
 
