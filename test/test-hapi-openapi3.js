@@ -64,6 +64,7 @@ Test('test plugin', function (t) {
 
             response = await server.inject({
                 method: 'DELETE',
+                headers: { 'x-custom-header': 'test' },
                 url: '/v1/petstore/pets/0'
             });
 
@@ -126,6 +127,7 @@ Test('test plugin', function (t) {
 
             response = await server.inject({
                 method: 'DELETE',
+                headers: { 'x-custom-header': 'test' },
                 url: '/v1/petstore/pets/0'
             });
 
@@ -294,6 +296,7 @@ Test('test plugin', function (t) {
 
             response = await server.inject({
                 method: 'DELETE',
+                headers: { 'x-custom-header': 'test' },
                 url: '/v1/petstore/pets/0'
             });
 
