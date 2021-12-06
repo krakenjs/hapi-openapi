@@ -35,6 +35,17 @@ paths:
         schema:
           type: integer
           format: int32
+      - name: filter
+        in: query
+        description: maximum number of results to return
+        schema:
+          type: object
+          properties:
+            breeds:
+              type: array
+              items:
+                type: string
+        style: deepObject
       responses:
         200:
           description: pet response
