@@ -75,6 +75,43 @@ Test('test plugin', function (t) {
         }
     });
 
+    t.test('validate yaml', async function (t) {
+        t.plan(2);
+
+        const server = new Hapi.Server();
+
+        try {           
+            await server.register({
+                plugin: OpenAPI,
+                options: {
+                    api: Path.join(__dirname, './fixtures/openapi3/defs/pets.yaml'),
+                    handlers: Path.join(__dirname, './fixtures/handlers')
+                }
+            });
+            let response = await server.inject({
+                method: 'POST',
+                headers: {"content-type": "text/x-yaml"},
+                url: '/v1/petstore/pets',
+                payload: "id: '0'\nname: 'Cat'"
+            });
+
+            t.strictEqual(response.statusCode, 200, `${response.request.path} OK.`);
+
+            response = await server.inject({
+                method: 'POST',
+                headers: {"content-type": "text/x-yaml"},
+                url: '/v1/petstore/pets',
+                payload: `id: '0'\nname_does_not_exists: 'Cat'`
+            });
+
+            t.strictEqual(response.statusCode, 400, `${response.request.path} payload bad.`);
+        }
+        catch (error) {
+            t.fail(error.message);
+        }
+
+    });
+
     t.test('routes with output validation', async function (t) {
         t.plan(5);
 
