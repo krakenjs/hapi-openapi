@@ -1,13 +1,14 @@
-'use strict';
+import Test from 'tape';
+import Path from 'path';
+import OpenAPI from '../lib/index.js';
+import Hapi from '@hapi/hapi';
+import StubAuthTokenScheme from './fixtures/lib/stub-auth-token-scheme.js';
 
-const Test = require('tape');
-const Path = require('path');
-const OpenAPI = require('../lib');
-const Hapi = require('@hapi/hapi');
-const StubAuthTokenScheme = require('./fixtures/lib/stub-auth-token-scheme');
+import { fileURLToPath } from 'url';
+const __dirname = Path.dirname(fileURLToPath(import.meta.url));
 
-Test('test plugin', function (t) {
-    t.test('basic API', async function (t) {
+Test('test plugin', (t) => {
+    t.test('basic API', async (t) => {
         t.plan(8);
 
         const server = new Hapi.Server();
@@ -32,7 +33,7 @@ Test('test plugin', function (t) {
                 url: '/v1/petstore/pets'
             });
 
-            t.strictEqual(response.statusCode, 200, `${response.request.path} OK.`);            
+            t.strictEqual(response.statusCode, 200, `${response.request.path} OK.`);
 
             response = await server.inject({
                 method: 'POST',
@@ -75,7 +76,7 @@ Test('test plugin', function (t) {
         }
     });
 
-    t.test('routes with output validation', async function (t) {
+    t.test('routes with output validation', async (t) => {
         t.plan(5);
 
         const server = new Hapi.Server();
@@ -139,7 +140,7 @@ Test('test plugin', function (t) {
         }
     });
 
-    t.test('output validation fails', async function (t) {
+    t.test('output validation fails', async (t) => {
         t.plan(1);
 
         const server = new Hapi.Server();
@@ -174,7 +175,7 @@ Test('test plugin', function (t) {
         }
     });
 
-    t.test('additional type properties', async function (t) {
+    t.test('additional type properties', async (t) => {
         t.plan(11);
 
         const server = new Hapi.Server();
@@ -231,7 +232,7 @@ Test('test plugin', function (t) {
             });
 
             t.strictEqual(response.statusCode, 400, `${response.request.path} payload bad.`);
-            
+
             response = await server.inject({
                 method: 'POST',
                 url: '/v1/petstore/pets',
@@ -261,7 +262,7 @@ Test('test plugin', function (t) {
                 url: '/v1/petstore/pets'
             });
 
-            t.strictEqual(response.statusCode, 200, `${response.request.path} OK.`);            
+            t.strictEqual(response.statusCode, 200, `${response.request.path} OK.`);
 
             response = await server.inject({
                 method: 'POST',
@@ -307,7 +308,7 @@ Test('test plugin', function (t) {
         }
     });
 
-    t.test('security object', async function (t) {
+    t.test('security object', async (t) => {
         t.plan(3);
 
         const server = new Hapi.Server();
@@ -340,5 +341,5 @@ Test('test plugin', function (t) {
         catch (error) {
             t.fail(error.message);
         }
-    });    
+    });
 });

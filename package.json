@@ -1,13 +1,14 @@
 {
-  "name": "hapi-openapi",
+  "name": "hapi-openapi-es6",
   "description": "Design-driven apis with OpenAPI (formerly Swagger) 2.0 and hapi.",
-  "version": "3.0.0",
+  "version": "3.0.4",
   "author": "Trevor Livingston <tlivings@gmail.com>",
+  "type": "module",
   "repository": {
     "type": "git",
-    "url": "git://github.com/krakenjs/hapi-openapi.git"
+    "url": "git://github.com/jceb/hapi-openapi-es6.git"
   },
-  "bugs": "http://github.com/krakenjs/hapi-openapi/issues",
+  "bugs": "http://github.com/jceb/hapi-openapi-es6/issues",
   "publishConfig": {
     "registry": "https://registry.npmjs.org"
   },
@@ -16,31 +17,29 @@
   },
   "dependencies": {
     "@hapi/hoek": "^9.0.4",
-    "dot-prop": "^5.2.0",
+    "dot-prop": "^6.0.1",
     "enjoi": "^9.0.0",
     "joi": "^17.1.0",
-    "js-yaml": "^3.11.0",
-    "merge-object-files": "^2.0.0",
-    "swagger-parser": "^9.0.1"
+    "js-yaml": "^4.1.0",
+    "merge-object-files-es6": "^1.0.0",
+    "openapi-types": "^10.0.0",
+    "swagger-parser": "^10.0.3"
   },
   "devDependencies": {
     "@hapi/boom": "^9.1.0",
-    "@hapi/eslint-config-hapi": "^13.0.2",
-    "@hapi/eslint-plugin-hapi": "^4.3.5",
+    "@hapi/eslint-plugin": "^5.1.0",
     "@hapi/hapi": "^20.0.3",
-    "eslint": "^6.8.0",
-    "eslint-config-hapi": "^12.0.0",
-    "eslint-plugin-hapi": "^4.1.0",
-    "nyc": "^15.0.0",
+    "eslint": "^7.32.0",
+    "nyc": "^15.1.0",
     "tape": "^5.0.0"
   },
   "scripts": {
-    "test": "tape test/*.js",
-    "cover": "nyc npm test",
+    "test": "NODE_OPTIONS='--trace-warnings --stack-trace-limit=100 --experimental-json-modules --experimental-import-meta-resolve' npx tape test/*.js",
+    "cover": "NODE_OPTIONS='--trace-warnings --stack-trace-limit=100 --experimental-json-modules --experimental-import-meta-resolve' nyc npm test",
     "lint": "eslint lib"
   },
   "license": "Apache-2.0",
-  "main": "./lib/index",
+  "main": "./lib/index.js",
   "keywords": [
     "openapi",
     "swagger",

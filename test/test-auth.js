@@ -1,13 +1,14 @@
-'use strict';
+import Test from 'tape';
+import Path from 'path';
+import OpenAPI from '../lib/index.js';
+import Hapi from '@hapi/hapi';
+import StubAuthTokenScheme from './fixtures/lib/stub-auth-token-scheme.js';
 
-const Test = require('tape');
-const Path = require('path');
-const OpenAPI = require('../lib');
-const Hapi = require('@hapi/hapi');
-const StubAuthTokenScheme = require('./fixtures/lib/stub-auth-token-scheme');
+import { fileURLToPath } from 'url';
+const __dirname = Path.dirname(fileURLToPath(import.meta.url));
 
-Test('authentication', function (t) {
-    t.test('token authentication', async function (t) {
+Test('authentication', (t) => {
+    t.test('token authentication', async (t) => {
         t.plan(3);
 
         const server = new Hapi.Server();
@@ -65,7 +66,7 @@ Test('authentication', function (t) {
         }
     });
 
-    t.test('unauthorized', async function (t) {
+    t.test('unauthorized', async (t) => {
         t.plan(1);
 
         const server = new Hapi.Server();
@@ -75,7 +76,7 @@ Test('authentication', function (t) {
 
             server.auth.strategy('api_key', 'stub-auth-token', {
                 validateFunc: async function (token) {
-                    return { credentials: { scope: [ 'api3:read' ] }, artifacts: { }};
+                    return { credentials: { scope: ['api3:read'] }, artifacts: { } };
                 }
             });
 
@@ -106,7 +107,7 @@ Test('authentication', function (t) {
         }
     });
 
-    t.test('with root auth', async function (t) {
+    t.test('with root auth', async (t) => {
         t.plan(1);
 
         const server = new Hapi.Server();
@@ -116,7 +117,7 @@ Test('authentication', function (t) {
 
             server.auth.strategy('api_key', 'stub-auth-token', {
                 validateFunc: async function (token) {
-                    return { credentials: { scope: [ 'api3:read' ] }, artifacts: { }};
+                    return { credentials: { scope: ['api3:read'] }, artifacts: { } };
                 }
             });
 
@@ -148,9 +149,9 @@ Test('authentication', function (t) {
     });
 });
 
-Test('authentication with x-auth', function (t) {
+Test('authentication with x-auth', (t) => {
 
-    t.test('authenticated', async function (t) {
+    t.test('authenticated', async (t) => {
         t.plan(2);
 
         const server = new Hapi.Server();

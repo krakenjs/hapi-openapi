@@ -1,11 +1,9 @@
-'use strict';
+import Test from 'tape';
+import Utils from '../lib/utils.js';
 
-const Test = require('tape');
-const Utils = require('../lib/utils');
+Test('utils', (t) => {
 
-Test('utils', function (t) {
-
-    t.test('prefix', function (t) {
+    t.test('prefix', (t) => {
         t.plan(3);
 
         var str = 'foobar';
@@ -23,7 +21,7 @@ Test('utils', function (t) {
         t.equal(Utils.prefix(undefined, 'foo'), 'foo', 'handled undefined.');
     });
 
-    t.test('unprefix', function (t) {
+    t.test('unprefix', (t) => {
         t.plan(3);
 
         var str = 'foobar';
@@ -41,7 +39,7 @@ Test('utils', function (t) {
         t.equal(Utils.unprefix(undefined, 'foo'), '', 'handled undefined.');
     });
 
-    t.test('suffix', function (t) {
+    t.test('suffix', (t) => {
         t.plan(3);
 
         var str = 'foobar';
@@ -59,7 +57,7 @@ Test('utils', function (t) {
         t.equal(Utils.suffix(undefined, 'foo'), 'foo', 'handled undefined.');
     });
 
-    t.test('unsuffix', function (t) {
+    t.test('unsuffix', (t) => {
         t.plan(3);
 
         var str = 'foobar';
@@ -77,13 +75,13 @@ Test('utils', function (t) {
         t.equal(Utils.unsuffix(undefined, 'foo'), '', 'handled undefined.');
     });
 
-    t.test('ends with', function (t) {
+    t.test('ends with', (t) => {
         t.plan(2);
         t.ok(Utils.endsWith('foobar', 'bar'), 'foobar ends with bar');
         t.ok(!Utils.endsWith('foobar', 'x'), 'foobar doesn\'t end with x');
     });
 
-    t.test('is httpMethod', function (t) {
+    t.test('is httpMethod', (t) => {
         const verbs = Utils.verbs;
 
         t.plan(verbs.length + 1);

@@ -1,13 +1,14 @@
-'use strict';
+import Test from 'tape';
+import Path from 'path';
+import OpenAPI from '../lib/index.js';
+import Hapi from '@hapi/hapi';
 
-const Test = require('tape');
-const Path = require('path');
-const OpenAPI = require('../lib');
-const Hapi = require('@hapi/hapi');
+import { fileURLToPath } from "url";
+const __dirname = Path.dirname(fileURLToPath(import.meta.url));
 
-Test('test plugin', function (t) {
+Test('test plugin', (t) => {
 
-    t.test('register', async function (t) {
+    t.test('register', async (t) => {
         t.plan(3);
 
         const server = new Hapi.Server();
@@ -33,7 +34,7 @@ Test('test plugin', function (t) {
 
     });
 
-    t.test('register with cors options', async function (t) {
+    t.test('register with cors options', async (t) => {
         t.plan(3);
 
         const server = new Hapi.Server();
@@ -45,10 +46,10 @@ Test('test plugin', function (t) {
                     api: Path.join(__dirname, './fixtures/defs/pets.json'),
                     handlers: Path.join(__dirname, './fixtures/handlers'),
                     cors: {
-                        origin: ["*"],
+                        origin: ['*'],
                         maxAge: 86400,
-                        headers: ["Accept", "Authorization", "Content-Type", "If-None-Match"],
-                        exposedHeaders: ["x-count", "link"]
+                        headers: ['Accept', 'Authorization', 'Content-Type', 'If-None-Match'],
+                        exposedHeaders: ['x-count', 'link']
                     }
                 }
             });
@@ -65,7 +66,7 @@ Test('test plugin', function (t) {
 
     });
 
-    t.test('register with boolean cors', async function (t) {
+    t.test('register with boolean cors', async (t) => {
         t.plan(3);
 
         const server = new Hapi.Server();
@@ -92,7 +93,7 @@ Test('test plugin', function (t) {
 
     });
 
-    t.test('register with object api', async function (t) {
+    t.test('register with object api', async (t) => {
         t.plan(3);
 
         const server = new Hapi.Server();
@@ -147,13 +148,13 @@ Test('test plugin', function (t) {
             t.strictEqual(server.plugins.openapi.getApi().host, 'api.paypal.com', 'server.plugins.openapi.setHost set host.');
         }
         catch (error) {
-            console.log(error.stack)
+            console.log(error.stack);
             t.fail(error.message);
         }
 
     });
 
-    t.test('register with optional query parameters does not change "request.orig"', async function (t) {
+    t.test('register with optional query parameters does not change "request.orig"', async (t) => {
         t.plan(1);
 
         const server = new Hapi.Server();
@@ -172,8 +173,8 @@ Test('test plugin', function (t) {
                                 name: 'optionalParameter',
                                 in: 'query',
                                 required: false,
-                                type: 'string',
-                            },
+                                type: 'string'
+                            }
                         ],
                         responses: {
                             200: {
@@ -211,7 +212,7 @@ Test('test plugin', function (t) {
         }
     });
 
-    t.test('api docs', async function (t) {
+    t.test('api docs', async (t) => {
         t.plan(3);
 
         const server = new Hapi.Server();
@@ -242,7 +243,7 @@ Test('test plugin', function (t) {
         }
     });
 
-    t.test('api docs strip vendor extensions false', async function (t) {
+    t.test('api docs strip vendor extensions false', async (t) => {
         t.plan(3);
 
         const server = new Hapi.Server();
@@ -276,7 +277,7 @@ Test('test plugin', function (t) {
         }
     });
 
-    t.test('api docs auth false', async function (t) {
+    t.test('api docs auth false', async (t) => {
         t.plan(1);
 
         const server = new Hapi.Server();
@@ -305,7 +306,7 @@ Test('test plugin', function (t) {
         }
     });
 
-    t.test('api docs change path', async function (t) {
+    t.test('api docs change path', async (t) => {
         t.plan(1);
 
         const server = new Hapi.Server();
@@ -334,7 +335,7 @@ Test('test plugin', function (t) {
         }
     });
 
-    t.test('api docs change path (with no basepath prefix)', async function (t) {
+    t.test('api docs change path (with no basepath prefix)', async (t) => {
         t.plan(1);
 
         const server = new Hapi.Server();
@@ -364,7 +365,7 @@ Test('test plugin', function (t) {
         }
     });
 
-    t.test('api docs change path old way', async function (t) {
+    t.test('api docs change path old way', async (t) => {
         t.plan(1);
 
         const server = new Hapi.Server();
@@ -391,7 +392,7 @@ Test('test plugin', function (t) {
         }
     });
 
-    t.test('minimal api spec support', async function (t) {
+    t.test('minimal api spec support', async (t) => {
         t.plan(1);
 
         const server = new Hapi.Server();
@@ -430,7 +431,7 @@ Test('test plugin', function (t) {
                 }
             });
 
-            let response = await server.inject({
+            const response = await server.inject({
                 method: 'GET',
                 url: '/test'
             });
@@ -444,7 +445,7 @@ Test('test plugin', function (t) {
 
     });
 
-    t.test('trailing slashes', async function (t) {
+    t.test('trailing slashes', async (t) => {
         t.plan(1);
 
         const server = new Hapi.Server();
@@ -483,7 +484,7 @@ Test('test plugin', function (t) {
                 }
             });
 
-            let response = await server.inject({
+            const response = await server.inject({
                 method: 'GET',
                 url: '/test/'
             });
@@ -497,7 +498,7 @@ Test('test plugin', function (t) {
 
     });
 
-    t.test('routes', async function (t) {
+    t.test('routes', async (t) => {
         t.plan(6);
 
         const server = new Hapi.Server();
@@ -567,7 +568,7 @@ Test('test plugin', function (t) {
 
     });
 
-    t.test('routes with output validation', async function (t) {
+    t.test('routes with output validation', async (t) => {
         t.plan(5);
 
         const server = new Hapi.Server();
@@ -631,7 +632,7 @@ Test('test plugin', function (t) {
 
     });
 
-    t.test('output validation fails', async function (t) {
+    t.test('output validation fails', async (t) => {
         t.plan(1);
 
         const server = new Hapi.Server();
@@ -668,7 +669,7 @@ Test('test plugin', function (t) {
 
     });
 
-    t.test('routes x-handler', async function (t) {
+    t.test('routes x-handler', async (t) => {
         t.plan(4);
 
         const server = new Hapi.Server();
@@ -721,7 +722,7 @@ Test('test plugin', function (t) {
     });
 
 
-    t.test('query validation', async function (t) {
+    t.test('query validation', async (t) => {
 
         const server = new Hapi.Server();
 
@@ -740,7 +741,7 @@ Test('test plugin', function (t) {
                 'tags=single_tag': 200,
                 'limit=2&tags=some_tag&tags=some_other_tag': 200,
                 'limit=a_string': 400
-            }
+            };
 
             for (const queryString in queryStringToStatusCode) {
                 const response = await server.inject({
@@ -758,7 +759,7 @@ Test('test plugin', function (t) {
         }
     });
 
-    t.test('query validation with arrays', async function (t) {
+    t.test('query validation with arrays', async (t) => {
 
         const server = new Hapi.Server();
 
@@ -824,8 +825,8 @@ Test('test plugin', function (t) {
         }
     });
 
-    t.test('parse description from api definition', async function (t) {
-        t.test('do not break with empty descriptions', async function (t) {
+    t.test('parse description from api definition', async (t) => {
+        t.test('do not break with empty descriptions', async (t) => {
             t.plan(1);
 
             const server = new Hapi.Server();
@@ -864,12 +865,13 @@ Test('test plugin', function (t) {
                 });
 
                 t.pass();
-            } catch (error) {
+            }
+            catch (error) {
                 t.fail(error.message);
             }
         });
 
-        t.test('create the right description for the route', async function (t) {
+        t.test('create the right description for the route', async (t) => {
             t.plan(1);
 
             const server = new Hapi.Server();
@@ -909,13 +911,14 @@ Test('test plugin', function (t) {
 
                 const response = await server.inject({ method: 'GET', url: '/test' });
                 t.strictEqual(response.request.route.settings.description, 'A simple description for the route');
-            } catch (error) {
+            }
+            catch (error) {
                 t.fail(error.message);
             }
         });
     });
 
-    t.test('hapi payload options (assert via parse:false)', async function (t) {
+    t.test('hapi payload options (assert via parse:false)', async (t) => {
         t.plan(1);
 
         const server = new Hapi.Server();
@@ -973,7 +976,7 @@ Test('test plugin', function (t) {
                 }
             });
 
-            let response = await server.inject({
+            const response = await server.inject({
                 method: 'POST',
                 url: '/test',
                 payload: {
@@ -990,7 +993,7 @@ Test('test plugin', function (t) {
 
     });
 
-    t.test('hapi allowUnknown request payload properties', async function (t) {
+    t.test('hapi allowUnknown request payload properties', async (t) => {
         t.plan(1);
 
         const server = new Hapi.Server();
@@ -1050,7 +1053,7 @@ Test('test plugin', function (t) {
                 }
             });
 
-            let response = await server.inject({
+            const response = await server.inject({
                 method: 'POST',
                 url: '/test',
                 payload: {
@@ -1068,7 +1071,7 @@ Test('test plugin', function (t) {
 
     });
 
-    t.test('hapi array parameters', async function (t) {
+    t.test('hapi array parameters', async (t) => {
         t.plan(1);
 
         const server = new Hapi.Server();
@@ -1087,15 +1090,15 @@ Test('test plugin', function (t) {
                                 name: 'body',
                                 in: 'body',
                                 schema: {
-                                    type: "array",
+                                    type: 'array',
                                     items: {
-                                        type: "object",
+                                        type: 'object',
                                         properties: {
                                             name: {
-                                                type: "string"
+                                                type: 'string'
                                             },
                                             breed: {
-                                                type: "string"
+                                                type: 'string'
                                             }
                                         }
                                     }
@@ -1127,7 +1130,7 @@ Test('test plugin', function (t) {
                 }
             });
 
-            let response = await server.inject({
+            const response = await server.inject({
                 method: 'POST',
                 url: '/test',
                 payload: [
@@ -1151,7 +1154,7 @@ Test('test plugin', function (t) {
 
     });
 
-    t.test('hapi operation tags', async function (t) {
+    t.test('hapi operation tags', async (t) => {
         t.plan(1);
 
         const server = new Hapi.Server();
@@ -1178,7 +1181,7 @@ Test('test plugin', function (t) {
                 }
             }
         };
-        const expectedTags = ['api', 'sample1', 'sample2']
+        const expectedTags = ['api', 'sample1', 'sample2'];
 
         try {
             await server.register({
@@ -1195,11 +1198,11 @@ Test('test plugin', function (t) {
                 }
             });
 
-            let response = await server.inject({
+            const response = await server.inject({
                 method: 'GET',
                 url: '/test'
             });
-            const responsteTags = response.request.route.settings.tags
+            const responsteTags = response.request.route.settings.tags;
 
             t.deepEqual(responsteTags, expectedTags, 'additional tags successfully configured');
 
@@ -1210,7 +1213,7 @@ Test('test plugin', function (t) {
 
     });
 
-    t.test('hapi operation tags omitted', async function (t) {
+    t.test('hapi operation tags omitted', async (t) => {
         t.plan(1);
 
         const server = new Hapi.Server();
@@ -1233,7 +1236,7 @@ Test('test plugin', function (t) {
                 }
             }
         };
-        const expectedDefaultTags = ['api']
+        const expectedDefaultTags = ['api'];
 
         try {
             await server.register({
@@ -1250,11 +1253,11 @@ Test('test plugin', function (t) {
                 }
             });
 
-            let response = await server.inject({
+            const response = await server.inject({
                 method: 'GET',
                 url: '/test'
             });
-            const responsteTags = response.request.route.settings.tags
+            const responsteTags = response.request.route.settings.tags;
 
             t.deepEqual(responsteTags, expectedDefaultTags, 'returned default tags');
 
@@ -1267,7 +1270,7 @@ Test('test plugin', function (t) {
 
 });
 
-Test('multi-register', function (t) {
+Test('multi-register', (t) => {
 
     const api1 = {
         swagger: '2.0',
@@ -1309,7 +1312,7 @@ Test('multi-register', function (t) {
         }
     };
 
-    t.test('support register multiple', async function (t) {
+    t.test('support register multiple', async (t) => {
         t.plan(2);
 
         const server = new Hapi.Server();
@@ -1365,7 +1368,7 @@ Test('multi-register', function (t) {
 
     });
 
-    t.test('support fail on conflicts', async function (t) {
+    t.test('support fail on conflicts', async (t) => {
         t.plan(1);
 
         const server = new Hapi.Server();
@@ -1416,8 +1419,8 @@ Test('multi-register', function (t) {
 
 });
 
-Test('yaml support', function (t) {
-    t.test('register', async function (t) {
+Test('yaml support', (t) => {
+    t.test('register', async (t) => {
         t.plan(3);
 
         const server = new Hapi.Server();

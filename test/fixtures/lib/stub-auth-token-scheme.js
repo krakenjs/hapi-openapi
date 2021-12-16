@@ -1,9 +1,7 @@
-'use strict';
-
-var Boom = require('@hapi/boom');
+import Boom from '@hapi/boom';
 
 const register = function (server, options) {
-    server.auth.scheme('stub-auth-token', function (server, options) {
+    server.auth.scheme('stub-auth-token', (server, options) => {
         const scheme = {
             authenticate: async function (request, h) {
                 const token = request.headers.authorization;
@@ -35,11 +33,11 @@ const buildValidateFunc = function (allowedToken) {
     return async function (token) {
 
         if (token === allowedToken) {
-            return { credentials: { scope: [ 'api1:read' ] }, artifacts: { }};
+            return { credentials: { scope: ['api1:read'] }, artifacts: { } };
         }
 
         return {};
-    }
+    };
 };
 
-module.exports = { register, name: 'stub-auth-token', buildValidateFunc};
+export default { register, name: 'stub-auth-token', buildValidateFunc };
