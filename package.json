@@ -22,6 +22,7 @@
     "joi": "^17.1.0",
     "js-yaml": "^4.1.0",
     "merge-object-files-es6": "^1.0.0",
+    "openapi-types": "^10.0.0",
     "swagger-parser": "^10.0.3"
   },
   "devDependencies": {
