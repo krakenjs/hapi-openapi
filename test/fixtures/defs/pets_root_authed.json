@@ -1,115 +1,114 @@
 {
-    "swagger": "2.0",
-    "info": {
-        "version": "1.0.0",
-        "title": "Swagger Petstore (Simple)",
-        "description": "A sample API that uses a petstore as an example to demonstrate features in the swagger-2.0 specification",
-        "termsOfService": "http://helloreverb.com/terms/",
-        "contact": {
-            "name": "Swagger API team",
-            "email": "foo@example.com",
-            "url": "http://swagger.io"
-        },
-        "license": {
-            "name": "MIT",
-            "url": "http://opensource.org/licenses/MIT"
-        }
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Swagger Petstore (Simple)",
+    "description": "A sample API that uses a petstore as an example to demonstrate features in the swagger-2.0 specification",
+    "termsOfService": "http://helloreverb.com/terms/",
+    "contact": {
+      "name": "Swagger API team",
+      "email": "foo@example.com",
+      "url": "http://swagger.io"
     },
-    "host": "petstore.swagger.io",
-    "basePath": "/v1/petstore",
-    "schemes": [
-        "http"
-    ],
-    "consumes": [
-        "application/json"
-    ],
-    "produces": [
-        "application/json"
-    ],
-    "security": [
-        {
-            "api_key": [
-                "api1:read"
-            ]
-        },
-        {
-            "api_key2": [
-                "api2:read"
-            ]
-        }
-    ],
-    "paths": {
-        "/pets": {
-            "get": {
-                "parameters": [
-                ],
-                "responses": {
-                    "200": {
-                        "description": "pet response",
-                        "schema": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/pet"
-                            }
-                        }
-                    },
-                    "default": {
-                        "description": "unexpected error",
-                        "schema": {
-                            "$ref": "#/definitions/errorModel"
-                        }
-                    }
-                }
-            }
-        }
-    },
-    "definitions": {
-        "pet": {
-            "type": "object",
-            "required": [
-                "id",
-                "name"
-            ],
-            "properties": {
-                "id": {
-                    "type": "integer",
-                    "format": "int64"
-                },
-                "name": {
-                    "type": "string"
-                },
-                "tag": {
-                    "type": "string"
-                }
-            }
-        },
-        "errorModel": {
-            "type": "object",
-            "required": [
-                "code",
-                "message"
-            ],
-            "properties": {
-                "code": {
-                    "type": "integer",
-                    "format": "int32"
-                },
-                "message": {
-                    "type": "string"
-                }
-            }
-        }
-    },
-    "securityDefinitions": {
-        "api_key": {
-            "type": "apiKey",
-            "name": "authorization",
-            "in": "header"
-        },
-        "api_key2": {
-            "type": "apiKey",
-            "name": "authorization",
-            "in": "header"
-        }
+    "license": {
+      "name": "MIT",
+      "url": "http://opensource.org/licenses/MIT"
     }
+  },
+  "host": "petstore.swagger.io",
+  "basePath": "/v1/petstore",
+  "schemes": [
+    "http"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "security": [
+    {
+      "api_key": [
+        "api1:read"
+      ]
+    },
+    {
+      "api_key2": [
+        "api2:read"
+      ]
+    }
+  ],
+  "paths": {
+    "/pets": {
+      "get": {
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "pet response",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/pet"
+              }
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "schema": {
+              "$ref": "#/definitions/errorModel"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "pet": {
+      "type": "object",
+      "required": [
+        "id",
+        "name"
+      ],
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "name": {
+          "type": "string"
+        },
+        "tag": {
+          "type": "string"
+        }
+      }
+    },
+    "errorModel": {
+      "type": "object",
+      "required": [
+        "code",
+        "message"
+      ],
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        }
+      }
+    }
+  },
+  "securityDefinitions": {
+    "api_key": {
+      "type": "apiKey",
+      "name": "authorization",
+      "in": "header"
+    },
+    "api_key2": {
+      "type": "apiKey",
+      "name": "authorization",
+      "in": "header"
+    }
+  }
 }

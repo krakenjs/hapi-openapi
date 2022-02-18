@@ -1,17 +1,17 @@
 var store = [];
 
 export default {
-    put: function (data) {
-        store.push(data);
-        return store.length - 1;
-    },
-    get: function (id) {
-        return store[id];
-    },
-    delete: function (id) {
-        store.splice(id, 1);
-    },
-    all: function () {
-        return store;
-    }
+  put: function (data) {
+    store.push(data);
+    return store.length - 1;
+  },
+  get: function (id) {
+    return store[id];
+  },
+  delete: function (id) {
+    store.splice(id, 1);
+  },
+  all: function () {
+    return store;
+  },
 };

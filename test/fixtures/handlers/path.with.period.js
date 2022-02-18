@@ -1,5 +1,5 @@
 export default {
-    get: function (req, h) {
-        return null
-    }
+  get: function (req, h) {
+    return null;
+  },
 };

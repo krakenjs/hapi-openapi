@@ -7,7 +7,7 @@
 - Don't set undefined parameters on request in `routeExt` (#180)
 - Update enjoi and @hapi/joi to Joi 17 (#176)
 
-### 2.0.1 
+### 2.0.1
 
 - Removed left over console.log file
 - Fixed `unknown` being used on all joi schemas as opposed to just objects
@@ -43,7 +43,8 @@
 
 ### 1.2.0
 
-- Vendor extensions are now stripped from the API docs end point (option `docs.stripExtensions`).
+- Vendor extensions are now stripped from the API docs end point (option
+  `docs.stripExtensions`).
 - Bumped to Enjoi 4.x.
 
 ### 1.1.0
@@ -56,11 +57,13 @@
 
 ### 1.0.4
 
-- Resolves https://github.com/krakenjs/hapi-openapi/issues/123, fixing array format support in parameters.
+- Resolves https://github.com/krakenjs/hapi-openapi/issues/123, fixing array
+  format support in parameters.
 
 ### 1.0.3
 
-- Resolves https://github.com/krakenjs/hapi-openapi/issues/125, correcting `date-time` format.
+- Resolves https://github.com/krakenjs/hapi-openapi/issues/125, correcting
+  `date-time` format.
 
 ### 1.0.2
 
@@ -105,7 +108,8 @@
 
 ### 3.3.1
 
-- Fixed https://github.com/krakenjs/swaggerize-hapi/issues/72 - allow single item arrays.
+- Fixed https://github.com/krakenjs/swaggerize-hapi/issues/72 - allow single
+  item arrays.
 
 ### 3.3.0
 
@@ -127,7 +131,9 @@
 
 - [BREAKING] Migrated to Hapi 17 and Node 8.
 - [BREAKING] Severed from `swaggerize-routes` - this module is now standalone.
-- [BREAKING] `server.plugins.swagger.api` is now `server.plugins.swagger.getApi()`.
-- [BREAKING] `handlers` object doesn't namespace http methods using `$` anymore. Assumption is verb is last in object path.
+- [BREAKING] `server.plugins.swagger.api` is now
+  `server.plugins.swagger.getApi()`.
+- [BREAKING] `handlers` object doesn't namespace http methods using `$` anymore.
+  Assumption is verb is last in object path.
 - [BREAKING] Currently does not work with the `swaggerize-generator`.
 - Routes will specify what they allow based on api spec.

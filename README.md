@@ -5,7 +5,8 @@
 
 ### Note: this project was renamed from 'swaggerize-hapi' to 'hapi-openapi'.
 
-`hapi-openapi` is a design-driven approach to building RESTful services with [OpenAPI (Swagger)](http://openapis.org) and [Hapi](http://hapijs.com).
+`hapi-openapi` is a design-driven approach to building RESTful services with
+[OpenAPI (Swagger)](http://openapis.org) and [Hapi](http://hapijs.com).
 
 `hapi-openapi` provides the following features:
 
@@ -16,17 +17,21 @@
 
 ### Why "Design Driven"
 
-There are already a number of modules that help build RESTful APIs for node with OpenAPI. However,
-these modules tend to focus on building the documentation or specification as a side effect of writing
-the application business logic.
+There are already a number of modules that help build RESTful APIs for node with
+OpenAPI. However, these modules tend to focus on building the documentation or
+specification as a side effect of writing the application business logic.
 
-`hapi-openapi` begins with the OpenAPI document first. This facilitates writing APIs that are easier to design, review, and test.
+`hapi-openapi` begins with the OpenAPI document first. This facilitates writing
+APIs that are easier to design, review, and test.
 
-At runtime, `hapi-openapi` uses the API specification to build routes from previously defined paths. This ensures that everything specified is what is implemented.
+At runtime, `hapi-openapi` uses the API specification to build routes from
+previously defined paths. This ensures that everything specified is what is
+implemented.
 
 ### Quick Start with a Generator
 
-This guide will let you go from an `api.json` to a service project in no time flat.
+This guide will let you go from an `api.json` to a service project in no time
+flat.
 
 First install `generator-swaggerize` (and `yo` if you haven't already):
 
@@ -44,26 +49,28 @@ $ yo swaggerize
 
 Follow the prompts (note: make sure to choose `hapi` as your framework choice).
 
-You now have a working api and can use something like [SwaggerHub](https://swaggerhub.com/?_ga=2.118604234.2143392684.1515431456-1673703125.1481054263) to explore it.
+You now have a working api and can use something like
+[SwaggerHub](https://swaggerhub.com/?_ga=2.118604234.2143392684.1515431456-1673703125.1481054263)
+to explore it.
 
 ### Manual Usage
 
 ```javascript
-const Hapi = require('@hapi/hapi');
+const Hapi = require("@hapi/hapi");
 const Path = require("path");
 
-const server = new Hapi.Server( { port: 3000 } );
+const server = new Hapi.Server({ port: 3000 });
 
-async function init () {
+async function init() {
   await server.register({
-    plugin: require('hapi-openapi'),
+    plugin: require("hapi-openapi"),
     options: {
-        api: Path.join(__dirname, './config/pets.json'),
-        handlers: Path.join(__dirname, './handlers')
-    }
+      api: Path.join(__dirname, "./config/pets.json"),
+      handlers: Path.join(__dirname, "./handlers"),
+    },
   });
   await server.start();
-  console.log( server.info.uri );
+  console.log(server.info.uri);
 }
 
 init();
@@ -71,33 +78,46 @@ init();
 
 ### Hapi Plugin
 
-The plugin will be registered as `openapi` on `server.plugins` with the following exposed:
+The plugin will be registered as `openapi` on `server.plugins` with the
+following exposed:
 
 - `getApi()` - the resolved Swagger document.
-- `setHost(host)` - a helper function for setting the `host` property on the `api`.
+- `setHost(host)` - a helper function for setting the `host` property on the
+  `api`.
 
 ### Configuration Options
 
-- `api` - a path to a valid OpenAPI 2.0 document, or a valid document in the form of an object.
-- *deprecated* `docspath` - the path to expose api docs for swagger-ui, etc. Defaults to `/api-docs`.
+- `api` - a path to a valid OpenAPI 2.0 document, or a valid document in the
+  form of an object.
+- _deprecated_ `docspath` - the path to expose api docs for swagger-ui, etc.
+  Defaults to `/api-docs`.
 - `docs` - an object used to configure the api docs route.
-    - `path` - the path to expose api docs for swagger-ui, etc. Defaults to `/api-docs`.
-    - `auth` - options auth config for this route.
-    - `stripExtensions` - strip vendor extensions from docs. Defaults to true.
-    - `prefixBasePath` - prefix path of docs with he OpenAPI document's `basePath` value. Defaults to true.
-- `handlers` - either a string directory structure for route handlers, object, or not set if using `x-hapi-handler`.
-- `extensions` - an array of file extension types to use when scanning for handlers. Defaults to `['js']`.
-- `vhost` - *optional* domain string (see [hapi route options](http://hapi.dev/api#route-options)).
-- `cors` - *optional* cors setting (see [hapi route options](http://hapi.dev/api#route-options)).
-- `outputvalidation` - *optional* validate response data.
+  - `path` - the path to expose api docs for swagger-ui, etc. Defaults to
+    `/api-docs`.
+  - `auth` - options auth config for this route.
+  - `stripExtensions` - strip vendor extensions from docs. Defaults to true.
+  - `prefixBasePath` - prefix path of docs with he OpenAPI document's `basePath`
+    value. Defaults to true.
+- `handlers` - either a string directory structure for route handlers, object,
+  or not set if using `x-hapi-handler`.
+- `extensions` - an array of file extension types to use when scanning for
+  handlers. Defaults to `['js']`.
+- `vhost` - _optional_ domain string (see
+  [hapi route options](http://hapi.dev/api#route-options)).
+- `cors` - _optional_ cors setting (see
+  [hapi route options](http://hapi.dev/api#route-options)).
+- `outputvalidation` - _optional_ validate response data.
 
 ### Mount Path
 
-Api `path` values will be prefixed with the OpenAPI document's `basePath` value.  This behavior can be negated if you set the option `docs.prefixBasePath` to `false`.
+Api `path` values will be prefixed with the OpenAPI document's `basePath` value.
+This behavior can be negated if you set the option `docs.prefixBasePath` to
+`false`.
 
 ### Handlers Directory
 
-The `options.handlers` option specifies a directory to scan for handlers. These handlers are bound to the api `paths` defined in the OpenAPI document.
+The `options.handlers` option specifies a directory to scan for handlers. These
+handlers are bound to the api `paths` defined in the OpenAPI document.
 
 ```
 handlers
@@ -117,7 +137,8 @@ baz.js => /baz
 
 ### Path Parameters
 
-The file and directory names in the handlers directory can also represent path parameters.
+The file and directory names in the handlers directory can also represent path
+parameters.
 
 For example, to represent the path `/users/{id}`:
 
@@ -141,7 +162,8 @@ To represent `/users/{id}/foo`.
 
 ### Handlers File
 
-Each provided javascript file should export an object containing functions with HTTP verbs as keys.
+Each provided javascript file should export an object containing functions with
+HTTP verbs as keys.
 
 Example:
 
@@ -153,7 +175,8 @@ module.exports = {
 }
 ```
 
-Optionally, `pre` handlers can be used by providing an array of handlers for a method:
+Optionally, `pre` handlers can be used by providing an array of handlers for a
+method:
 
 ```javascript
 module.exports = {
@@ -166,7 +189,8 @@ module.exports = {
 
 ### Handlers Object
 
-The directory generation will yield this object, but it can be provided directly as `options.handlers`.
+The directory generation will yield this object, but it can be provided directly
+as `options.handlers`.
 
 Example:
 
@@ -185,7 +209,8 @@ Example:
 
 ### X-Hapi-Handler
 
-Alternatively the API document can set `x-hapi-handler` attribute on each defined `paths` element if `handlers` is not defined.
+Alternatively the API document can set `x-hapi-handler` attribute on each
+defined `paths` element if `handlers` is not defined.
 
 Example:
 
@@ -201,7 +226,9 @@ This will construct a `handlers` object from the given `x-hapi-handler` files.
 
 ### X-Hapi-Options
 
-There is now support at the operations level for `x-hapi-options` which represent individual [Hapi Route Optijons](https://github.com/hapijs/hapi/blob/master/API.md#route-options).
+There is now support at the operations level for `x-hapi-options` which
+represent individual
+[Hapi Route Optijons](https://github.com/hapijs/hapi/blob/master/API.md#route-options).
 
 This support is limited to configuration supported by the JSON file type.
 
@@ -220,9 +247,15 @@ Example:
 
 ### Authentication
 
-Support for OpenAPI [security schemes](http://swagger.io/specification/#securitySchemeObject) requires that relevant authentication scheme and strategy are registered before the hapi-openapi plugin. See the [hapi docs](http://hapijs.com/tutorials/auth) for information about authentication schemes and strategies.
+Support for OpenAPI
+[security schemes](http://swagger.io/specification/#securitySchemeObject)
+requires that relevant authentication scheme and strategy are registered before
+the hapi-openapi plugin. See the [hapi docs](http://hapijs.com/tutorials/auth)
+for information about authentication schemes and strategies.
 
-The name of the hapi authentication strategy is expected to match the name field of the OpenAPI [security requirement object](http://swagger.io/specification/#securityRequirementObject).
+The name of the hapi authentication strategy is expected to match the name field
+of the OpenAPI
+[security requirement object](http://swagger.io/specification/#securityRequirementObject).
 
 Example:
 
@@ -244,28 +277,30 @@ const server = new Hapi.Server();
 
 await server.register({ plugin: AuthTokenScheme });
 
-server.auth.strategy('api_key', 'auth-token-scheme', {
-    validateFunc: async function (token) {
-      // Implement validation here, return { credentials, artifacts }.
-    }
+server.auth.strategy("api_key", "auth-token-scheme", {
+  validateFunc: async function (token) {
+    // Implement validation here, return { credentials, artifacts }.
+  },
 });
 
 await server.register({
-    plugin: require('hapi-openapi'),
-    options: {
-        api: require('./config/pets.json'),
-        handlers: Path.join(__dirname, './handlers')
-    }
+  plugin: require("hapi-openapi"),
+  options: {
+    api: require("./config/pets.json"),
+    handlers: Path.join(__dirname, "./handlers"),
+  },
 });
 ```
 
 ### X-Hapi-Auth
 
-Alternatively it may be easier to automatically register a plugin to handle registering the necessary schemes and strategies.
+Alternatively it may be easier to automatically register a plugin to handle
+registering the necessary schemes and strategies.
 
 **x-hapi-auth-schemes**
 
-The root document can contain an `x-hapi-auth-schemes` object specifying different plugins responsible for registering auth schemes.
+The root document can contain an `x-hapi-auth-schemes` object specifying
+different plugins responsible for registering auth schemes.
 
 Example:
 
@@ -281,7 +316,8 @@ This plugin will be passed the following options:
 
 **x-hapi-auth-strategy**
 
-The `securityDefinitions` entries can contain an `x-hapi-auth-strategy` attribute pointing to a plugin responsible for registering auth strategies.
+The `securityDefinitions` entries can contain an `x-hapi-auth-strategy`
+attribute pointing to a plugin responsible for registering auth strategies.
 
 Example:
 
@@ -298,29 +334,37 @@ Example:
 
 The plugin will be passed the following options:
 
-- `name` - the `securityDefinitions` entry's key. In this example, `api_key`. This is typically used as the strategy name.
-- `scheme` - the `securityDefinitions` `type`. In this example, `apiKey`. This should match a `x-hapi-auth-scheme` name.
-- `where` - `securityDefinitions` entry `in` attribute. This is search for the `lookup` value; in this example `header`.
-- `lookup` - `securityDefinitions` entry `name` attribute. Used as the name to look up against `where`.
+- `name` - the `securityDefinitions` entry's key. In this example, `api_key`.
+  This is typically used as the strategy name.
+- `scheme` - the `securityDefinitions` `type`. In this example, `apiKey`. This
+  should match a `x-hapi-auth-scheme` name.
+- `where` - `securityDefinitions` entry `in` attribute. This is search for the
+  `lookup` value; in this example `header`.
+- `lookup` - `securityDefinitions` entry `name` attribute. Used as the name to
+  look up against `where`.
 
-The way you can make these play together is that for every `type`, a scheme exists that delegates some lookup or evaluation to the appropriate strategy.
+The way you can make these play together is that for every `type`, a scheme
+exists that delegates some lookup or evaluation to the appropriate strategy.
 
 Example:
 
 ```javascript
 //xauth-scheme.js
 
-const register = function (server, { name  }) {
-    server.auth.scheme(name /*apiKey*/, (server, /* options received from the strategy */ { validate }) => {
-        return {
-            authenticate: async function (request, h) {
-                return h.authenticated(await validate(request));
-            }
-        };
-    });
+const register = function (server, { name }) {
+  server.auth.scheme(
+    name, /*apiKey*/
+    (server, /* options received from the strategy */ { validate }) => {
+      return {
+        authenticate: async function (request, h) {
+          return h.authenticated(await validate(request));
+        },
+      };
+    },
+  );
 };
 
-module.exports = { register, name: 'x-hapi-auth-scheme' };
+module.exports = { register, name: "x-hapi-auth-scheme" };
 ```
 
 and
@@ -328,23 +372,27 @@ and
 ```javascript
 //xauth-strategy.js
 
-const Boom = require('@hapi/boom');
+const Boom = require("@hapi/boom");
 
 const register = function (server, { name, scheme, where, lookup }) {
-    server.auth.strategy(name, /* the scheme to use this strategy with */ scheme, {
-        //Define a validate function for the scheme above to receive
-        validate: async function (request) {
-            const token = request.headers[lookup];
+  server.auth.strategy(
+    name,
+    /* the scheme to use this strategy with */ scheme,
+    {
+      //Define a validate function for the scheme above to receive
+      validate: async function (request) {
+        const token = request.headers[lookup];
 
-            //Some arbitrary example
-            if (token === '12345') {
-                return { credentials: { scope: ['read'] }, artifacts: { token } };
-            }
-
-            throw Boom.unauthorized();
+        //Some arbitrary example
+        if (token === "12345") {
+          return { credentials: { scope: ["read"] }, artifacts: { token } };
         }
-    });
+
+        throw Boom.unauthorized();
+      },
+    },
+  );
 };
 
-module.exports = { register, name: 'x-hapi-auth-strategy' };
+module.exports = { register, name: "x-hapi-auth-strategy" };
 ```
